@@ -14,6 +14,7 @@ class MyWindow(QMainWindow, form_class) :
         self.kiwoom = Kiwoom()
         self.kiwoom.Comm_Connect()
         self.kiwoom.Get_LoginInfo()
+        self.kiwoom.Make_StrDate()
         
         # 접속정보
         self.Print_TextBrowser()
@@ -28,8 +29,13 @@ class MyWindow(QMainWindow, form_class) :
 
         # 실시간 조회 이벤트 설정
         self.timer2 = QTimer(self)
-        self.timer2.start(1000*10)
+        self.timer2.start(1000*5)
         self.timer2.timeout.connect(self.Handle_Timeout2)
+
+        # 보유주식 실시간 상승/하강률(%) 추적
+        self.timer3 = QTimer(self)
+        self.timer3.start(1000*5)
+        self.timer3.timeout.connect(self.Handle_Timeout3)
 
     def Print_TextBrowser(self) :
         self.textBrowser.append("계좌개수 : " + self.kiwoom.accountCnt)
@@ -101,6 +107,20 @@ class MyWindow(QMainWindow, form_class) :
                 self.tableWidget_2.setItem(i, j-1, item)
         self.tableWidget_2.resizeRowsToContents()
 
+    def Handle_Timeout3(self) :
+        if self.checkBox_2.isChecked() :
+            self.textBrowser_2.clear()
+            for i in range(len(self.kiwoom.opw00018['buyStockData'])) :     
+                code = str(self.kiwoom.opw00018['buyStockData'][i][0]).replace("A", "")
+                #self.kiwoom.Get_Opt10081(code, kiwoom.yesterday, STOCK_DATA_ALL)
+                self.kiwoom.Get_Opt10081(code, self.kiwoom.today, STOCK_DATA_ONLY)
+                gap = self.kiwoom.Calc_UpDownRateToday(i)
+                #self.kiwoom.Print_Opt10081(i)
+                self.kiwoom.Clear_Opt10081()
+                self.Print_TextBrowser2(i, gap)
+
+    def Print_TextBrowser2(self, idx, gap) :
+        self.textBrowser_2.append(">> " + str(self.kiwoom.opw00018['buyStockData'][idx][1]) + " 상승/하강률(%) : " + str(gap))
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv)

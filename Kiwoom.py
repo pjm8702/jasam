@@ -10,6 +10,8 @@ from PyQt5.QtCore import *
 TQ_REQ_TIME_INTERVAL = 0.2
 MARKET_KOSPI = 0
 MARKET_KOSDAQ = 10
+STOCK_DATA_ALL = 0
+STOCK_DATA_ONLY = 1
 
 
 class Kiwoom(QAxWidget) :
@@ -48,13 +50,14 @@ class Kiwoom(QAxWidget) :
             formatData = format(int(stripData))
         
         if data.startswith('-') :
-            foramtData = '-' + formatData
+            formatData = '-' + formatData
         
         return formatData
     
     @staticmethod
     def change_format2(data) :
-        stripData = data.lstrip('0')
+        stripData = data.lstrip('-0')
+
         if stripData == '' :
             stripData = 0
 
@@ -62,7 +65,7 @@ class Kiwoom(QAxWidget) :
             stripData = '0' + stripData
         
         if data.startswith('-') :
-            foramtData = '-' + stripData
+            stripData = '-' + stripData
         
         return stripData
     
@@ -257,16 +260,16 @@ class Kiwoom(QAxWidget) :
         tmpDf.to_csv("MyStockInfo.csv", index=False, encoding="UTF-8")
         print(">> MyStockInfo.csv is made")
     
-    def Get_Opt10081(self, stockCode, date) :
-        self._set_input_value("종목코드", stockCode)
+    def Get_Opt10081(self, code, date, type) :
+        self._set_input_value("종목코드", code)
         self._set_input_value("기준일자", date)
         self._set_input_value("수정주가구분", 1)
         self._set_input_value("조회구분", "1")
         self._comm_rq_data("주식일봉차트조회요청", "opt10081", 0, "1002")
 
-        while self.remained_data == True :
+        while self.remained_data == True and type == STOCK_DATA_ALL :
             time.sleep(TQ_REQ_TIME_INTERVAL)
-            self._set_input_value("종목코드", stockCode)
+            self._set_input_value("종목코드", code)
             self._set_input_value("기준일자", date)
             self._set_input_value("수정주가구분", 1)
             self._set_input_value("조회구분", "1")
@@ -288,6 +291,12 @@ class Kiwoom(QAxWidget) :
             self.opt10081['low'].append(low)
             self.opt10081['close'].append(close)
             self.opt10081['volume'].append(volume)
+
+    def Calc_UpDownRateToday(self, idx) :
+        gap = ((int(self.opt10081['close'][0]) - int(self.opt10081['close'][1])) / int(self.opt10081['close'][1])) * 100.0
+        gap = round(gap, 2)
+        print(">> " + str(self.opw00018['buyStockData'][idx][1]) + " 상승/하강률(%) : " + str(gap))
+        return gap
 
     def Clear_Opt10081(self) :
         self.opt10081['date'].clear()
@@ -324,9 +333,11 @@ if __name__ == "__main__" :
     kiwoom.Make_StrDate()
     for i in range(len(kiwoom.opw00018['buyStockData'])) :     
         code = str(kiwoom.opw00018['buyStockData'][i][0]).replace("A", "")
-        kiwoom.Get_Opt10081(code, kiwoom.yesterday)
+        #kiwoom.Get_Opt10081(code, kiwoom.yesterday, STOCK_DATA_ALL)
+        kiwoom.Get_Opt10081(code, kiwoom.today, STOCK_DATA_ONLY)
+        kiwoom.Calc_UpDownRateToday(i)
         kiwoom.Print_Opt10081(i)
         kiwoom.Clear_Opt10081()
 
-    # 총평가손익금액, 평가손익 정보 마이너스값이 안나옴
-    # 보유주식정보로 만들어낼 정보와 이론? 카톡으로 메시지 보내는 기능 구현 필요
+    # 상승/하강률 정보 기반 3%, 5%, 7%, 10%, 15%, 20%, 25%, 29% 도달 체크(몇 분 단위로 실시간 체크할 지)
+    # 카톡 메시지 송신 기능 구현
