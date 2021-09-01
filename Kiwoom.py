@@ -7,12 +7,6 @@ from PyQt5.QtWidgets import *
 from PyQt5.QAxContainer import *
 from PyQt5.QtCore import *
 
-TQ_REQ_TIME_INTERVAL = 0.2
-MARKET_KOSPI = 0
-MARKET_KOSDAQ = 10
-STOCK_DATA_ALL = 0
-STOCK_DATA_ONLY = 1
-
 
 class Kiwoom(QAxWidget) :
     # Constructor
@@ -20,6 +14,12 @@ class Kiwoom(QAxWidget) :
         super().__init__()
         self._create_kiwoom_instance()
         self._set_signal_slots()
+
+        self.TQ_REQ_TIME_INTERVAL = 0.2 # 요청 주기
+        self.STOCK_DATA_ALL = 0 # 전체 데이터 요청
+        self.STOCK_DATA_ONLY = 1    # 1회 데이터 요청
+        self.MARKET_KOSPI = 0   # 코스피
+        self.MARKET_KOSDAQ = 10 # 코스닥
 
         self.passwd = ''  # 비밀번호
         self.accountCnt = ''  # 계좌개수
@@ -30,13 +30,16 @@ class Kiwoom(QAxWidget) :
         self.firewallSet = ''  # 방화벽설정
         self.marketKospi = ''  # KOSPI 종목코드/이름 정보
         self.marketKosdaq = '' # KOSDAQ 종목코드/이름 정보
-        self.opw00001 = []  # 예수금, D+2추정에수금
+        self.opw00001 = []  # 예수금
         self.today = ''
         self.yesterday = ''
         # accountData : 총매입금액, 총평가금액, 총평가손익금액, 총수익률, 추정자산
-        # buyStockData : 종목코드, 종목명, 평가손익, 수익률, 매입가, 보유수량, 매매가능수량, 현재가
+        # buyStockData : 종목코드, 종목명, 평가손익, 수익률, 매입가, 보유수량, 매매가능수량, 현재가 
         self.opw00018 = {'accountData' : [], 'buyStockData' : []}
-        self.opt10081 = {'date' : [], 'open' : [], 'high' : [], 'low' : [], 'close' : [], 'volume' : []}    # 일자, 시가, 고가, 저가, 현재가, 거래량
+        self.opt10081 = {'date' : [], 'open' : [], 'high' : [], 'low' : [], 'close' : [], 'volume' : []}    # 일자, 시가, 고가, 저가, 현a재가, 거래량
+        # accountData : 총매수금액, 총매도금액, 실현손익, 매매수수료, 매매세금
+        # dateData : 일자, 매수금액, 매도금액, 당일매도손익, 당일매매수수료, 당일매매세금
+        self.opt10074 = {'accountData' : [], 'dateData' : []}
 
     @staticmethod
     def change_format1(data) :
@@ -136,22 +139,23 @@ class Kiwoom(QAxWidget) :
         self.keybSecurity = self.dynamicCall("GetLoginInfo(QString)", "KEY_BSECGB")
         self.firewallSet = self.dynamicCall("GetLoginInfo(QString)", "FIREW_SECGB")
 
-        print(">> 계좌개수 : " + self.accountCnt)
-        print(">> 계좌번호 : " + self.accNo[0])
-        print(">> 사용자ID : " + self.userId)
-        print(">> 사용자이름 : " + self.userName)
+        if __name__ == "__main__" :
+            print(">> 계좌개수 : " + self.accountCnt)
+            print(">> 계좌번호 : " + self.accNo[0])
+            print(">> 사용자ID : " + self.userId)
+            print(">> 사용자이름 : " + self.userName)
 
-        if self.keybSecurity == '0' :
-            print(">> 키보드보안 : 정상")
-        else :
-            print(">> 키보드보안 : 해지")
+            if self.keybSecurity == '0' :
+                print(">> 키보드보안 : 정상")
+            else :
+                print(">> 키보드보안 : 해지")
 
-        if self.firewallSet == '0' :
-            print(">> 방화벽설정 : 미설정")
-        elif self.firewallSet == '1' :
-            print(">> 방화벽설정 : 설정")
-        else :
-            print(">> 방화벽설정 : 해지")
+            if self.firewallSet == '0' :
+                print(">> 방화벽설정 : 미설정")
+            elif self.firewallSet == '1' :
+                print(">> 방화벽설정 : 설정")
+            else :
+                print(">> 방화벽설정 : 해지")
     
     # 전체 종목 코드, 종목명 리스트 생성
     def Get_AllCodeName(self, market) :
@@ -161,14 +165,17 @@ class Kiwoom(QAxWidget) :
         for code in codeList :
             name = self.dynamicCall("GetMasterCodeName(QString)", code)
             nameList.append(name)
+        
         if market == 0 :
-            self.marketKospi = pd.DataFrame({'종목코드' : codeList, '종목명' : nameList})
-            self.marketKospi.to_csv("Market_Kospi.csv", index=False, encoding="UTF-8")
-            print(">> Market_Kospi.csv is made")
+            self.marketKospi = pd.DataFrame({'code' : codeList, 'name' : nameList})
+            if __name__ == "__main__" :
+                self.marketKospi.to_csv("Market_Kospi.csv", index=False, encoding="UTF-8")
+                print(">> Market_Kospi.csv is made")
         else :
-            self.marketKosdaq = pd.DataFrame({'종목코드' : codeList, '종목명' : nameList})
-            self.marketKosdaq.to_csv("Market_Kosdaq.csv", index=False, encoding="UTF-8")
-            print(">> Market_Kosdaq.csv is made")
+            self.marketKosdaq = pd.DataFrame({'code' : codeList, 'name' : nameList})
+            if __name__ == "__main__" :
+                self.marketKosdaq.to_csv("Market_Kosdaq.csv", index=False, encoding="UTF-8")
+                print(">> Market_Kosdaq.csv is made")
 
     # Opw00001 예수금상세현황요청
     def Get_Opw00001(self) :
@@ -182,10 +189,9 @@ class Kiwoom(QAxWidget) :
     def Handle_Opw00001(self, rqName, trCode) :
         tmp = self._get_comm_data(trCode, rqName, 0, "예수금")
         self.opw00001.append(Kiwoom.change_format1(tmp))
-        tmp = self._get_comm_data(trCode, rqName, 0, "d+2추정예수금")
-        self.opw00001.append(Kiwoom.change_format1(tmp))
-        print(f">> 예수금 : {self.opw00001[0]}")
-        print(f">> D+2 추정예수금 : {self.opw00001[1]}")
+        
+        if __name__ == "__main__" :
+            print(f">> 예수금 : {self.opw00001[0]}")
         
     # Opw00018 계좌평가잔고내역요청
     def Get_Opw00018(self) :
@@ -196,7 +202,7 @@ class Kiwoom(QAxWidget) :
         self._comm_rq_data("계좌평가잔고내역요청", "opw00018", 0, "1001")
         
         while self.remained_data == True :
-            time.sleep(TQ_REQ_TIME_INTERVAL)
+            time.sleep(self.TQ_REQ_TIME_INTERVAL)
             self._set_input_value("계좌번호", self.accNo[0])
             self._set_input_value("비밀번호", str(self.passwd))
             self._set_input_value("비밀번호입력매체구분", "00")
@@ -228,14 +234,15 @@ class Kiwoom(QAxWidget) :
         estTotDeposit = Kiwoom.change_format1(tmp)
         self.opw00018['accountData'].append(estTotDeposit)
 
-        print(">> 계좌정보 (총매입금액, 총평가금액, 총평가손익금액, 총수익률(%), 추정예착자산)")
-        print(self.opw00018['accountData'])
-        tmpDf = pd.DataFrame({'예수금' : [self.opw00001[0]], '예수금(D+2)' : [self.opw00001[1]], '총매입금액' : [self.opw00018['accountData'][0]], '총평가금액' : [self.opw00018['accountData'][1]], '총평가손익금액' : [self.opw00018['accountData'][2]], '총수익률' :[self.opw00018['accountData'][3]], '추정예탁자산' : [self.opw00018['accountData'][4]]})
-        tmpDf.to_csv("AccountInfo.csv", index=False, encoding="UTF-8")
-        print(">> AccountInfo.csv is made")
-
+        if __name__ == "__main__" :
+            print(">> 계좌정보 (총매입금액, 총평가금액, 총평가손익금액, 총수익률(%), 추정예착자산)")
+            print(self.opw00018['accountData'])
+            tmpDf = pd.DataFrame({'예수금' : [self.opw00001[0]], '총매입금액' : [self.opw00018['accountData'][0]], '총평가금액' : [self.opw00018['accountData'][1]], '총평가손익금액' : [self.opw00018['accountData'][2]], '총수익률' :[self.opw00018['accountData'][3]], '추정예탁자산' : [self.opw00018['accountData'][4]]})
+            tmpDf.to_csv("AccountInfo.csv", index=False, encoding="UTF-8")
+            print(">> AccountInfo.csv is made")
+        #종목번호 | 종목명 | 매입가 | 평가손익 | 수익률(%) | 보유수량 | 매매가능수량 | 현재가
         cnt = self._get_repeat_cnt(trCode, rqName)
-        tmpDf = pd.DataFrame({'종목번호' : [], '종목명' : [], '평가손익' : [], '수익률(%)' : [], '매입가' : [], '보유수량' : [], '매매가능수량' : [], '현재가' : []})
+        tmpDf = pd.DataFrame({'종목번호' : [], '종목명' : [], '매입가' : [], '평가손익' : [], '수익률(%)' : [], '보유수량' : [], '매매가능수량' : [], '현재가' : []})
         for i in range(cnt) :
             no = self._get_comm_data(trCode, rqName, i, "종목번호")
             name = self._get_comm_data(trCode, rqName, i, "종목명")
@@ -254,11 +261,13 @@ class Kiwoom(QAxWidget) :
             curPrice = Kiwoom.change_format1(tmp)
             
             self.opw00018['buyStockData'].append([no, name, gain, rate, avgPrice, count, sellCount, curPrice])
-            tmpDf = tmpDf.append({'종목번호' : no, '종목명' : name, '평가손익' : gain, '수익률(%)' : rate, '매입가' : avgPrice, '보유수량' : count, '매매가능수량' : sellCount, '현재가' : curPrice}, ignore_index=True)
-        print(">> 보유주식정보 (종목번호, 종목명, 평가손익, 수익률(%), 매입가, 보유수량, 매매가능수량, 현재가)")
-        print(self.opw00018['buyStockData'])
-        tmpDf.to_csv("MyStockInfo.csv", index=False, encoding="UTF-8")
-        print(">> MyStockInfo.csv is made")
+            tmpDf = tmpDf.append({'종목번호' : no, '종목명' : name, '매입가' : avgPrice, '평가손익' : gain, '수익률(%)' : rate, '보유수량' : count, '매매가능수량' : sellCount, '현재가' : curPrice}, ignore_index=True)
+        
+        if __name__ == "__main__" :
+            print(">> 보유주식정보 (종목번호, 종목명, 평가손익, 수익률(%), 매입가, 보유수량, 매매가능수량, 현재가)")
+            print(self.opw00018['buyStockData'])
+            tmpDf.to_csv("MyStockInfo.csv", index=False, encoding="UTF-8")
+            print(">> MyStockInfo.csv is made")
     
     def Get_Opt10081(self, code, date, type) :
         self._set_input_value("종목코드", code)
@@ -267,8 +276,8 @@ class Kiwoom(QAxWidget) :
         self._set_input_value("조회구분", "1")
         self._comm_rq_data("주식일봉차트조회요청", "opt10081", 0, "1002")
 
-        while self.remained_data == True and type == STOCK_DATA_ALL :
-            time.sleep(TQ_REQ_TIME_INTERVAL)
+        while self.remained_data == True and type == self.STOCK_DATA_ALL :
+            time.sleep(self.TQ_REQ_TIME_INTERVAL)
             self._set_input_value("종목코드", code)
             self._set_input_value("기준일자", date)
             self._set_input_value("수정주가구분", 1)
@@ -295,7 +304,10 @@ class Kiwoom(QAxWidget) :
     def Calc_UpDownRateToday(self, idx) :
         gap = ((int(self.opt10081['close'][0]) - int(self.opt10081['close'][1])) / int(self.opt10081['close'][1])) * 100.0
         gap = round(gap, 2)
-        print(">> " + str(self.opw00018['buyStockData'][idx][1]) + " 상승/하강률(%) : " + str(gap))
+
+        if __name__ == "__main__" :
+            print(">> " + str(self.opw00018['buyStockData'][idx][1]) + " 상승/하강률(%) : " + str(gap))
+        
         return gap
 
     def Clear_Opt10081(self) :
@@ -325,19 +337,21 @@ if __name__ == "__main__" :
 
     kiwoom.Comm_Connect()
     kiwoom.Get_LoginInfo()
-    kiwoom.Get_AllCodeName(MARKET_KOSPI)
-    kiwoom.Get_AllCodeName(MARKET_KOSDAQ)
+    kiwoom.Get_AllCodeName(kiwoom.MARKET_KOSPI)
+    kiwoom.Get_AllCodeName(kiwoom.MARKET_KOSDAQ)
     kiwoom.Get_Opw00001()
     kiwoom.Get_Opw00018()
 
     kiwoom.Make_StrDate()
     for i in range(len(kiwoom.opw00018['buyStockData'])) :     
         code = str(kiwoom.opw00018['buyStockData'][i][0]).replace("A", "")
-        #kiwoom.Get_Opt10081(code, kiwoom.yesterday, STOCK_DATA_ALL)
-        kiwoom.Get_Opt10081(code, kiwoom.today, STOCK_DATA_ONLY)
+        #kiwoom.Get_Opt10081(code, kiwoom.yesterday, kiwoom.STOCK_DATA_ALL)
+        kiwoom.Get_Opt10081(code, kiwoom.today, kiwoom.STOCK_DATA_ONLY)
         kiwoom.Calc_UpDownRateToday(i)
         kiwoom.Print_Opt10081(i)
         kiwoom.Clear_Opt10081()
 
+    # MyTrader 다이얼로그로 계좌비밀번호 입력 구현
+    # 실현손익 기능 추가
     # 상승/하강률 정보 기반 3%, 5%, 7%, 10%, 15%, 20%, 25%, 29% 도달 체크(몇 분 단위로 실시간 체크할 지)
     # 카톡 메시지 송신 기능 구현
