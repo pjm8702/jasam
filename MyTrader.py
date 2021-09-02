@@ -4,8 +4,9 @@ from PyQt5.QtCore import *
 from PyQt5 import uic
 from Kiwoom import *
 
-TIMER2_INTERVAL = 1000*60
-TIMER3_INTERVAL = 1000*300
+TIMER2_INTERVAL = 1000*300
+TIMER3_INTERVAL = 1000*60
+DATE_MAX_LENGTH = 8
 
 # Qt Designer UI 파일
 form_class = uic.loadUiType("MyTrader.ui")[0]
@@ -14,6 +15,9 @@ class MyWindow(QMainWindow, form_class) :
     def __init__(self) :
         super().__init__()
         self.setupUi(self)
+
+        self.lineEditStartDate = ''
+        self.lineEdit_2EndDate = ''
 
         self.kiwoom = Kiwoom()
         self.kiwoom.Comm_Connect()  # 키움 접속
@@ -55,6 +59,12 @@ class MyWindow(QMainWindow, form_class) :
 
         # 실현손익 조회 버튼 이벤트 설정
         self.pushButton_4.clicked.connect(self.Handle_pushButton4)
+
+        # 실현손익 조회 시작/종료 날짜 설정
+        self.lineEdit.setText("20160101")
+        self.lineEdit.textChanged.connect(self.Handle_lineEdit1n2)
+        self.lineEdit_2.setText(self.kiwoom.today)
+        self.lineEdit_2.textChanged.connect(self.Handle_lineEdit1n2)
 
     # 계좌비밀번호 입력 다이얼로그 출력
     def Print_PasswdDialog(self) :
@@ -152,7 +162,10 @@ class MyWindow(QMainWindow, form_class) :
 
     # 보유종목 상승/하강률 실시간 조회 이벤트 timeout
     def Handle_Timeout3(self) :
-        if self.checkBox_2.isChecked() :
+        curTime = QTime.currentTime()
+        curTime = int(curTime.toString("hhmmss"))
+        
+        if self.checkBox_2.isChecked() and curTime >= 90000 and curTime <= 153000 :
             self.Print_TextBrowser_2()
 
     # 보유종목 상승/하강률 실시간 조회 버튼 클릭 이벤트 처리
@@ -212,26 +225,32 @@ class MyWindow(QMainWindow, form_class) :
 
     # 실현손익 조회 버튼 클릭 이벤트 처리
     def Handle_pushButton4(self) :
-        self.kiwoom.Get_Opt10074("20160101", self.kiwoom.today)
-        self.tableWidget_4.setRowCount(1)
-        self.tableWidget_4.setColumnCount(len(self.kiwoom.opt10074['single']))
-        for i in range(len(self.kiwoom.opt10074['single'])) : 
-            item = QTableWidgetItem(self.kiwoom.opt10074['single'][i])
-            item.setTextAlignment(Qt.AlignVCenter | Qt.AlignRight)
-            self.tableWidget_4.setItem(0, i, item)
-        self.tableWidget_4.resizeRowsToContents()
-        
-        cntCol = len(self.kiwoom.opt10074['multi'])
-        cntRow = len(self.kiwoom.opt10074['multi'][0])
-        self.tableWidget_5.setRowCount(cntCol)
-        self.tableWidget_5.setColumnCount(cntRow)
-        for i in range(cntCol) :
-            row = self.kiwoom.opt10074['multi'][i]
-            for j in range(cntRow) :
-                item = QTableWidgetItem(row[j])
+        if int(self.lineEdit_2EndDate) - int(self.lineEditStartDate) >= 0 :
+            self.kiwoom.Get_Opt10074(self.lineEditStartDate, self.lineEdit_2EndDate)
+            self.tableWidget_4.setRowCount(1)
+            self.tableWidget_4.setColumnCount(len(self.kiwoom.opt10074['single']))
+            for i in range(len(self.kiwoom.opt10074['single'])) : 
+                item = QTableWidgetItem(self.kiwoom.opt10074['single'][i])
                 item.setTextAlignment(Qt.AlignVCenter | Qt.AlignRight)
-                self.tableWidget_5.setItem(i, j, item)
-        self.tableWidget_5.resizeRowsToContents()
+                self.tableWidget_4.setItem(0, i, item)
+            self.tableWidget_4.resizeRowsToContents()
+            
+            cntCol = len(self.kiwoom.opt10074['multi'])
+            cntRow = len(self.kiwoom.opt10074['multi'][0])
+            self.tableWidget_5.setRowCount(cntCol)
+            self.tableWidget_5.setColumnCount(cntRow)
+            for i in range(cntCol) :
+                row = self.kiwoom.opt10074['multi'][i]
+                for j in range(cntRow) :
+                    item = QTableWidgetItem(row[j])
+                    item.setTextAlignment(Qt.AlignVCenter | Qt.AlignRight)
+                    self.tableWidget_5.setItem(i, j, item)
+            self.tableWidget_5.resizeRowsToContents()
+
+    # 실현손익 조회를 위한 날짜 처리
+    def Handle_lineEdit1n2(self) :
+        self.lineEditStartDate = self.lineEdit.text()
+        self.lineEdit_2EndDate = self.lineEdit_2.text()
 
 
 if __name__ == "__main__" :
