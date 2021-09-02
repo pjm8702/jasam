@@ -50,6 +50,15 @@ class MyWindow(QMainWindow, form_class) :
         self.radioButton.clicked.connect(self.Handle_radioButton1n2)
         self.radioButton_2.clicked.connect(self.Handle_radioButton1n2)
 
+    # 계좌비밀번호 입력 다이얼로그 출력
+    def Print_PasswdDialog(self) :
+        if self.kiwoom.passwd == None :
+            passwd, ok = QInputDialog.getText(self, "비밀번호 입력", "계좌 비밀번호를 입력하세요.")
+            if ok :
+                self.kiwoom.passwd = passwd
+            else :
+                self.kiwoom.passwd = None
+
     # 접속정보 출력
     def Print_TextBrowser(self) :
         self.textBrowser.append("계좌개수 : " + self.kiwoom.accountCnt)
@@ -86,10 +95,12 @@ class MyWindow(QMainWindow, form_class) :
     # 잔고 및 보유종목현황 실시간 조회 이벤트 Timeout
     def Handle_Timeout2(self) :
         if self.checkBox.isChecked() :
+            self.Print_PasswdDialog()
             self.Print_TableWidget1n2()
 
     # 잔고 및 보유종목현황 실시간 조회 버튼 이벤트 처리
     def Handle_pushButton(self) :
+        self.Print_PasswdDialog()
         self.Print_TableWidget1n2()
 
     # 잔고 및 보유종목현황 출력
@@ -111,7 +122,7 @@ class MyWindow(QMainWindow, form_class) :
 
         # 총매입금액 | 총평가금액 | 총평가손익금액 | 총수익률(%) | 추정자산
         for i in range(1, 6) :
-            item = QTableWidgetItem(self.kiwoom.opw00018['accountData'][i - 1])
+            item = QTableWidgetItem(self.kiwoom.opw00018['single'][i - 1])
             item.setTextAlignment(Qt.AlignVCenter | Qt.AlignRight)
             self.tableWidget.setItem(0, i, item)
         self.tableWidget.resizeRowsToContents()
@@ -120,11 +131,11 @@ class MyWindow(QMainWindow, form_class) :
     # 보유종목현황 출력
     def Print_tableWidget2(self) :
         # 종목코드 | 종목명 | 매입가 | 평가손익 | 수익률(%) | 보유수량 | 매매가능수량 | 현재가
-        cnt = len(self.kiwoom.opw00018['buyStockData'])
+        cnt = len(self.kiwoom.opw00018['multi'])
         self.tableWidget_2.setRowCount(cnt)
         self.tableWidget_2.setColumnCount(8)
         for i in range(cnt) :
-            row = self.kiwoom.opw00018['buyStockData'][i]
+            row = self.kiwoom.opw00018['multi'][i]
             for j in range(0, len(row)) :
                 item = QTableWidgetItem(row[j])
                 item.setTextAlignment(Qt.AlignVCenter | Qt.AlignRight)
@@ -143,15 +154,17 @@ class MyWindow(QMainWindow, form_class) :
 
     # 보유종목 상승/하강률 출력
     def Print_TextBrowser_2(self) :
+        self.kiwoom.Get_Opw00001()
+        self.kiwoom.Get_Opw00018()
         self.textBrowser_2.clear()
-        for i in range(len(self.kiwoom.opw00018['buyStockData'])) :     
-            code = str(self.kiwoom.opw00018['buyStockData'][i][0]).replace("A", "")
+        for i in range(len(self.kiwoom.opw00018['multi'])) :     
+            code = str(self.kiwoom.opw00018['multi'][i][0]).replace("A", "")
             #self.kiwoom.Get_Opt10081(code, kiwoom.yesterday, self.kiwoom.STOCK_DATA_ALL)
             self.kiwoom.Get_Opt10081(code, self.kiwoom.today, self.kiwoom.STOCK_DATA_ONLY)
             gap = self.kiwoom.Calc_UpDownRateToday(i)
             #self.kiwoom.Print_Opt10081(i)
             self.kiwoom.Clear_Opt10081()
-            self.textBrowser_2.append(">> " + str(self.kiwoom.opw00018['buyStockData'][i][1]) + " 상승/하강률(%) : " + str(gap))      
+            self.textBrowser_2.append(">> " + str(self.kiwoom.opw00018['multi'][i][1]) + " 상승/하강률(%) : " + str(gap))      
 
     # 종목 조회 버튼 클릭 이벤트 처리
     def Handle_pushButton3(self) :
@@ -189,6 +202,7 @@ class MyWindow(QMainWindow, form_class) :
             self.tableWidget_3.setItem(i, 1, item2)
         self.tableWidget_3.resizeRowsToContents()
         #self.tableWidget_3.resizeColumnsToContents()
+
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv)
