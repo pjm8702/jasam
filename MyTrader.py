@@ -4,6 +4,9 @@ from PyQt5.QtCore import *
 from PyQt5 import uic
 from Kiwoom import *
 
+TIMER2_INTERVAL = 1000*60
+TIMER3_INTERVAL = 1000*300
+
 # Qt Designer UI 파일
 form_class = uic.loadUiType("MyTrader.ui")[0]
 
@@ -30,7 +33,7 @@ class MyWindow(QMainWindow, form_class) :
 
         # 잔고 및 보유종목현황 실시간 조회 이벤트 설정
         self.timer2 = QTimer(self)
-        self.timer2.start(1000*5)
+        self.timer2.start(TIMER2_INTERVAL)
         self.timer2.timeout.connect(self.Handle_Timeout2)
 
         # 보유종목 상승/하강률 조회 버튼 이벤트 설정
@@ -38,7 +41,7 @@ class MyWindow(QMainWindow, form_class) :
 
         # 보유종목 실시간 상승/하강률 조회 클릭 이벤트 설정
         self.timer3 = QTimer(self)
-        self.timer3.start(1000*5)
+        self.timer3.start(TIMER3_INTERVAL)
         self.timer3.timeout.connect(self.Handle_Timeout3)
 
         # 종목 조회 버튼 이벤트 설정
@@ -49,6 +52,9 @@ class MyWindow(QMainWindow, form_class) :
         self.market = self.kiwoom.MARKET_KOSPI
         self.radioButton.clicked.connect(self.Handle_radioButton1n2)
         self.radioButton_2.clicked.connect(self.Handle_radioButton1n2)
+
+        # 실현손익 조회 버튼 이벤트 설정
+        self.pushButton_4.clicked.connect(self.Handle_pushButton4)
 
     # 계좌비밀번호 입력 다이얼로그 출력
     def Print_PasswdDialog(self) :
@@ -131,12 +137,13 @@ class MyWindow(QMainWindow, form_class) :
     # 보유종목현황 출력
     def Print_tableWidget2(self) :
         # 종목코드 | 종목명 | 매입가 | 평가손익 | 수익률(%) | 보유수량 | 매매가능수량 | 현재가
-        cnt = len(self.kiwoom.opw00018['multi'])
-        self.tableWidget_2.setRowCount(cnt)
-        self.tableWidget_2.setColumnCount(8)
-        for i in range(cnt) :
+        cntRow = len(self.kiwoom.opw00018['multi'])
+        cntCol = len(self.kiwoom.opw00018['multi'][0])
+        self.tableWidget_2.setRowCount(cntRow)
+        self.tableWidget_2.setColumnCount(cntCol)
+        for i in range(cntRow) :
             row = self.kiwoom.opw00018['multi'][i]
-            for j in range(0, len(row)) :
+            for j in range(cntCol) :
                 item = QTableWidgetItem(row[j])
                 item.setTextAlignment(Qt.AlignVCenter | Qt.AlignRight)
                 self.tableWidget_2.setItem(i, j, item)
@@ -159,8 +166,8 @@ class MyWindow(QMainWindow, form_class) :
         self.textBrowser_2.clear()
         for i in range(len(self.kiwoom.opw00018['multi'])) :     
             code = str(self.kiwoom.opw00018['multi'][i][0]).replace("A", "")
-            #self.kiwoom.Get_Opt10081(code, kiwoom.yesterday, self.kiwoom.STOCK_DATA_ALL)
-            self.kiwoom.Get_Opt10081(code, self.kiwoom.today, self.kiwoom.STOCK_DATA_ONLY)
+            self.kiwoom.Get_Opt10081(code, self.kiwoom.today)
+            self.kiwoom.tr_event_loop.exit()
             gap = self.kiwoom.Calc_UpDownRateToday(i)
             #self.kiwoom.Print_Opt10081(i)
             self.kiwoom.Clear_Opt10081()
@@ -186,7 +193,7 @@ class MyWindow(QMainWindow, form_class) :
             cnt = len(self.kiwoom.marketKosdaq['code'])
                 
         self.tableWidget_3.setRowCount(cnt)
-        self.tableWidget_3.setColumnCount(2)
+        self.tableWidget_3.setColumnCount(self.kiwoom.marketKospi.shpae[1])
         for i in range(cnt) :
             if market == self.kiwoom.MARKET_KOSPI :
                 code = self.kiwoom.marketKospi['code'][i]
@@ -202,6 +209,29 @@ class MyWindow(QMainWindow, form_class) :
             self.tableWidget_3.setItem(i, 1, item2)
         self.tableWidget_3.resizeRowsToContents()
         #self.tableWidget_3.resizeColumnsToContents()
+
+    # 실현손익 조회 버튼 클릭 이벤트 처리
+    def Handle_pushButton4(self) :
+        self.kiwoom.Get_Opt10074("20160101", self.kiwoom.today)
+        self.tableWidget_4.setRowCount(1)
+        self.tableWidget_4.setColumnCount(len(self.kiwoom.opt10074['single']))
+        for i in range(len(self.kiwoom.opt10074['single'])) : 
+            item = QTableWidgetItem(self.kiwoom.opt10074['single'][i])
+            item.setTextAlignment(Qt.AlignVCenter | Qt.AlignRight)
+            self.tableWidget_4.setItem(0, i, item)
+        self.tableWidget_4.resizeRowsToContents()
+        
+        cntCol = len(self.kiwoom.opt10074['multi'])
+        cntRow = len(self.kiwoom.opt10074['multi'][0])
+        self.tableWidget_5.setRowCount(cntCol)
+        self.tableWidget_5.setColumnCount(cntRow)
+        for i in range(cntCol) :
+            row = self.kiwoom.opt10074['multi'][i]
+            for j in range(cntRow) :
+                item = QTableWidgetItem(row[j])
+                item.setTextAlignment(Qt.AlignVCenter | Qt.AlignRight)
+                self.tableWidget_5.setItem(i, j, item)
+        self.tableWidget_5.resizeRowsToContents()
 
 
 if __name__ == "__main__" :
