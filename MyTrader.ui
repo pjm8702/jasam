@@ -184,7 +184,7 @@
      </rect>
     </property>
     <property name="title">
-     <string>보유종목 상승/하강률</string>
+     <string>보유종목 등락</string>
     </property>
     <widget class="QCheckBox" name="checkBox_2">
      <property name="geometry">
@@ -441,6 +441,32 @@
       </rect>
      </property>
     </widget>
+   </widget>
+   <widget class="QPushButton" name="pushButton_5">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>600</y>
+      <width>181</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>보유종목 일봉차트 자료 조회</string>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="progressBar">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>650</y>
+      <width>161</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
