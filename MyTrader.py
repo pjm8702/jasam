@@ -186,8 +186,13 @@ class MyWindow(QMainWindow, form_class) :
         for i in range(len(self.kiwoom.opw00018['multi'])) :     
             code = str(self.kiwoom.opw00018['multi'][i][0])
             name = str(self.kiwoom.opw00018['multi'][i][1])
-            self.kiwoom.Get_Opt10001(code)
-            self.textBrowser_2.append(i + ". " + name + "(%) : " + self.kiwoom.opt10001[i][10])
+            self.kiwoom.Get_Opt10081(code, self.kiwoom.today, self.kiwoom.MULTI_ONCE)
+            self.kiwoom.Print_Opt10081(i)
+            gap = self.kiwoom.Calc_UpDownRateToday(i)
+            self.kiwoom.Clear_Opt10081()
+
+            self.textBrowser_2.append(str(i) + ". " + name + "(%) : " + str(gap))
+            Kakao.Send_KakaoMessage(name + " : " + str(gap) + "%")  # TODO 등락 계산 기반 특정 상승/하강 포착 후 카톡 메시지 송신하는 함수 구현!
 
     # 종목 조회 버튼 클릭 이벤트 처리
     def Handle_pushButton3(self) :
@@ -266,7 +271,7 @@ class MyWindow(QMainWindow, form_class) :
         upStep = self.progressBar.maximum() / len(self.kiwoom.opw00018['multi'])
         for i in range(len(self.kiwoom.opw00018['multi'])) :     
             code = self.kiwoom.opw00018['multi'][i][0]
-            self.kiwoom.Get_Opt10081(code, self.kiwoom.yesterday)
+            self.kiwoom.Get_Opt10081(code, self.kiwoom.today, self.kiwoom.MULTI_ALL)
             self.kiwoom.Print_Opt10081(i)
             self.kiwoom.Clear_Opt10081()
             bar = bar + upStep
