@@ -1,8 +1,8 @@
 import sys
 import time
-#import sqlite3
 import pandas as pd
 import datetime
+import Kakao
 from PyQt5.QtWidgets import *
 from PyQt5.QAxContainer import *
 from PyQt5.QtCore import *
@@ -21,16 +21,16 @@ class Kiwoom(QAxWidget) :
         self.SCREEN_NO = "1000"   # 스크린 번호
 
         self.passwd = None  # 비밀번호
-        self.accountCnt = ''  # 계좌개수
-        self.accNo = ''  # 계좌번호
-        self.userId = ''  # 사용자ID
-        self.userName = ''  # 사용자이름
-        self.keybSecurity = ''  # 키보드보안
-        self.firewallSet = ''  # 방화벽설정
-        self.marketKospi = ''  # KOSPI 종목코드/이름 정보
-        self.marketKosdaq = '' # KOSDAQ 종목코드/이름 정보
-        self.today = ''
-        self.yesterday = ''
+        self.accountCnt = None  # 계좌개수
+        self.accNo = None  # 계좌번호
+        self.userId = None  # 사용자ID
+        self.userName = None  # 사용자이름
+        self.keybSecurity = None  # 키보드보안
+        self.firewallSet = None  # 방화벽설정
+        self.marketKospi = None  # KOSPI 종목코드/이름 정보
+        self.marketKosdaq = None # KOSDAQ 종목코드/이름 정보
+        self.today = None
+        self.yesterday = None
         self.opw00001 = []  # 예수금
         # single : 총매입금액, 총평가금액, 총평가손익금액, 총수익률, 추정자산
         # multi : 종목코드, 종목명, 평가손익, 수익률, 매입가, 보유수량, 매매가능수량, 현재가 
@@ -80,6 +80,7 @@ class Kiwoom(QAxWidget) :
     def _set_signal_slots(self) :
         self.OnEventConnect.connect(self.Handle_Event_Connect)
         self.OnReceiveTrData.connect(self.Handle_Event_TrData)
+        self.OnReceiveMsg.connect(self.Handle_ReceiveMessage)
 
     # 키움 Rq 요청을 위한 입력값 설정
     def _set_input_value(self, id, value) :
@@ -123,15 +124,15 @@ class Kiwoom(QAxWidget) :
         else :
             self.remained_data = False
         
-        if rqName == '예수금상세현황요청' :
+        if rqName == 'opw00001_req' :
             self.Handle_Opw00001(rqName, trCode)
-        elif rqName == '계좌평가잔고내역요청' :
+        elif rqName == 'opw00018_req' :
             self.Handle_Opw00018(rqName, trCode)
-        elif rqName == '주식일봉차트조회요청' :
+        elif rqName == 'opt10081_req' :
             self.Handle_Opt10081(rqName, trCode)
-        elif rqName == '일자별실현손익요청' :
+        elif rqName == 'opt10074_req' :
             self.Handle_Opt10074(rqName, trCode)
-        elif rqName == '주식기본정보요청' :
+        elif rqName == 'opt10001_req' :
             self.Handle_Opt10001(rqName, trCode)
             
         try :
@@ -197,7 +198,8 @@ class Kiwoom(QAxWidget) :
         self._set_input_value("비밀번호", str(self.passwd))
         self._set_input_value("비밀번호입력매체구분", "00")
         self._set_input_value("조회구분", "2")
-        self._comm_rq_data("예수금상세현황요청", "opw00001", 0, self.SCREEN_NO)
+        self._comm_rq_data("opw00001_req", "opw00001", 0, self.SCREEN_NO)
+        time.sleep(self.TQ_REQ_TIME_INTERVAL)
 
     # Opw0001 예수금상세현황요청 Rq 데이터 이벤트 처리
     def Handle_Opw00001(self, rqName, trCode) :
@@ -213,7 +215,7 @@ class Kiwoom(QAxWidget) :
         self._set_input_value("비밀번호", str(self.passwd))
         self._set_input_value("비밀번호입력매체구분", "00")
         self._set_input_value("조회구분", "1")
-        self._comm_rq_data("계좌평가잔고내역요청", "opw00018", 0, self.SCREEN_NO)
+        self._comm_rq_data("opw00018_req", "opw00018", 0, self.SCREEN_NO)
         
         while self.remained_data == True :
             time.sleep(self.TQ_REQ_TIME_INTERVAL)
@@ -221,7 +223,7 @@ class Kiwoom(QAxWidget) :
             self._set_input_value("비밀번호", str(self.passwd))
             self._set_input_value("비밀번호입력매체구분", "00")
             self._set_input_value("조회구분", "1")
-            self._comm_rq_data("계좌평가잔고내역요청", "opw00018", 2, self.SCREEN_NO)
+            self._comm_rq_data("opw00018_req", "opw00018", 2, self.SCREEN_NO)
     
     # Opw00018 계좌평가잔고내역요청 Rq 데이터 이벤트 처리
     def Handle_Opw00018(self, rqName, trCode) :
@@ -254,7 +256,7 @@ class Kiwoom(QAxWidget) :
             tmpDf = pd.DataFrame({'예수금' : [self.opw00001[0]], '총매입금액' : [self.opw00018['single'][0]], '총평가금액' : [self.opw00018['single'][1]], '총평가손익금액' : [self.opw00018['single'][2]], '총수익률' :[self.opw00018['single'][3]], '추정예탁자산' : [self.opw00018['single'][4]]})
             tmpDf.to_csv("계좌정보.csv", index=False, encoding="UTF-8")
             print(">> 계좌정보.csv is made")
-
+        
         tmpDf = pd.DataFrame({'종목번호' : [], '종목명' : [], '매입가' : [], '평가손익' : [], '수익률(%)' : [], '보유수량' : [], '매매가능수량' : [], '현재가' : []})
         cnt = self._get_repeat_cnt(trCode, rqName)
         for i in range(cnt) :
@@ -290,7 +292,7 @@ class Kiwoom(QAxWidget) :
         self._set_input_value("기준일자", date)
         self._set_input_value("수정주가구분", 1)
         self._set_input_value("조회구분", "1")
-        self._comm_rq_data("주식일봉차트조회요청", "opt10081", 0, self.SCREEN_NO)
+        self._comm_rq_data("opt10081_req", "opt10081", 0, self.SCREEN_NO)
 
         while self.remained_data == True :
             time.sleep(self.TQ_REQ_TIME_INTERVAL)
@@ -298,7 +300,7 @@ class Kiwoom(QAxWidget) :
             self._set_input_value("기준일자", date)
             self._set_input_value("수정주가구분", 1)
             self._set_input_value("조회구분", "1")
-            self._comm_rq_data("주식일봉차트조회요청", "opt10081", 2, self.SCREEN_NO)
+            self._comm_rq_data("opt10081_req", "opt10081", 2, self.SCREEN_NO)
 
     # Opt10081 주식일봉차트조회요청 Rq 데이터 이벤트 처리
     def Handle_Opt10081(self, rqName, trCode) :
@@ -351,14 +353,14 @@ class Kiwoom(QAxWidget) :
         self._set_input_value("계좌번호", self.accNo[0])
         self._set_input_value("시작일자", startDate)
         self._set_input_value("종료일자", endDate)
-        self._comm_rq_data("일자별실현손익요청", "opt10074", 0, self.SCREEN_NO)
+        self._comm_rq_data("opt10074_req", "opt10074", 0, self.SCREEN_NO)
 
         while self.remained_data == True :
             time.sleep(self.TQ_REQ_TIME_INTERVAL)
             self._set_input_value("계좌번호", self.accNo[0])
             self._set_input_value("시작일자", startDate)
             self._set_input_value("종료일자", endDate)
-            self._comm_rq_data("일자별실현손익요청", "opt10074", 2, self.SCREEN_NO)
+            self._comm_rq_data("opt10074_req", "opt10074", 2, self.SCREEN_NO)
 
     # Opt10074 일자별실현손익요청 Rq 데이터 이벤트 처리
     def Handle_Opt10074(self, rqName, trCode) :
@@ -413,7 +415,7 @@ class Kiwoom(QAxWidget) :
     # Opt10001 주식기본정보요청
     def Get_Opt10001(self, code) :
         self._set_input_value("종목코드", code)
-        self._comm_rq_data("주식기본정보요청", "opt10001", 0, self.SCREEN_NO)
+        self._comm_rq_data("opt10001_req", "opt10001", 0, self.SCREEN_NO)
         time.sleep(self.TQ_REQ_TIME_INTERVAL)
 
     # Opt10001 주식기본정보요청 Rq 데이터 이벤트 처리
@@ -445,13 +447,15 @@ class Kiwoom(QAxWidget) :
             print(">> 주식기본정보요청 (종목명, PER, EPS, ROE, PBR, 매출액, 영업이익, 당기순이익, 현재가, 전일대비, 등락률, 거래량)")
             print(self.opt10001)
 
+    def Handle_ReceiveMessage(self, screenNo, rqName, trCode, msg) :
+        print(">> " + trCode + "_" + msg)
 
 # Main
 if __name__ == "__main__" :
     app = QApplication(sys.argv)
     kiwoom = Kiwoom()
-
-    kiwoom.Make_StrDate()   # 오늘, 어제 날짜 처리
+    
+    #kiwoom.Make_StrDate()   # 오늘, 어제 날짜 처리
 
     kiwoom.Comm_Connect()   # 키움 접속
     kiwoom.Get_LoginInfo()  # 로그인 정보
@@ -459,20 +463,23 @@ if __name__ == "__main__" :
     kiwoom.Get_AllCodeName(kiwoom.MARKET_KOSDAQ)    # 코스닥 종목코드 및 종목명
     kiwoom.Get_Opw00001()   # 예수금상세현황요청
     kiwoom.Get_Opw00018()   # 계좌평가잔고내역요청
-
+    
     # 보유주식 주식일봉차트조회요청
-    for i in range(len(kiwoom.opw00018['multi'])) :     
-        code = kiwoom.opw00018['multi'][i][0]
-        kiwoom.Get_Opt10081(code, kiwoom.yesterday)
-        kiwoom.Print_Opt10081(i)
-        kiwoom.Clear_Opt10081()
+    #for i in range(len(kiwoom.opw00018['multi'])) :     
+    #    code = kiwoom.opw00018['multi'][i][0]
+    #    kiwoom.Get_Opt10081(code, kiwoom.yesterday)
+    #    kiwoom.Print_Opt10081(i)
+    #    kiwoom.Clear_Opt10081()
 
     kiwoom.Get_Opt10074("20160101", kiwoom.today)   # 일자별실현손익요청
 
     # 주식기본정보요청
+    i = 0
     for i in range(len(kiwoom.opw00018['multi'])) :
         code = kiwoom.opw00018['multi'][i][0]
         kiwoom.Get_Opt10001(code)
     kiwoom.Print_Opt10001()
+
+    Kakao.Send_KakaoMessage("Test!!!")
 
     # 주식기본정보 조회가 왜 안되??

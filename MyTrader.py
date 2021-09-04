@@ -115,6 +115,7 @@ class MyWindow(QMainWindow, form_class) :
     # 잔고 및 보유종목현황 실시간 조회 이벤트 Timeout
     def Handle_Timeout2(self) :
         if self.checkBox.isChecked() :
+            self.Print_PasswdDialog()
             self.Print_TableWidget1n2()
 
     # 잔고 및 보유종목현황 실시간 조회 버튼 이벤트 처리
@@ -186,7 +187,7 @@ class MyWindow(QMainWindow, form_class) :
             code = str(self.kiwoom.opw00018['multi'][i][0])
             name = str(self.kiwoom.opw00018['multi'][i][1])
             self.kiwoom.Get_Opt10001(code)
-            self.textBrowser_2.append(">> " + name + "(%) : " + self.kiwoom.opt10001[i][10])
+            self.textBrowser_2.append(i + ". " + name + "(%) : " + self.kiwoom.opt10001[i][10])
 
     # 종목 조회 버튼 클릭 이벤트 처리
     def Handle_pushButton3(self) :
