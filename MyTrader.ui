@@ -95,17 +95,17 @@
      </column>
      <column>
       <property name="text">
-       <string>매입가</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
        <string>평가손익</string>
       </property>
      </column>
      <column>
       <property name="text">
        <string>수익률(%)</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>매입가</string>
       </property>
      </column>
      <column>
