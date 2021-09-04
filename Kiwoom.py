@@ -42,6 +42,7 @@ class Kiwoom(QAxWidget) :
         # multi : 일자, 매수금액, 매도금액, 당일매도손익, 당일매매수수료, 당일매매세금
         self.opt10074 = {'single' : [], 'multi' : []}
         self.opt10001 = []  # 종목명, PER, EPS, ROE, PBR, 매출액, 영업이익, 당기순이익, 현재가, 전일대비, 등락율, 거래량
+        self.printGap = []
 
     @staticmethod   # 금액 정보 타입 처리
     def change_format1(data) :
@@ -473,8 +474,8 @@ if __name__ == "__main__" :
 
     kiwoom.Comm_Connect()   # 키움 접속
     kiwoom.Get_LoginInfo()  # 로그인 정보
-    #kiwoom.Get_AllCodeName(kiwoom.MARKET_KOSPI) # 코스피 종목코드 및 종목명
-    #kiwoom.Get_AllCodeName(kiwoom.MARKET_KOSDAQ)    # 코스닥 종목코드 및 종목명
+    kiwoom.Get_AllCodeName(kiwoom.MARKET_KOSPI) # 코스피 종목코드 및 종목명
+    kiwoom.Get_AllCodeName(kiwoom.MARKET_KOSDAQ)    # 코스닥 종목코드 및 종목명
     kiwoom.Get_Opw00001()   # 예수금상세현황요청
     kiwoom.Get_Opw00018()   # 계좌평가잔고내역요청
     
@@ -487,13 +488,13 @@ if __name__ == "__main__" :
         gap = kiwoom.Calc_UpDownRateToday(i)
         kiwoom.Clear_Opt10081()
 
-    #kiwoom.Get_Opt10074("20160101", kiwoom.today)   # 일자별실현손익요청
+    kiwoom.Get_Opt10074("20160101", kiwoom.today)   # 일자별실현손익요청
 
     # 주식기본정보요청
-    #i = 0
-    #for i in range(len(kiwoom.opw00018['multi'])) :
-    #    code = kiwoom.opw00018['multi'][i][0]
-    #    kiwoom.Get_Opt10001(code)
-    #kiwoom.Print_Opt10001()
+    i = 0
+    for i in range(len(kiwoom.opw00018['multi'])) :
+        code = kiwoom.opw00018['multi'][i][0]
+        kiwoom.Get_Opt10001(code)
+    kiwoom.Print_Opt10001()
 
-    Kakao.Send_KakaoMessage("Test : " + str(gap))
+    Kakao.Send_KakaoMessage("Test Message!!!")

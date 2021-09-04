@@ -4,8 +4,8 @@ from PyQt5.QtCore import *
 from PyQt5 import uic
 from Kiwoom import *
 
-TIMER2_INTERVAL = 1000*60   # 잔고 및 보유종목현황 실시간 인터벌
-TIMER3_INTERVAL = 1000*60   # 보유종목 등락 실시간 인터벌
+TIMER2_INTERVAL = 1000*300   # 잔고 및 보유종목현황 실시간 인터벌
+TIMER3_INTERVAL = 1000*300   # 보유종목 등락 실시간 인터벌
 
 # Qt Designer UI 파일
 form_class = uic.loadUiType("MyTrader.ui")[0]
@@ -183,6 +183,7 @@ class MyWindow(QMainWindow, form_class) :
             self.kiwoom.Get_Opw00018()
 
         self.textBrowser_2.clear()
+        msg = ''
         for i in range(len(self.kiwoom.opw00018['multi'])) :     
             code = str(self.kiwoom.opw00018['multi'][i][0])
             name = str(self.kiwoom.opw00018['multi'][i][1])
@@ -190,9 +191,14 @@ class MyWindow(QMainWindow, form_class) :
             self.kiwoom.Print_Opt10081(i)
             gap = self.kiwoom.Calc_UpDownRateToday(i)
             self.kiwoom.Clear_Opt10081()
-
             self.textBrowser_2.append(str(i) + ". " + name + "(%) : " + str(gap))
-            Kakao.Send_KakaoMessage(name + " : " + str(gap) + "%")  # TODO 등락 계산 기반 특정 상승/하강 포착 후 카톡 메시지 송신하는 함수 구현!
+
+            if gap >= 3.0 or gap <= -3.0 :
+                msg = msg + name + ':' + str(gap) + '%\n'
+
+        if msg != '' :
+            Kakao.Send_KakaoMessage(msg)
+
 
     # 종목 조회 버튼 클릭 이벤트 처리
     def Handle_pushButton3(self) :

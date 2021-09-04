@@ -10,9 +10,9 @@ def Get_KakaoToken() :
     url = 'https://kauth.kakao.com/oauth/token'
     rest_api_key = '7b38b6fab1cbdbfda1d02061d673ca60'
     redirect_uri = 'https://example.com/oauth'
-    authorize_code = 'JGQHvWpwyUWV0wpb5anY9h3tF5Z9KdrxIO2TTQPztrGokbwo5IBnj3SiYQGCDx5fwkSS2QorDNMAAAF7rrYxqg'
+    authorize_code = '9qkVmay8W-qgl1XXarCxa4koRHMkxq91RMcW_ePt1yEqgrl65gq2yT9osWTfNaenAs_QSQo9c-sAAAF7sJzElg'
     # authorize_code 만료 시 아래 접속 후 코드 갱신 필요
-    #webUrl = 'https://kauth.kakao.com/oauth/authorize?client_id=' + rest_api_key + '&redirect_uri=' + redirect_uri + '&response_type=code'
+    #webUrl = 'https://kauth.kakao.com/oauth/authorize?client_id=7b38b6fab1cbdbfda1d02061d673ca60&redirect_uri=https://example.com/oauth&response_type=code'
 
     data = {
         'grant_type':'authorization_code',
