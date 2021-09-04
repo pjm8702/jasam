@@ -19,6 +19,8 @@ class Kiwoom(QAxWidget) :
         self.MARKET_KOSPI = 0   # 코스피
         self.MARKET_KOSDAQ = 10 # 코스닥
         self.SCREEN_NO = "1000"   # 스크린 번호
+        self.MULTI_ONCE = 1
+        self.MULTI_ALL = 0
 
         self.passwd = None  # 비밀번호
         self.accountCnt = None  # 계좌개수
@@ -40,6 +42,7 @@ class Kiwoom(QAxWidget) :
         # multi : 일자, 매수금액, 매도금액, 당일매도손익, 당일매매수수료, 당일매매세금
         self.opt10074 = {'single' : [], 'multi' : []}
         self.opt10001 = []  # 종목명, PER, EPS, ROE, PBR, 매출액, 영업이익, 당기순이익, 현재가, 전일대비, 등락율, 거래량
+        self.printGap = []
 
     @staticmethod   # 금액 정보 타입 처리
     def change_format1(data) :
@@ -216,6 +219,7 @@ class Kiwoom(QAxWidget) :
         self._set_input_value("비밀번호입력매체구분", "00")
         self._set_input_value("조회구분", "1")
         self._comm_rq_data("opw00018_req", "opw00018", 0, self.SCREEN_NO)
+        time.sleep(self.TQ_REQ_TIME_INTERVAL)
         
         while self.remained_data == True :
             time.sleep(self.TQ_REQ_TIME_INTERVAL)
@@ -287,14 +291,15 @@ class Kiwoom(QAxWidget) :
             print(">> 보유주식정보.csv is made")
     
     # Opt10081 주식일봉차트조회요청
-    def Get_Opt10081(self, code, date) :
+    def Get_Opt10081(self, code, date, multi) :
         self._set_input_value("종목코드", code)
         self._set_input_value("기준일자", date)
         self._set_input_value("수정주가구분", 1)
         self._set_input_value("조회구분", "1")
         self._comm_rq_data("opt10081_req", "opt10081", 0, self.SCREEN_NO)
+        time.sleep(self.TQ_REQ_TIME_INTERVAL)
 
-        while self.remained_data == True :
+        while self.remained_data == True and multi == self.MULTI_ALL:
             time.sleep(self.TQ_REQ_TIME_INTERVAL)
             self._set_input_value("종목코드", code)
             self._set_input_value("기준일자", date)
@@ -329,6 +334,15 @@ class Kiwoom(QAxWidget) :
         self.opt10081['close'].clear()
         self.opt10081['volume'].clear()
 
+    def Calc_UpDownRateToday(self, idx) :
+        gap = ((int(self.opt10081['close'][0]) - int(self.opt10081['close'][1])) / int(self.opt10081['close'][1])) * 100.0
+        gap = round(gap, 2)
+
+        if __name__ == "__main__" :
+            print(">> " + str(self.opw00018['multi'][idx][1]) + " 상승/하강률(%) : " + str(gap))
+
+        return gap
+
     # Opt10081 주식일봉차트조회요청 Rq 데이터 출력
     def Print_Opt10081(self, idx) :
         csvFileName = str(self.opw00018['multi'][idx][0]) + '_' + str(self.opw00018['multi'][idx][1]) + str('_Info.csv')
@@ -354,6 +368,7 @@ class Kiwoom(QAxWidget) :
         self._set_input_value("시작일자", startDate)
         self._set_input_value("종료일자", endDate)
         self._comm_rq_data("opt10074_req", "opt10074", 0, self.SCREEN_NO)
+        time.sleep(self.TQ_REQ_TIME_INTERVAL)
 
         while self.remained_data == True :
             time.sleep(self.TQ_REQ_TIME_INTERVAL)
@@ -455,23 +470,25 @@ if __name__ == "__main__" :
     app = QApplication(sys.argv)
     kiwoom = Kiwoom()
     
-    #kiwoom.Make_StrDate()   # 오늘, 어제 날짜 처리
+    kiwoom.Make_StrDate()   # 오늘, 어제 날짜 처리
 
     kiwoom.Comm_Connect()   # 키움 접속
     kiwoom.Get_LoginInfo()  # 로그인 정보
-    #.Get_AllCodeName(kiwoom.MARKET_KOSPI) # 코스피 종목코드 및 종목명
-    #kiwoom.Get_AllCodeName(kiwoom.MARKET_KOSDAQ)    # 코스닥 종목코드 및 종목명
+    kiwoom.Get_AllCodeName(kiwoom.MARKET_KOSPI) # 코스피 종목코드 및 종목명
+    kiwoom.Get_AllCodeName(kiwoom.MARKET_KOSDAQ)    # 코스닥 종목코드 및 종목명
     kiwoom.Get_Opw00001()   # 예수금상세현황요청
     kiwoom.Get_Opw00018()   # 계좌평가잔고내역요청
     
     # 보유주식 주식일봉차트조회요청
-    #for i in range(len(kiwoom.opw00018['multi'])) :     
-    #    code = kiwoom.opw00018['multi'][i][0]
-    #    kiwoom.Get_Opt10081(code, kiwoom.yesterday)
-    #    kiwoom.Print_Opt10081(i)
-    #    kiwoom.Clear_Opt10081()
+    gap = 0
+    for i in range(len(kiwoom.opw00018['multi'])) :     
+        code = kiwoom.opw00018['multi'][i][0]
+        kiwoom.Get_Opt10081(code, kiwoom.today, kiwoom.MULTI_ONCE)
+        kiwoom.Print_Opt10081(i)
+        gap = kiwoom.Calc_UpDownRateToday(i)
+        kiwoom.Clear_Opt10081()
 
-    #kiwoom.Get_Opt10074("20160101", kiwoom.today)   # 일자별실현손익요청
+    kiwoom.Get_Opt10074("20160101", kiwoom.today)   # 일자별실현손익요청
 
     # 주식기본정보요청
     i = 0
@@ -480,6 +497,4 @@ if __name__ == "__main__" :
         kiwoom.Get_Opt10001(code)
     kiwoom.Print_Opt10001()
 
-    Kakao.Send_KakaoMessage("Test!!!")
-
-    # 주식기본정보 조회가 왜 안되??
+    Kakao.Send_KakaoMessage("Test Message!!!")
