@@ -1,18 +1,37 @@
 import requests
 import json
-
+import time
+from selenium import webdriver
 
 response = None
 tokens = None
 authorize_code = None
 
 def Get_KakaoToken() :
+    kakaoTokenUrl = 'https://kauth.kakao.com/oauth/authorize?client_id=7b38b6fab1cbdbfda1d02061d673ca60&redirect_uri=https://example.com/oauth&response_type=code'
+    
+    f = open("kakaoInfo.txt", "r")
+    id = f.readline().rstrip()
+    pw = f.readline()
+
+    driver = webdriver.Chrome(executable_path='chromedriver')
+    driver.get(url=kakaoTokenUrl)
+    time.sleep(1)
+
+    driver.find_element_by_id('id_email_2').send_keys(id)
+    driver.find_element_by_id('id_password_3').send_keys(pw)
+    loginButton = driver.find_element_by_class_name('submit')
+    loginButton.click()
+    time.sleep(5)
+    
+    tokenUrl = driver.current_url
+    token = tokenUrl.replace("https://example.com/oauth?code=", "")
+    driver.quit()
+
     url = 'https://kauth.kakao.com/oauth/token'
     rest_api_key = '7b38b6fab1cbdbfda1d02061d673ca60'
     redirect_uri = 'https://example.com/oauth'
-    authorize_code = '9qkVmay8W-qgl1XXarCxa4koRHMkxq91RMcW_ePt1yEqgrl65gq2yT9osWTfNaenAs_QSQo9c-sAAAF7sJzElg'
-    # authorize_code 만료 시 아래 접속 후 코드 갱신 필요
-    #webUrl = 'https://kauth.kakao.com/oauth/authorize?client_id=7b38b6fab1cbdbfda1d02061d673ca60&redirect_uri=https://example.com/oauth&response_type=code'
+    authorize_code = token
 
     data = {
         'grant_type':'authorization_code',
@@ -23,7 +42,6 @@ def Get_KakaoToken() :
 
     response = requests.post(url, data=data)
     tokens = response.json()
-    print(tokens)
 
     with open(r"C:\Users\pjm87\Documents\Coding\jasam\elephant\kakao_code.json","w") as fp:
         json.dump(tokens, fp)
@@ -56,5 +74,5 @@ def Send_KakaoMessage(msg) :
 
 
 if __name__ == "__main__" :
-    #Get_KakaoToken()
+    Get_KakaoToken()
     Send_KakaoMessage("Test Message to Me!!")

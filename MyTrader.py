@@ -1,8 +1,9 @@
 import sys
+from Kakao import *
+from Kiwoom import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5 import uic
-from Kiwoom import *
 
 TIMER2_INTERVAL = 1000*300   # 잔고 및 보유종목현황 실시간 인터벌
 TIMER3_INTERVAL = 1000*300   # 보유종목 등락 실시간 인터벌
@@ -17,6 +18,11 @@ class MyWindow(QMainWindow, form_class) :
 
         self.lineEditStartDate = ''
         self.lineEdit_2EndDate = ''
+
+        # 매일 오전 실행 시 카톡 메시지 전송을 위해 토큰 Get
+        curTime = MyWindow.Get_CurTimeInt()
+        if curTime >= 70000 and curTime <= 90000 :
+            Kakao.Get_KakaoToken()
 
         self.kiwoom = Kiwoom()
         self.kiwoom.Comm_Connect()  # 키움 접속
@@ -69,6 +75,12 @@ class MyWindow(QMainWindow, form_class) :
 
         # 보유종목 일봉차트 자료 조회
         self.pushButton_5.clicked.connect(self.Handle_pushButton5)
+
+    @staticmethod
+    def Get_CurTimeInt() :
+        curTime = QTime.currentTime()
+        curTime = int(curTime.toString("hhmmss"))
+        return curTime
         
     # 계좌비밀번호 입력 다이얼로그 출력
     def Print_PasswdDialog(self) :
@@ -166,9 +178,7 @@ class MyWindow(QMainWindow, form_class) :
 
     # 보유종목 등락 실시간 조회 이벤트 timeout
     def Handle_Timeout3(self) :
-        curTime = QTime.currentTime()
-        curTime = int(curTime.toString("hhmmss"))
-        
+        curTime = MyWindow.Get_CurTimeInt()
         if self.checkBox_2.isChecked() and curTime >= 90000 and curTime <= 153000 :
             self.Print_TextBrowser_2()
 
