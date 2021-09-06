@@ -12,7 +12,7 @@ def Get_KakaoToken() :
     
     f = open("kakaoInfo.txt", "r")
     id = f.readline().rstrip()
-    pw = f.readline()
+    pw = f.readline().rstrip()
 
     driver = webdriver.Chrome(executable_path='chromedriver')
     driver.get(url=kakaoTokenUrl)
