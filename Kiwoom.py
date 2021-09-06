@@ -474,27 +474,28 @@ if __name__ == "__main__" :
 
     kiwoom.Comm_Connect()   # 키움 접속
     kiwoom.Get_LoginInfo()  # 로그인 정보
-    kiwoom.Get_AllCodeName(kiwoom.MARKET_KOSPI) # 코스피 종목코드 및 종목명
-    kiwoom.Get_AllCodeName(kiwoom.MARKET_KOSDAQ)    # 코스닥 종목코드 및 종목명
+    #kiwoom.Get_AllCodeName(kiwoom.MARKET_KOSPI) # 코스피 종목코드 및 종목명
+    #kiwoom.Get_AllCodeName(kiwoom.MARKET_KOSDAQ)    # 코스닥 종목코드 및 종목명
     kiwoom.Get_Opw00001()   # 예수금상세현황요청
     kiwoom.Get_Opw00018()   # 계좌평가잔고내역요청
     
     # 보유주식 주식일봉차트조회요청
-    gap = 0
-    for i in range(len(kiwoom.opw00018['multi'])) :     
-        code = kiwoom.opw00018['multi'][i][0]
-        kiwoom.Get_Opt10081(code, kiwoom.today, kiwoom.MULTI_ONCE)
-        kiwoom.Print_Opt10081(i)
-        gap = kiwoom.Calc_UpDownRateToday(i)
-        kiwoom.Clear_Opt10081()
+    #gap = 0
+    #for i in range(len(kiwoom.opw00018['multi'])) :     
+    #    code = kiwoom.opw00018['multi'][i][0]
+    #    kiwoom.Get_Opt10081(code, kiwoom.today, kiwoom.MULTI_ONCE)
+    #    kiwoom.Print_Opt10081(i)
+    #    gap = kiwoom.Calc_UpDownRateToday(i)
+    #    kiwoom.Clear_Opt10081()
 
-    kiwoom.Get_Opt10074("20160101", kiwoom.today)   # 일자별실현손익요청
+    #kiwoom.Get_Opt10074("20160101", kiwoom.today)   # 일자별실현손익요청
 
-    # 주식기본정보요청
-    i = 0
-    for i in range(len(kiwoom.opw00018['multi'])) :
-        code = kiwoom.opw00018['multi'][i][0]
-        kiwoom.Get_Opt10001(code)
-    kiwoom.Print_Opt10001()
+    # 주식기본정보요청  # TODO : 종목조회가 원래 안되는건가?
+    #i = 0
+    #for i in range(len(kiwoom.opw00018['multi'])) :
+    #    code = kiwoom.opw00018['multi'][i][0]
+    #    kiwoom.Get_Opt10001(code)
+    #kiwoom.Print_Opt10001()
 
-    Kakao.Send_KakaoMessage("Test Message!!!")
+    #Kakao.Send_KakaoMessage("Test Message!!!")
+
