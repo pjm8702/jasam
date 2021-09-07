@@ -21,8 +21,8 @@ class MyWindow(QMainWindow, form_class) :
 
         # 매일 오전 실행 시 카톡 메시지 전송을 위해 토큰 Get
         curTime = MyWindow.Get_CurTimeInt()
-        if curTime >= 70000 and curTime <= 90000 :
-            Kakao.Get_KakaoToken()
+        #if curTime >= 70000 and curTime <= 90000 :
+        #    Kakao.Get_KakaoToken()
 
         self.kiwoom = Kiwoom()
         self.kiwoom.Comm_Connect()  # 키움 접속
@@ -194,17 +194,15 @@ class MyWindow(QMainWindow, form_class) :
 
         self.textBrowser_2.clear()
         msg = ''
-        for i in range(len(self.kiwoom.opw00018['multi'])) :     
+        for i in range(len(self.kiwoom.opw00018['multi'])) :
             code = str(self.kiwoom.opw00018['multi'][i][0])
             name = str(self.kiwoom.opw00018['multi'][i][1])
-            self.kiwoom.Get_Opt10081(code, self.kiwoom.today, self.kiwoom.MULTI_ONCE)
-            self.kiwoom.Print_Opt10081(i)
-            gap = self.kiwoom.Calc_UpDownRateToday(i)
-            self.kiwoom.Clear_Opt10081()
-            self.textBrowser_2.append(str(i) + ". " + name + "(%) : " + str(gap))
+            self.kiwoom.Get_Opt10001(code)
+            gap = self.kiwoom.opt10001[i][10]
+            self.textBrowser_2.append(str(i + 1) + ". " + name + "(%) : " + gap)
 
-            if gap >= 3.0 or gap <= -3.0 :
-                msg = msg + name + ':' + str(gap) + '%\n'
+            if float(gap) >= 3.0 or float(gap) <= -3.0 :
+                msg = msg + name + ':' + gap + '%\n'
 
         if msg != '' :
             Kakao.Send_KakaoMessage(msg)

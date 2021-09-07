@@ -42,7 +42,6 @@ class Kiwoom(QAxWidget) :
         # multi : 일자, 매수금액, 매도금액, 당일매도손익, 당일매매수수료, 당일매매세금
         self.opt10074 = {'single' : [], 'multi' : []}
         self.opt10001 = []  # 종목명, PER, EPS, ROE, PBR, 매출액, 영업이익, 당기순이익, 현재가, 전일대비, 등락율, 거래량
-        self.printGap = []
 
     @staticmethod   # 금액 정보 타입 처리
     def change_format1(data) :
@@ -434,7 +433,7 @@ class Kiwoom(QAxWidget) :
         time.sleep(self.TQ_REQ_TIME_INTERVAL)
 
     # Opt10001 주식기본정보요청 Rq 데이터 이벤트 처리
-    def Handle_Opt10001(self, trCode, rqName) :
+    def Handle_Opt10001(self, rqName, trCode) :
         name = self._get_comm_data(trCode, rqName, 0, "종목명")
         per = self._get_comm_data(trCode, rqName, 0, "PER")
         eps = self._get_comm_data(trCode, rqName, 0, "EPS")
@@ -442,7 +441,7 @@ class Kiwoom(QAxWidget) :
         pbr = self._get_comm_data(trCode, rqName, 0, "PBR")
         tmp = self._get_comm_data(trCode, rqName, 0, "매출액")
         sales = Kiwoom.change_format1(tmp)
-        tmp = self._get_comm_data(trCode, rqName, 0, "영억이입")
+        tmp = self._get_comm_data(trCode, rqName, 0, "영업이입")
         businessProfit = Kiwoom.change_format1(tmp)
         tmp = self._get_comm_data(trCode, rqName, 0, "당기순이익")
         netProfit = Kiwoom.change_format1(tmp)
@@ -490,12 +489,12 @@ if __name__ == "__main__" :
 
     #kiwoom.Get_Opt10074("20160101", kiwoom.today)   # 일자별실현손익요청
 
-    # 주식기본정보요청  # TODO : 종목조회가 원래 안되는건가?
-    #i = 0
-    #for i in range(len(kiwoom.opw00018['multi'])) :
-    #    code = kiwoom.opw00018['multi'][i][0]
-    #    kiwoom.Get_Opt10001(code)
-    #kiwoom.Print_Opt10001()
+    # 주식기본정보요청
+    i = 0
+    for i in range(len(kiwoom.opw00018['multi'])) :
+        code = kiwoom.opw00018['multi'][i][0]
+        kiwoom.Get_Opt10001(code)
+    kiwoom.Print_Opt10001()
 
     #Kakao.Send_KakaoMessage("Test Message!!!")
 
