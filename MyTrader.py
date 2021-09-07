@@ -45,10 +45,10 @@ class MyWindow(QMainWindow, form_class) :
         self.timer2.start(TIMER2_INTERVAL)
         self.timer2.timeout.connect(self.Handle_Timeout2)
 
-        # 보유종목 등락 조회 버튼 이벤트 설정
+        # 보유종목 일일정보 조회 버튼 이벤트 설정
         self.pushButton_2.clicked.connect(self.Handle_pushButton2)
 
-        # 보유종목 실시간 등락 조회 클릭 이벤트 설정
+        # 보유종목 일일정보 실시간 조회 클릭 이벤트 설정
         self.timer3 = QTimer(self)
         self.timer3.start(TIMER3_INTERVAL)
         self.timer3.timeout.connect(self.Handle_Timeout3)
@@ -176,37 +176,44 @@ class MyWindow(QMainWindow, form_class) :
         self.tableWidget_2.resizeRowsToContents()
         #self.tableWidget_2.resizeColumnsToContents()
 
-    # 보유종목 등락 실시간 조회 이벤트 timeout
+    # 보유종목 일일정보 실시간 조회 이벤트 timeout
     def Handle_Timeout3(self) :
         curTime = MyWindow.Get_CurTimeInt()
         if self.checkBox_2.isChecked() and curTime >= 90000 and curTime <= 153000 :
-            self.Print_TextBrowser_2()
+            self.Print_TableWidget_6()
 
-    # 보유종목 등락 실시간 조회 버튼 클릭 이벤트 처리
+    # 보유종목 일일정보 실시간 조회 버튼 클릭 이벤트 처리
     def Handle_pushButton2(self) :
-        self.Print_TextBrowser_2()
+        self.Print_TableWidget_6()
 
-    # 보유종목 등락 출력
-    def Print_TextBrowser_2(self) :
+    # 보유종목 일일정보 출력
+    def Print_TableWidget_6(self) :
+        # 종목명 | 현재가 | 대비 | 등락 | 거래량
         if len(self.kiwoom.opw00018['multi']) == 0 :
             self.kiwoom.Get_Opw00001()
             self.kiwoom.Get_Opw00018()
 
-        self.textBrowser_2.clear()
-        msg = ''
         for i in range(len(self.kiwoom.opw00018['multi'])) :
-            code = str(self.kiwoom.opw00018['multi'][i][0])
-            name = str(self.kiwoom.opw00018['multi'][i][1])
+            code = self.kiwoom.opw00018['multi'][i][0]
             self.kiwoom.Get_Opt10001(code)
-            gap = self.kiwoom.opt10001[i][10]
-            self.textBrowser_2.append(str(i + 1) + ". " + name + "(%) : " + gap)
-
-            if float(gap) >= 3.0 or float(gap) <= -3.0 :
-                msg = msg + name + ':' + gap + '%\n'
+        
+        cntRow = len(self.kiwoom.opt10001)
+        cntCol = len(self.kiwoom.opt10001[0])
+        self.tableWidget_6.setRowCount(cntRow)
+        self.tableWidget_6.setColumnCount(cntCol - 7)
+        msg = '종목명 | 현재가 | 전일대비 | 등락율(%)\n'
+        for j in range(cntRow) :
+            row = self.kiwoom.opt10001[j]
+            for k in range(cntCol - 7) :
+                item = QTableWidgetItem(row[k])
+                item.setTextAlignment(Qt.AlignVCenter | Qt.AlignRight)
+                self.tableWidget_6.setItem(j, k, item)
+            msg = msg + row[0] + ' | ' + row[1] + ' | ' + row[2] + ' | ' + row[3] + '\n'
+            self.tableWidget_6.resizeRowsToContents()    
 
         if msg != '' :
             Kakao.Send_KakaoMessage(msg)
-
+            msg = ''
 
     # 종목 조회 버튼 클릭 이벤트 처리
     def Handle_pushButton3(self) :

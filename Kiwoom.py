@@ -41,7 +41,7 @@ class Kiwoom(QAxWidget) :
         # single : 총매수금액, 총매도금액, 실현손익, 매매수수료, 매매세금
         # multi : 일자, 매수금액, 매도금액, 당일매도손익, 당일매매수수료, 당일매매세금
         self.opt10074 = {'single' : [], 'multi' : []}
-        self.opt10001 = []  # 종목명, PER, EPS, ROE, PBR, 매출액, 영업이익, 당기순이익, 현재가, 전일대비, 등락율, 거래량
+        self.opt10001 = []  # 종목명, 현재가, 전일대비, 등락율, 거래량, PER, EPS, ROE, PBR, 매출액, 영업이익, 당기순이익
 
     @staticmethod   # 금액 정보 타입 처리
     def change_format1(data) :
@@ -435,6 +435,13 @@ class Kiwoom(QAxWidget) :
     # Opt10001 주식기본정보요청 Rq 데이터 이벤트 처리
     def Handle_Opt10001(self, rqName, trCode) :
         name = self._get_comm_data(trCode, rqName, 0, "종목명")
+        tmp = self._get_comm_data(trCode, rqName, 0, "현재가")
+        curPrice = Kiwoom.change_format1(tmp)
+        tmp = self._get_comm_data(trCode, rqName, 0, "전일대비")
+        netChange = Kiwoom.change_format1(tmp)
+        fluctuation = self._get_comm_data(trCode, rqName, 0, "등락율")
+        tmp = self._get_comm_data(trCode, rqName, 0, "거래량")
+        volume = Kiwoom.change_format1(tmp)
         per = self._get_comm_data(trCode, rqName, 0, "PER")
         eps = self._get_comm_data(trCode, rqName, 0, "EPS")
         roe = self._get_comm_data(trCode, rqName, 0, "ROE")
@@ -445,20 +452,13 @@ class Kiwoom(QAxWidget) :
         businessProfit = Kiwoom.change_format1(tmp)
         tmp = self._get_comm_data(trCode, rqName, 0, "당기순이익")
         netProfit = Kiwoom.change_format1(tmp)
-        tmp = self._get_comm_data(trCode, rqName, 0, "현재가")
-        curPrice = Kiwoom.change_format1(tmp)
-        tmp = self._get_comm_data(trCode, rqName, 0, "전일대비")
-        netChange = Kiwoom.change_format1(tmp)
-        fluctuation = self._get_comm_data(trCode, rqName, 0, "등락율")
-        tmp = self._get_comm_data(trCode, rqName, 0, "거래량")
-        volume = Kiwoom.change_format1(tmp)
 
-        self.opt10001.append([name, per, eps, roe, pbr, sales, businessProfit, netProfit, curPrice, netChange, fluctuation, volume])
+        self.opt10001.append([name, curPrice, netChange, fluctuation, volume, per, eps, roe, pbr, sales, businessProfit, netProfit])
 
     # Opt10001 주식기본정보요청 결과 출력
     def Print_Opt10001(self) :
         if __name__ == "__main__" :
-            print(">> 주식기본정보요청 (종목명, PER, EPS, ROE, PBR, 매출액, 영업이익, 당기순이익, 현재가, 전일대비, 등락률, 거래량)")
+            print(">> 주식기본정보요청 (종목명, 현재가, 전일대비, 등락률, 거래량, PER, EPS, ROE, PBR, 매출액, 영업이익, 당기순이익)")
             print(self.opt10001)
 
     def Handle_ReceiveMessage(self, screenNo, rqName, trCode, msg) :
