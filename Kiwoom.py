@@ -461,6 +461,10 @@ class Kiwoom(QAxWidget) :
             print(">> 주식기본정보요청 (종목명, 현재가, 전일대비, 등락률, 거래량, PER, EPS, ROE, PBR, 매출액, 영업이익, 당기순이익)")
             print(self.opt10001)
 
+    # Opt10001 주식기본정보 요청 정보 삭제
+    def Clear_Opt10001(self) :
+        self.opt10001.clear()
+
     def Handle_ReceiveMessage(self, screenNo, rqName, trCode, msg) :
         print(">> " + trCode + "_" + msg)
 

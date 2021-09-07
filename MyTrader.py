@@ -215,6 +215,8 @@ class MyWindow(QMainWindow, form_class) :
             Kakao.Send_KakaoMessage(msg)
             msg = ''
 
+        self.kiwoom.Clear_Opt10001()
+
     # 종목 조회 버튼 클릭 이벤트 처리
     def Handle_pushButton3(self) :
         self.kiwoom.Get_AllCodeName(self.market)
