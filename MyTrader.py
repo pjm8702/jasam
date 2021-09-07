@@ -197,23 +197,25 @@ class MyWindow(QMainWindow, form_class) :
             code = self.kiwoom.opw00018['multi'][i][0]
             self.kiwoom.Get_Opt10001(code)
         
+        kakaoMsgTitle = '종목명 | 현재가 | 전일대비 | 등락율(%)\n'
+        kakaoMsg = ''
+
         cntRow = len(self.kiwoom.opt10001)
         cntCol = len(self.kiwoom.opt10001[0])
         self.tableWidget_6.setRowCount(cntRow)
         self.tableWidget_6.setColumnCount(cntCol - 7)
-        msg = '종목명 | 현재가 | 전일대비 | 등락율(%)\n'
         for j in range(cntRow) :
             row = self.kiwoom.opt10001[j]
             for k in range(cntCol - 7) :
                 item = QTableWidgetItem(row[k])
                 item.setTextAlignment(Qt.AlignVCenter | Qt.AlignRight)
                 self.tableWidget_6.setItem(j, k, item)
-            msg = msg + row[0] + ' | ' + row[1] + ' | ' + row[2] + ' | ' + row[3] + '\n'
-            self.tableWidget_6.resizeRowsToContents()    
-
-        if msg != '' :
-            Kakao.Send_KakaoMessage(msg)
-            msg = ''
+            kakaoMsg = kakaoMsg + row[0] + ' | ' + row[1] + ' | ' + row[2] + ' | ' + row[3] + '\n'
+            self.tableWidget_6.resizeRowsToContents()
+            
+            if (j + 1) % 5 == 0 :
+                Kakao.Send_KakaoMessage(kakaoMsgTitle + kakaoMsg)
+                kakaoMsg = ''
 
         self.kiwoom.Clear_Opt10001()
 
