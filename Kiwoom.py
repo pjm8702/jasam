@@ -32,6 +32,8 @@ class Kiwoom(QAxWidget) :
         self.marketKosdaq = None # KOSDAQ 종목코드/이름 정보
         self.today = None
         self.yesterday = None
+        self.codeList = []  # 종목코드
+        self.nameList = []  # 종목명
         self.opw00001 = []  # 예수금
         # single : 총매입금액, 총평가금액, 총평가손익금액, 총수익률, 추정자산
         # multi : 종목코드, 종목명, 평가손익, 수익률, 매입가, 보유수량, 매매가능수량, 현재가 
@@ -159,43 +161,42 @@ class Kiwoom(QAxWidget) :
         self.keybSecurity = self.dynamicCall("GetLoginInfo(QString)", "KEY_BSECGB")
         self.firewallSet = self.dynamicCall("GetLoginInfo(QString)", "FIREW_SECGB")
 
-        if __name__ == "__main__" :
-            print(">> 계좌개수 : " + self.accountCnt)
-            print(">> 계좌번호 : " + self.accNo[0])
-            print(">> 사용자ID : " + self.userId)
-            print(">> 사용자이름 : " + self.userName)
+        print(">> 계좌개수 : " + self.accountCnt)
+        print(">> 계좌번호 : " + self.accNo[0])
+        print(">> 사용자ID : " + self.userId)
+        print(">> 사용자이름 : " + self.userName)
 
-            if self.keybSecurity == '0' :
-                print(">> 키보드보안 : 정상")
-            else :
-                print(">> 키보드보안 : 해지")
+        if self.keybSecurity == '0' :
+            print(">> 키보드보안 : 정상")
+        else :
+            print(">> 키보드보안 : 해지")
 
-            if self.firewallSet == '0' :
-                print(">> 방화벽설정 : 미설정")
-            elif self.firewallSet == '1' :
-                print(">> 방화벽설정 : 설정")
-            else :
-                print(">> 방화벽설정 : 해지")
+        if self.firewallSet == '0' :
+            print(">> 방화벽설정 : 미설정")
+        elif self.firewallSet == '1' :
+            print(">> 방화벽설정 : 설정")
+        else :
+            print(">> 방화벽설정 : 해지")
     
     # 전체 종목 코드, 종목명 리스트 생성
     def Get_AllCodeName(self, market) :
-        codeList = self.dynamicCall("GetCodeListByMarket(QString)", str(market))
-        codeList = codeList.split(';')[:-1]
-        nameList = []
-        for code in codeList :
+        self.codeList.clear()
+        self.nameList.clear()
+
+        self.codeList = self.dynamicCall("GetCodeListByMarket(QString)", str(market))
+        self.codeList = self.codeList.split(';')[:-1]
+        for code in self.codeList :
             name = self.dynamicCall("GetMasterCodeName(QString)", code)
-            nameList.append(name)
-        
-        if market == 0 :
-            self.marketKospi = pd.DataFrame({'code' : codeList, 'name' : nameList})
-            if __name__ == "__main__" :
-                self.marketKospi.to_csv("코스피종목정보.csv", index=False, encoding="UTF-8")
-                print(">> 코스피종목정보.csv is made")
+            self.nameList.append(name)
+    
+    # 전체 종목 코드, 종목명 csv 파일 저장
+    def Make_CodeNameCsvFile(self, market) :
+        if market == self.MARKET_KOSPI :
+            marketKospi = pd.DataFrame({'code' : self.codeList, 'name' : self.nameList})
+            marketKospi.to_csv("코스피종목정보.csv", index=False, encoding="UTF-8")
         else :
-            self.marketKosdaq = pd.DataFrame({'code' : codeList, 'name' : nameList})
-            if __name__ == "__main__" :
-                self.marketKosdaq.to_csv("코스닥종목정보.csv", index=False, encoding="UTF-8")
-                print(">> 코스닥종목정보.csv is made")
+            marketKosdaq = pd.DataFrame({'code' : self.codeList, 'name' : self.nameList})
+            marketKosdaq.to_csv("코스닥종목정보.csv", index=False, encoding="UTF-8")
 
     # Opw00001 예수금상세현황요청
     def Get_Opw00001(self) :

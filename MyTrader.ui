@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1003</width>
-    <height>867</height>
+    <width>1308</width>
+    <height>856</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -177,9 +177,9 @@
    <widget class="QGroupBox" name="groupBox_3">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>590</y>
-      <width>641</width>
+      <x>20</x>
+      <y>580</y>
+      <width>431</width>
       <height>221</height>
      </rect>
     </property>
@@ -189,7 +189,7 @@
     <widget class="QCheckBox" name="checkBox_2">
      <property name="geometry">
       <rect>
-       <x>463</x>
+       <x>253</x>
        <y>21</y>
        <width>91</width>
        <height>16</height>
@@ -202,7 +202,7 @@
     <widget class="QPushButton" name="pushButton_2">
      <property name="geometry">
       <rect>
-       <x>554</x>
+       <x>344</x>
        <y>13</y>
        <width>75</width>
        <height>31</height>
@@ -217,7 +217,7 @@
       <rect>
        <x>10</x>
        <y>50</y>
-       <width>621</width>
+       <width>411</width>
        <height>161</height>
       </rect>
      </property>
@@ -254,7 +254,7 @@
       <x>19</x>
       <y>150</y>
       <width>311</width>
-      <height>431</height>
+      <height>421</height>
      </rect>
     </property>
     <property name="title">
@@ -266,7 +266,7 @@
        <x>9</x>
        <y>20</y>
        <width>291</width>
-       <height>361</height>
+       <height>351</height>
       </rect>
      </property>
      <column>
@@ -283,8 +283,8 @@
     <widget class="QPushButton" name="pushButton_3">
      <property name="geometry">
       <rect>
-       <x>223</x>
-       <y>390</y>
+       <x>120</x>
+       <y>380</y>
        <width>75</width>
        <height>31</height>
       </rect>
@@ -296,8 +296,8 @@
     <widget class="QRadioButton" name="radioButton">
      <property name="geometry">
       <rect>
-       <x>156</x>
-       <y>388</y>
+       <x>60</x>
+       <y>378</y>
        <width>90</width>
        <height>16</height>
       </rect>
@@ -309,8 +309,8 @@
     <widget class="QRadioButton" name="radioButton_2">
      <property name="geometry">
       <rect>
-       <x>156</x>
-       <y>409</y>
+       <x>60</x>
+       <y>399</y>
        <width>90</width>
        <height>16</height>
       </rect>
@@ -319,12 +319,25 @@
       <string>코스닥</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="pushButton_6">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>380</y>
+       <width>101</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>csv 파일 저장</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_5">
     <property name="geometry">
      <rect>
       <x>340</x>
-      <y>340</y>
+      <y>330</y>
       <width>641</width>
       <height>241</height>
      </rect>
@@ -470,8 +483,8 @@
    <widget class="QPushButton" name="pushButton_5">
     <property name="geometry">
      <rect>
-      <x>18</x>
-      <y>592</y>
+      <x>992</x>
+      <y>10</y>
       <width>141</width>
       <height>41</height>
      </rect>
@@ -483,8 +496,8 @@
    <widget class="QProgressBar" name="progressBar">
     <property name="geometry">
      <rect>
-      <x>167</x>
-      <y>602</y>
+      <x>1141</x>
+      <y>20</y>
       <width>161</width>
       <height>23</height>
      </rect>
@@ -493,13 +506,91 @@
      <number>0</number>
     </property>
    </widget>
+   <widget class="QGroupBox" name="groupBox_6">
+    <property name="geometry">
+     <rect>
+      <x>460</x>
+      <y>580</y>
+      <width>521</width>
+      <height>221</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>보유종목 별 투자자현황</string>
+    </property>
+    <widget class="QComboBox" name="comboBox">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>20</y>
+       <width>231</width>
+       <height>22</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QTableWidget" name="tableWidget_7">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>501</width>
+       <height>161</height>
+      </rect>
+     </property>
+     <column>
+      <property name="text">
+       <string>일자</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>누적거래량</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>누적거래대금</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>개인</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>외인</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>기관</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>연기금</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>보험</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>은행</string>
+      </property>
+     </column>
+    </widget>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1003</width>
+     <width>1308</width>
      <height>21</height>
     </rect>
    </property>

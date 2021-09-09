@@ -44,7 +44,8 @@ class MyWindow(QMainWindow, form_class) :
         self.timer2 = QTimer(self)
         self.timer2.start(TIMER2_INTERVAL)
         self.timer2.timeout.connect(self.Handle_Timeout2)
-        # 실행 시 조회
+        
+        # 첫 실행 시 잔고 및 보유종목현황 조회 실시
         self.Print_TableWidget1n2()
 
         # 보유종목 일일정보 조회 버튼 이벤트 설정
@@ -63,6 +64,9 @@ class MyWindow(QMainWindow, form_class) :
         self.market = self.kiwoom.MARKET_KOSPI
         self.radioButton.clicked.connect(self.Handle_radioButton1n2)
         self.radioButton_2.clicked.connect(self.Handle_radioButton1n2)
+
+        # 종목 조회 csv 파일 저장 버튼 이벤트 설정
+        self.pushButton_6.clicked.connect(self.Handle_pushButton6)
 
         # 실현손익 조회 버튼 이벤트 설정
         self.pushButton_4.clicked.connect(self.Handle_pushButton4)
@@ -236,19 +240,19 @@ class MyWindow(QMainWindow, form_class) :
     # 코스피 or 코스닥 전체 종목정보 출력
     def Print_TableWideg3(self, market) :
         if market == self.kiwoom.MARKET_KOSPI :
-            cnt = len(self.kiwoom.marketKospi['code'])
+            cnt = len(self.kiwoom.codeList)
         elif market == self.kiwoom.MARKET_KOSDAQ :
-            cnt = len(self.kiwoom.marketKosdaq['code'])
+            cnt = len(self.kiwoom.nameList)
                 
         self.tableWidget_3.setRowCount(cnt)
-        self.tableWidget_3.setColumnCount(self.kiwoom.marketKospi.shape[1])
+        self.tableWidget_3.setColumnCount(2)
         for i in range(cnt) :
             if market == self.kiwoom.MARKET_KOSPI :
-                code = self.kiwoom.marketKospi['code'][i]
-                name = self.kiwoom.marketKospi['name'][i]
+                code = self.kiwoom.codeList[i]
+                name = self.kiwoom.nameList[i]
             elif market == self.kiwoom.MARKET_KOSDAQ :
-                code = self.kiwoom.marketKosdaq['code'][i]
-                name = self.kiwoom.marketKosdaq['name'][i]
+                code = self.kiwoom.codeList[i]
+                name = self.kiwoom.nameList[i]
             item1 = QTableWidgetItem(code)
             item1.setTextAlignment(Qt.AlignVCenter | Qt.AlignRight)
             self.tableWidget_3.setItem(i, 0, item1)
@@ -256,7 +260,13 @@ class MyWindow(QMainWindow, form_class) :
             item2.setTextAlignment(Qt.AlignVCenter | Qt.AlignRight)
             self.tableWidget_3.setItem(i, 1, item2)
         self.tableWidget_3.resizeRowsToContents()
-        #self.tableWidget_3.resizeColumnsToContents()
+
+    # 종목 조회 csv 파일 저장 버튼 클릭 이벤트 처리
+    def Handle_pushButton6(self) :
+        if len(self.kiwoom.codeList) == 0 :
+            self.kiwoom.Get_AllCodeName(self.market)
+        self.kiwoom.Make_CodeNameCsvFile(self.market)
+        tmp, ok = QInputDialog.getText(self, "종목 조회 csv 파일 저장", "완료")
 
     # 실현손익 조회 버튼 클릭 이벤트 처리
     def Handle_pushButton4(self) :
