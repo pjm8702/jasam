@@ -7,7 +7,7 @@ from PyQt5 import uic
 
 TIMER2_INTERVAL = 1000*300   # 잔고 및 보유종목현황 실시간 인터벌
 TIMER3_INTERVAL = 1000*300   # 보유종목 등락 실시간 인터벌
-TIMER4_INTERVAL = 1000*30 # 보유종목 별 투자자현황 실시간 인터벌
+TIMER4_INTERVAL = 1000*3600 # 보유종목 별 투자자현황 실시간 인터벌
 
 # Qt Designer UI 파일
 form_class = uic.loadUiType("MyTrader.ui")[0]
@@ -377,7 +377,7 @@ class MyWindow(QMainWindow, form_class) :
         kakaoMsg = ''
 
         curTime = MyWindow.Get_CurTimeInt()
-        if self.checkBox_3.isChecked() : # and curTime >= 150000 and curTime <= 173000 :            
+        if self.checkBox_3.isChecked() and (curTime >= 90000 and curTime <= 100000) or (curTime >= 160000 and curTime <= 170000) :            
             for i in range(len(self.kiwoom.opw00018['multi'])) :
                 code = self.kiwoom.opw00018['multi'][i][0]
                 name = self.kiwoom.opw00018['multi'][i][1]
@@ -406,4 +406,3 @@ if __name__ == "__main__" :
     myWindow = MyWindow()
     myWindow.show()
     app.exec_()
-    
