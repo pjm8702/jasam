@@ -48,6 +48,9 @@ class MyWindow(QMainWindow, form_class) :
         # 첫 실행 시 잔고 및 보유종목현황 조회 실시
         self.Print_TableWidget1n2()
 
+        # 잔고 및 보유종목현황 csv 파일 저장 버튼 이벤트 설정
+        self.pushButton_7.clicked.connect(self.Handle_pushButton7)
+
         # 보유종목 일일정보 조회 버튼 이벤트 설정
         self.pushButton_2.clicked.connect(self.Handle_pushButton2)
 
@@ -169,7 +172,11 @@ class MyWindow(QMainWindow, form_class) :
             item.setTextAlignment(Qt.AlignVCenter | Qt.AlignRight)
             self.tableWidget.setItem(0, i, item)
         self.tableWidget.resizeRowsToContents()
-        #self.tableWidget.resizeColumnsToContents()
+    
+    # 잔고 및 보유종목현황 csv 파일 저장 버튼 클릭 이벤트 처리
+    def Handle_pushButton7(self):
+        self.kiwoom.Make_MyAccountInfoCsvFile()
+        passwd, ok = QInputDialog.getText(self, "잔고 및 보유종목현황", "완료")
 
     # 보유종목현황 출력
     def Print_tableWidget2(self) :
@@ -185,7 +192,6 @@ class MyWindow(QMainWindow, form_class) :
                 item.setTextAlignment(Qt.AlignVCenter | Qt.AlignRight)
                 self.tableWidget_2.setItem(i, j, item)
         self.tableWidget_2.resizeRowsToContents()
-        #self.tableWidget_2.resizeColumnsToContents()
 
     # 보유종목 일일정보 실시간 조회 이벤트 timeout
     def Handle_Timeout3(self) :

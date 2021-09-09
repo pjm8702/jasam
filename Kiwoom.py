@@ -194,9 +194,11 @@ class Kiwoom(QAxWidget) :
         if market == self.MARKET_KOSPI :
             marketKospi = pd.DataFrame({'code' : self.codeList, 'name' : self.nameList})
             marketKospi.to_csv("코스피종목정보.csv", index=False, encoding="UTF-8")
+            print(">> 코스피종목정보.csv is made")
         else :
             marketKosdaq = pd.DataFrame({'code' : self.codeList, 'name' : self.nameList})
             marketKosdaq.to_csv("코스닥종목정보.csv", index=False, encoding="UTF-8")
+            print(">> 코스닥종목정보.csv is made")
 
     # Opw00001 예수금상세현황요청
     def Get_Opw00001(self) :
@@ -256,13 +258,6 @@ class Kiwoom(QAxWidget) :
         tmp = self._get_comm_data(trCode, rqName, 0, "추정예탁자산")
         estTotDeposit = Kiwoom.change_format1(tmp)
         self.opw00018['single'].append(estTotDeposit)
-
-        if __name__ == "__main__" :
-            print(">> 계좌정보 (총매입금액, 총평가금액, 총평가손익금액, 총수익률(%), 추정예착자산)")
-            print(self.opw00018['single'])
-            tmpDf = pd.DataFrame({'예수금' : [self.opw00001[0]], '총매입금액' : [self.opw00018['single'][0]], '총평가금액' : [self.opw00018['single'][1]], '총평가손익금액' : [self.opw00018['single'][2]], '총수익률' :[self.opw00018['single'][3]], '추정예탁자산' : [self.opw00018['single'][4]]})
-            tmpDf.to_csv("계좌정보.csv", index=False, encoding="UTF-8")
-            print(">> 계좌정보.csv is made")
         
         tmpDf = pd.DataFrame({'종목번호' : [], '종목명' : [], '매입가' : [], '평가손익' : [], '수익률(%)' : [], '보유수량' : [], '매매가능수량' : [], '현재가' : []})
         cnt = self._get_repeat_cnt(trCode, rqName)
@@ -285,13 +280,19 @@ class Kiwoom(QAxWidget) :
             curPrice = Kiwoom.change_format1(tmp)
             
             self.opw00018['multi'].append([no, name, gain, rate, avgPrice, count, sellCount, curPrice])
-            tmpDf = tmpDf.append({'종목번호' : no, '종목명' : name, '매입가' : avgPrice, '평가손익' : gain, '수익률(%)' : rate, '보유수량' : count, '매매가능수량' : sellCount, '현재가' : curPrice}, ignore_index=True)
-            
-        if __name__ == "__main__" :
-            print(">> 보유주식정보 (종목번호, 종목명, 평가손익, 수익률(%), 매입가, 보유수량, 매매가능수량, 현재가)")
-            print(self.opw00018['multi'])
-            tmpDf.to_csv("보유주식정보.csv", index=False, encoding="UTF-8")
-            print(">> 보유주식정보.csv is made")
+
+    def Make_MyAccountInfoCsvFile(self) :
+        print(">> 계좌정보 (총매입금액, 총평가금액, 총평가손익금액, 총수익률(%), 추정예착자산)")
+        print(self.opw00018['single'])
+        tmpDf1 = pd.DataFrame({'예수금' : [self.opw00001[0]], '총매입금액' : [self.opw00018['single'][0]], '총평가금액' : [self.opw00018['single'][1]], '총평가손익금액' : [self.opw00018['single'][2]], '총수익률' : [self.opw00018['single'][3]], '추정예탁자산' : [self.opw00018['single'][4]]})
+        tmpDf1.to_csv("계좌정보.csv", index=False, encoding="UTF-8")
+        print(">> 계좌정보.csv is made")
+
+        tmpDf2 = pd.DataFrame(self.opw00018['multi'], columns=['종목번호', '종목명', '평가손익', '수익률(%)', '매입가', '보유수량', '매매가능수량', '현재가'])
+        print(">> 보유주식정보 (종목번호, 종목명, 평가손익, 수익률(%), 매입가, 보유수량, 매매가능수량, 현재가)")
+        print(self.opw00018['multi'])
+        tmpDf2.to_csv("보유주식정보.csv", index=False, encoding="UTF-8")
+        print(">> 보유주식정보.csv is made")
     
     # Opt10081 주식일봉차트조회요청
     def Get_Opt10081(self, code, date, multi) :
