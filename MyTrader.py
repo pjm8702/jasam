@@ -7,6 +7,7 @@ from PyQt5 import uic
 
 TIMER2_INTERVAL = 1000*300   # 잔고 및 보유종목현황 실시간 인터벌
 TIMER3_INTERVAL = 1000*300   # 보유종목 등락 실시간 인터벌
+TIMER4_INTERVAL = 1000*30 # 보유종목 별 투자자현황 실시간 인터벌
 
 # Qt Designer UI 파일
 form_class = uic.loadUiType("MyTrader.ui")[0]
@@ -89,9 +90,15 @@ class MyWindow(QMainWindow, form_class) :
         self.pushButton_5.clicked.connect(self.Handle_pushButton5)
 
         # 보유종목 별 투자자현황 콤보박스 설정
+        self.comboBox.addItem("선택하세요.")
         for i in range(len(self.kiwoom.opw00018['multi'])) :
             self.comboBox.addItem(self.kiwoom.opw00018['multi'][i][1])
         self.comboBox.currentIndexChanged.connect(self.Handle_comboBox)
+
+        # 보유종목 별 투자자현황 실시간조회 이벤트 설정
+        self.timer4 = QTimer(self)
+        self.timer4.start(TIMER4_INTERVAL)
+        self.timer4.timeout.connect(self.Handle_Timeout4)
 
     @staticmethod
     def Get_CurTimeInt() :
@@ -212,7 +219,7 @@ class MyWindow(QMainWindow, form_class) :
             code = self.kiwoom.opw00018['multi'][i][0]
             self.kiwoom.Get_Opt10001(code)
         
-        kakaoMsgTitle = '종목명 | 현재가 | 전일대비 | 등락율(%)\n'
+        kakaoMsgTitle = '#종목정보#\n'
         kakaoMsg = ''
 
         cntRow = len(self.kiwoom.opt10001)
@@ -225,7 +232,11 @@ class MyWindow(QMainWindow, form_class) :
                 item = QTableWidgetItem(row[k])
                 item.setTextAlignment(Qt.AlignVCenter | Qt.AlignRight)
                 self.tableWidget_6.setItem(j, k, item)
-            kakaoMsg = kakaoMsg + row[0] + ' | ' + row[1] + ' | ' + row[2] + ' | ' + row[3] + '\n'
+            
+            if len(row[0]) >= 6 :
+                row[0] = row[0][0:6]
+            
+            kakaoMsg = kakaoMsg + str(j+1) + "." + row[0] + '\n\t현재:' + row[1] + '\n\t등락:' + row[2] + '\n\t비율:' + row[3] + '\n'
             self.tableWidget_6.resizeRowsToContents()
             
             if (j + 1) % 5 == 0 :
@@ -341,9 +352,13 @@ class MyWindow(QMainWindow, form_class) :
     # 보유종목별 투자자현황 콤보박스 선택 이벤트 처리
     def Handle_comboBox(self) :
         idx = self.comboBox.currentIndex()
-        code = self.kiwoom.opw00018['multi'][idx][0]
+        if idx != 0 :
+            self.Print_TableWidget7(idx)
+
+    # 보유종목 별 투자자현황 출력
+    def Print_TableWidget7(self, idx) :
+        code = self.kiwoom.opw00018['multi'][idx - 1][0]
         self.kiwoom.Get_Opt10059(code, self.kiwoom.MULTI_ONCE)
-        #self.kiwoom.Get_Opt10059(code, self.kiwoom.MULTI_ALL)
 
         self.tableWidget_7.setRowCount(len(self.kiwoom.opt10059))
         self.tableWidget_7.setColumnCount(len(self.kiwoom.opt10059[0]))
@@ -356,9 +371,39 @@ class MyWindow(QMainWindow, form_class) :
         self.tableWidget_7.resizeRowsToContents()
         self.kiwoom.Clear_Opt10059()
 
+    # 보유종목 별 투자자현황 실시간조회 이벤트 처리
+    def Handle_Timeout4(self) :
+        kakaoMsgTitle = '#투자자현황(100일)#\n'
+        kakaoMsg = ''
+
+        curTime = MyWindow.Get_CurTimeInt()
+        if self.checkBox_3.isChecked() : # and curTime >= 150000 and curTime <= 173000 :            
+            for i in range(len(self.kiwoom.opw00018['multi'])) :
+                code = self.kiwoom.opw00018['multi'][i][0]
+                name = self.kiwoom.opw00018['multi'][i][1]
+                person = 0
+                foreigner = 0
+                gigwan = 0
+
+                self.kiwoom.Get_Opt10059(code, self.kiwoom.MULTI_ONCE)
+                for j in range(len(self.kiwoom.opt10059)) :
+                    person += int(self.kiwoom.opt10059[j][3])
+                    foreigner += int(self.kiwoom.opt10059[j][4])
+                    gigwan += int(self.kiwoom.opt10059[j][5]) + int(self.kiwoom.opt10059[j][6])
+                self.kiwoom.Clear_Opt10059()
+
+                if len(name) >= 6 :
+                    name = name[0:6]
+                kakaoMsg = kakaoMsg + str(i+1) + "." + name + "\n\t개인:" + str(person) + "\n\t외인:" + str(foreigner) + "\n\t기관:" + str(gigwan) + "\n"
+
+            if (i + 1) % 5 == 0 :
+                Send_KakaoMessage(kakaoMsgTitle + kakaoMsg)
+                kakaoMsg = ''
+
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv)
     myWindow = MyWindow()
     myWindow.show()
     app.exec_()
+    

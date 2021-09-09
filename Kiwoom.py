@@ -214,9 +214,6 @@ class Kiwoom(QAxWidget) :
         tmp = self._get_comm_data(trCode, rqName, 0, "예수금")
         self.opw00001.append(Kiwoom.change_format1(tmp))
         
-        if __name__ == "__main__" :
-            print(f">> 예수금 : {self.opw00001[0]}")
-        
     # Opw00018 계좌평가잔고내역요청
     def Get_Opw00018(self) :
         self._set_input_value("계좌번호", self.accNo[0])
@@ -471,7 +468,7 @@ class Kiwoom(QAxWidget) :
     def Get_Opt10059(self, code, multi) :
         self._set_input_value("일자", self.today)
         self._set_input_value("종목코드", code)
-        self._set_input_value("금액수량구분", "1")
+        self._set_input_value("금액수량구분", "2")
         self._set_input_value("매매구분", "0")
         self._set_input_value("단위구분", "1000")
         self._comm_rq_data("opt10059_req", "opt10059", 0, self.SCREEN_NO)
@@ -481,7 +478,7 @@ class Kiwoom(QAxWidget) :
             time.sleep(self.TQ_REQ_TIME_INTERVAL)
             self._set_input_value("일자", self.today)
             self._set_input_value("종목코드", code)
-            self._set_input_value("금액수량구분", "1")
+            self._set_input_value("금액수량구분", "2")
             self._set_input_value("매매구분", "0")
             self._set_input_value("단위구분", "1000")
             self._comm_rq_data("opt10059_req", "opt10059", 2, self.SCREEN_NO)
@@ -493,16 +490,16 @@ class Kiwoom(QAxWidget) :
             date = self._get_comm_data(trCode, rqName, i, "일자")
             tmp = self._get_comm_data(trCode, rqName, i, "누적거래량")
             totVolume = Kiwoom.change_format1(tmp)
-            tmp = self._get_comm_data(trCode, rqName, i, "누적거래대금")
-            totCost = Kiwoom.change_format1(tmp)
-            tmp = self._get_comm_data(trCode, rqName, i, "개인투자자")
-            person = Kiwoom.change_format1(tmp)
-            tmp = self._get_comm_data(trCode, rqName, i, "외국인투자자")
-            foreigner = Kiwoom.change_format1(tmp)
-            tmp = self._get_comm_data(trCode, rqName, i, "기관계")
-            gigwan = Kiwoom.change_format1(tmp)
-            tmp = self._get_comm_data(trCode, rqName, i, "연기금")
-            yeongigeum = Kiwoom.change_format1(tmp)
+            totCost = self._get_comm_data(trCode, rqName, i, "누적거래대금")
+            #totCost = Kiwoom.change_format1(tmp)
+            person = self._get_comm_data(trCode, rqName, i, "개인투자자")
+            #person = Kiwoom.change_format1(tmp)
+            foreigner = self._get_comm_data(trCode, rqName, i, "외국인투자자")
+            #foreigner = Kiwoom.change_format1(tmp)
+            gigwan = self._get_comm_data(trCode, rqName, i, "기관계")
+            #gigwan = Kiwoom.change_format1(tmp)
+            yeongigeum = self._get_comm_data(trCode, rqName, i, "연기금등")
+            #yeongigeum = Kiwoom.change_format1(tmp)
             tmp = self._get_comm_data(trCode, rqName, i, "보험")
             assurance = Kiwoom.change_format1(tmp)
             tmp = self._get_comm_data(trCode, rqName, i, "은행")
@@ -561,4 +558,4 @@ if __name__ == "__main__" :
         code = kiwoom.opw00018['multi'][k][0]
         kiwoom.Get_Opt10059(code, kiwoom.MULTI_ONCE)
     kiwoom.Print_Opt10059()
-
+    
