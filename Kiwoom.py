@@ -281,6 +281,7 @@ class Kiwoom(QAxWidget) :
             
             self.opw00018['multi'].append([no, name, gain, rate, avgPrice, count, sellCount, curPrice])
 
+    # 계좌평가잔고내역 Csv 파일 저장
     def Make_MyAccountInfoCsvFile(self) :
         print(">> 계좌정보 (총매입금액, 총평가금액, 총평가손익금액, 총수익률(%), 추정예착자산)")
         print(self.opw00018['single'])
@@ -338,15 +339,6 @@ class Kiwoom(QAxWidget) :
         self.opt10081['close'].clear()
         self.opt10081['volume'].clear()
 
-    def Calc_UpDownRateToday(self, idx) :
-        gap = ((int(self.opt10081['close'][0]) - int(self.opt10081['close'][1])) / int(self.opt10081['close'][1])) * 100.0
-        gap = round(gap, 2)
-
-        if __name__ == "__main__" :
-            print(">> " + str(self.opw00018['multi'][idx][1]) + " 상승/하강률(%) : " + str(gap))
-
-        return gap
-
     # Opt10081 주식일봉차트조회요청 Rq 데이터 출력
     def Print_Opt10081(self, idx) :
         csvFileName = str(self.opw00018['multi'][idx][0]) + '_' + str(self.opw00018['multi'][idx][1]) + str('_Info.csv')
@@ -400,13 +392,6 @@ class Kiwoom(QAxWidget) :
         self.opt10074['single'].append(sellCommission)
         self.opt10074['single'].append(sellTax)
 
-        if __name__ == "__main__" :
-            print(">> 실현손익 (총매수금액, 총매도금액, 실현손익, 매매수수료, 매매세금)")
-            print(self.opt10074['single'])
-            tmpDf = pd.DataFrame({'총매수금액' : [self.opt10074['single'][0]], '총매도금액' : [self.opt10074['single'][1]], '실현손익' : [self.opt10074['single'][2]], '매매수수료' : [self.opt10074['single'][3]], '매매세금' :[self.opt10074['single'][4]]})
-            tmpDf.to_csv("실현손익.csv", index=False, encoding="UTF-8")
-            print(">> 실현손익.csv is made")
-
         tmpDf = pd.DataFrame({'일자' : [], '매수금액' : [], '매도금액' : [], '당일매도손익' : [], '당일매매수수료' :[], '당일매매세금' : []})
         cnt = self._get_repeat_cnt(trCode, rqName)
         for i in range(cnt) :
@@ -423,17 +408,25 @@ class Kiwoom(QAxWidget) :
             tax = Kiwoom.change_format1(tmp)
 
             self.opt10074['multi'].append([date, buyCost, sellCost, sellProfit, commission, tax])
-            tmpDf = tmpDf.append({'일자' : date, '매수금액' : buyCost, '매도금액' : sellCost, '당일매도손익' : sellProfit, '당일매매수수료' : commission, '당일매매세금' : tax}, ignore_index=True)
-
-        if __name__ == "__main__" :
-            print(">> 일자별 실현손익 (일자, 매수금액, 매도금액, 당일매도손익, 당일매매수수료, 당일매매세금)")
-            print(self.opt10074['multi'])
-            tmpDf.to_csv("일자별실현손익.csv", index=False, encoding="UTF-8")
-            print(">> 일자별실현손익.csv is made")
 
     def Clear_Opt10074(self) :
         self.opt10074['single'].clear()
         self.opt10074['multi'].clear()
+
+    # 실현손익 Csv 파일 저장
+    def Make_MyRealProfitCsvFile(self) :
+        print(">> 실현손익 (총매수금액, 총매도금액, 실현손익, 매매수수료, 매매세금)")
+        print(self.opt10074['single'])
+        tmpDf1 = pd.DataFrame({'총매수금액' : [self.opt10074['single'][0]], '총매도금액' : [self.opt10074['single'][1]], '실현손익' : [self.opt10074['single'][2]], '매매수수료' : [self.opt10074['single'][3]], '매매세금' :[self.opt10074['single'][4]]})
+        tmpDf1.to_csv("실현손익.csv", index=False, encoding="UTF-8")
+        print(">> 실현손익.csv is made")
+
+        print(">> 일자별 실현손익 (일자, 매수금액, 매도금액, 당일매도손익, 당일매매수수료, 당일매매세금)")
+        print(self.opt10074['multi'])
+        tmpDf2 = pd.DataFrame(self.opt10074['multi'], columns=['일자', '매수금액', '매도금액', '당일매도손익', '당일매매수수료', '당일매매세금'])
+        tmpDf2.to_csv("일자별실현손익.csv", index=False, encoding="UTF-8")
+        print(">> 일자별실현손익.csv is made")
+
 
     # Opt10001 주식기본정보요청
     def Get_Opt10001(self, code) :

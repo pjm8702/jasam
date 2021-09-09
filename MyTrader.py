@@ -74,6 +74,9 @@ class MyWindow(QMainWindow, form_class) :
         # 실현손익 조회 버튼 이벤트 설정
         self.pushButton_4.clicked.connect(self.Handle_pushButton4)
 
+        # 실현손익 csv 파일 저장 버튼 이벤트 설정
+        self.pushButton_8.clicked.connect(self.Handle_pushButton8)
+
         # 실현손익 조회 시작/종료 날짜 설정
         self.lineEdit.setText("20160101")
         self.lineEditStartDate = self.lineEdit.text()
@@ -297,12 +300,28 @@ class MyWindow(QMainWindow, form_class) :
                     item.setTextAlignment(Qt.AlignVCenter | Qt.AlignRight)
                     self.tableWidget_5.setItem(i, j, item)
             self.tableWidget_5.resizeRowsToContents()
+        else :
+           tmp, ok = QInputDialog.getText(self, "실현손익 조회", "시작날짜를 확인하세요.")
+        
         self.kiwoom.Clear_Opt10074()
 
     # 실현손익 조회를 위한 날짜 처리
     def Handle_lineEdit1n2(self) :
         self.lineEditStartDate = self.lineEdit.text()
         self.lineEdit_2EndDate = self.lineEdit_2.text()
+
+    # 실현손익 csv 파일 저장 버튼 클릭 이벤트 처리
+    def Handle_pushButton8(self) :
+        if len(self.kiwoom.opt10074['single']) == 0 :
+            if int(self.lineEdit_2EndDate) - int(self.lineEditStartDate) >= 0 :
+                self.kiwoom.Get_Opt10074(self.lineEditStartDate, self.lineEdit_2EndDate)
+            else :
+                tmp, ok = QInputDialog.getText(self, "실현손익 조회", "시작날짜를 확인하세요.")
+                return
+        
+        self.kiwoom.Make_MyRealProfitCsvFile()
+        tmp, ok = QInputDialog.getText(self, "실현손익 조회", "완료")
+        self.kiwoom.Clear_Opt10074()
 
     # 보유주식 일봉차트 자료 조회 버튼 클릭 이벤트 처리
     def Handle_pushButton5(self) :
