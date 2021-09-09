@@ -2,7 +2,6 @@ import sys
 import time
 import pandas as pd
 import datetime
-import Kakao
 from PyQt5.QtWidgets import *
 from PyQt5.QAxContainer import *
 from PyQt5.QtCore import *
@@ -42,6 +41,8 @@ class Kiwoom(QAxWidget) :
         # multi : 일자, 매수금액, 매도금액, 당일매도손익, 당일매매수수료, 당일매매세금
         self.opt10074 = {'single' : [], 'multi' : []}
         self.opt10001 = []  # 종목명, 현재가, 전일대비, 등락율, 거래량, PER, EPS, ROE, PBR, 매출액, 영업이익, 당기순이익
+        self.opt10059 = []  # 일자, 누적거래량, 누적거래대금, 개인투자자, 외국인투자자, 기관계, 금융투자, 보험, 은행, 연기금
+
 
     @staticmethod   # 금액 정보 타입 처리
     def change_format1(data) :
@@ -136,6 +137,8 @@ class Kiwoom(QAxWidget) :
             self.Handle_Opt10074(rqName, trCode)
         elif rqName == 'opt10001_req' :
             self.Handle_Opt10001(rqName, trCode)
+        elif rqName == 'opt10059_req' :
+            self.Handle_Opt10059(rqName, trCode)
             
         try :
             self.tr_event_loop.exit()
@@ -230,8 +233,8 @@ class Kiwoom(QAxWidget) :
     
     # Opw00018 계좌평가잔고내역요청 Rq 데이터 이벤트 처리
     def Handle_Opw00018(self, rqName, trCode) :
-        self.opw00018['single'] = []
-        self.opw00018['multi'] = []
+        self.opw00018['single'].clear()
+        self.opw00018['multi'].clear()
 
         tmp = self._get_comm_data(trCode, rqName, 0, "총매입금액")
         totBuyMoney = Kiwoom.change_format1(tmp)
@@ -298,7 +301,7 @@ class Kiwoom(QAxWidget) :
         self._comm_rq_data("opt10081_req", "opt10081", 0, self.SCREEN_NO)
         time.sleep(self.TQ_REQ_TIME_INTERVAL)
 
-        while self.remained_data == True and multi == self.MULTI_ALL:
+        while self.remained_data == True and multi == self.MULTI_ALL :
             time.sleep(self.TQ_REQ_TIME_INTERVAL)
             self._set_input_value("종목코드", code)
             self._set_input_value("기준일자", date)
@@ -426,6 +429,10 @@ class Kiwoom(QAxWidget) :
             tmpDf.to_csv("일자별실현손익.csv", index=False, encoding="UTF-8")
             print(">> 일자별실현손익.csv is made")
 
+    def Clear_Opt10074(self) :
+        self.opt10074['single'].clear()
+        self.opt10074['multi'].clear()
+
     # Opt10001 주식기본정보요청
     def Get_Opt10001(self, code) :
         self._set_input_value("종목코드", code)
@@ -465,6 +472,59 @@ class Kiwoom(QAxWidget) :
     def Clear_Opt10001(self) :
         self.opt10001.clear()
 
+    # Opt10059 종목별투자자기관별요청
+    def Get_Opt10059(self, code, multi) :
+        self._set_input_value("일자", self.today)
+        self._set_input_value("종목코드", code)
+        self._set_input_value("금액수량구분", "1")
+        self._set_input_value("매매구분", "0")
+        self._set_input_value("단위구분", "1000")
+        self._comm_rq_data("opt10059_req", "opt10059", 0, self.SCREEN_NO)
+        time.sleep(self.TQ_REQ_TIME_INTERVAL)
+
+        while self.remained_data == True and multi == self.MULTI_ALL :
+            time.sleep(self.TQ_REQ_TIME_INTERVAL)
+            self._set_input_value("일자", self.today)
+            self._set_input_value("종목코드", code)
+            self._set_input_value("금액수량구분", "1")
+            self._set_input_value("매매구분", "0")
+            self._set_input_value("단위구분", "1000")
+            self._comm_rq_data("opt10059_req", "opt10059", 2, self.SCREEN_NO)
+
+    # Opt10059 종목별투자자기관별요청 Rq 데이터 이벤트 처리
+    def Handle_Opt10059(self, rqName, trCode) :
+        cnt = self._get_repeat_cnt(trCode, rqName)
+        for i in range(cnt) :
+            date = self._get_comm_data(trCode, rqName, i, "일자")
+            tmp = self._get_comm_data(trCode, rqName, i, "누적거래량")
+            totVolume = Kiwoom.change_format1(tmp)
+            tmp = self._get_comm_data(trCode, rqName, i, "누적거래대금")
+            totCost = Kiwoom.change_format1(tmp)
+            tmp = self._get_comm_data(trCode, rqName, i, "개인투자자")
+            person = Kiwoom.change_format1(tmp)
+            tmp = self._get_comm_data(trCode, rqName, i, "외국인투자자")
+            foreigner = Kiwoom.change_format1(tmp)
+            tmp = self._get_comm_data(trCode, rqName, i, "기관계")
+            gigwan = Kiwoom.change_format1(tmp)
+            tmp = self._get_comm_data(trCode, rqName, i, "연기금")
+            yeongigeum = Kiwoom.change_format1(tmp)
+            tmp = self._get_comm_data(trCode, rqName, i, "보험")
+            assurance = Kiwoom.change_format1(tmp)
+            tmp = self._get_comm_data(trCode, rqName, i, "은행")
+            bank = Kiwoom.change_format1(tmp)
+        
+            self.opt10059.append([date, totVolume, totCost, person, foreigner, gigwan, yeongigeum, assurance, bank])
+
+    # Opt10059 종목별투자자기관별요청 출력
+    def Print_Opt10059(self) :
+        if __name__ == "__main__" :
+            print(">> 종목별투자자기관별요청 (일자, 누적거래량, 누적거래대금, 개인투자자, 외국인투자자, 기관계, 연기금, 보험, 은행)")
+            print(self.opt10059)
+
+    # Opt10059 종목별투자자기관별요청
+    def Clear_Opt10059(self) :
+        self.opt10059.clear()
+
     def Handle_ReceiveMessage(self, screenNo, rqName, trCode, msg) :
         print(">> " + trCode + "_" + msg)
 
@@ -494,11 +554,15 @@ if __name__ == "__main__" :
     #kiwoom.Get_Opt10074("20160101", kiwoom.today)   # 일자별실현손익요청
 
     # 주식기본정보요청
-    i = 0
-    for i in range(len(kiwoom.opw00018['multi'])) :
-        code = kiwoom.opw00018['multi'][i][0]
-        kiwoom.Get_Opt10001(code)
-    kiwoom.Print_Opt10001()
+    #for j in range(len(kiwoom.opw00018['multi'])) :
+    #    code = kiwoom.opw00018['multi'][j][0]
+    #    kiwoom.Get_Opt10001(code)
+    #kiwoom.Print_Opt10001()
 
     #Kakao.Send_KakaoMessage("Test Message!!!")
 
+    # 종목별투자자기관별요청
+    for k in range(len(kiwoom.opw00018['multi'])) :
+        code = kiwoom.opw00018['multi'][k][0]
+        kiwoom.Get_Opt10059(code, kiwoom.MULTI_ONCE)
+    kiwoom.Print_Opt10059()
