@@ -566,3 +566,4 @@ if __name__ == "__main__" :
         code = kiwoom.opw00018['multi'][k][0]
         kiwoom.Get_Opt10059(code, kiwoom.MULTI_ONCE)
     kiwoom.Print_Opt10059()
+
