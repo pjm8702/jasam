@@ -22,7 +22,7 @@ class MyWindow(QMainWindow, form_class) :
         # 매일 오전 실행 시 카톡 메시지 전송을 위해 토큰 Get
         curTime = MyWindow.Get_CurTimeInt()
         if curTime >= 70000 and curTime <= 90000 :
-            Kakao.Get_KakaoToken()
+            Get_KakaoToken()
 
         self.kiwoom = Kiwoom()
         self.kiwoom.Comm_Connect()  # 키움 접속
@@ -44,6 +44,8 @@ class MyWindow(QMainWindow, form_class) :
         self.timer2 = QTimer(self)
         self.timer2.start(TIMER2_INTERVAL)
         self.timer2.timeout.connect(self.Handle_Timeout2)
+        # 실행 시 조회
+        self.Print_TableWidget1n2()
 
         # 보유종목 일일정보 조회 버튼 이벤트 설정
         self.pushButton_2.clicked.connect(self.Handle_pushButton2)
@@ -75,6 +77,11 @@ class MyWindow(QMainWindow, form_class) :
 
         # 보유종목 일봉차트 자료 조회
         self.pushButton_5.clicked.connect(self.Handle_pushButton5)
+
+        # 보유종목 별 투자자현황 콤보박스 설정
+        for i in range(len(self.kiwoom.opw00018['multi'])) :
+            self.comboBox.addItem(self.kiwoom.opw00018['multi'][i][1])
+        self.comboBox.currentIndexChanged.connect(self.Handle_comboBox)
 
     @staticmethod
     def Get_CurTimeInt() :
@@ -186,13 +193,8 @@ class MyWindow(QMainWindow, form_class) :
     def Handle_pushButton2(self) :
         self.Print_TableWidget_6()
 
-    # 보유종목 일일정보 출력
+    # 보유종목 일일정보 출력 (종목명 | 현재가 | 대비 | 등락 | 거래량)
     def Print_TableWidget_6(self) :
-        # 종목명 | 현재가 | 대비 | 등락 | 거래량
-        if len(self.kiwoom.opw00018['multi']) == 0 :
-            self.kiwoom.Get_Opw00001()
-            self.kiwoom.Get_Opw00018()
-
         for i in range(len(self.kiwoom.opw00018['multi'])) :
             code = self.kiwoom.opw00018['multi'][i][0]
             self.kiwoom.Get_Opt10001(code)
@@ -214,7 +216,7 @@ class MyWindow(QMainWindow, form_class) :
             self.tableWidget_6.resizeRowsToContents()
             
             if (j + 1) % 5 == 0 :
-                Kakao.Send_KakaoMessage(kakaoMsgTitle + kakaoMsg)
+                Send_KakaoMessage(kakaoMsgTitle + kakaoMsg)
                 kakaoMsg = ''
 
         self.kiwoom.Clear_Opt10001()
@@ -279,6 +281,7 @@ class MyWindow(QMainWindow, form_class) :
                     item.setTextAlignment(Qt.AlignVCenter | Qt.AlignRight)
                     self.tableWidget_5.setItem(i, j, item)
             self.tableWidget_5.resizeRowsToContents()
+        self.kiwoom.Clear_Opt10074()
 
     # 실현손익 조회를 위한 날짜 처리
     def Handle_lineEdit1n2(self) :
@@ -287,10 +290,6 @@ class MyWindow(QMainWindow, form_class) :
 
     # 보유주식 일봉차트 자료 조회 버튼 클릭 이벤트 처리
     def Handle_pushButton5(self) :
-        if len(self.kiwoom.opw00018['multi']) == 0 :
-            self.kiwoom.Get_Opw00001()
-            self.kiwoom.Get_Opw00018()
-
         bar = 0
         self.progressBar.setValue(bar)
         upStep = self.progressBar.maximum() / len(self.kiwoom.opw00018['multi'])
@@ -303,6 +302,24 @@ class MyWindow(QMainWindow, form_class) :
             self.progressBar.setValue(bar)
         
         tmp, ok = QInputDialog.getText(self, "보유주식 일봉차트 자료 조회", "완료...csv 파일을 확인하세요.")
+
+    # 보유종목별 투자자현황 콤보박스 선택 이벤트 처리
+    def Handle_comboBox(self) :
+        idx = self.comboBox.currentIndex()
+        code = self.kiwoom.opw00018['multi'][idx][0]
+        self.kiwoom.Get_Opt10059(code, self.kiwoom.MULTI_ONCE)
+        #self.kiwoom.Get_Opt10059(code, self.kiwoom.MULTI_ALL)
+
+        self.tableWidget_7.setRowCount(len(self.kiwoom.opt10059))
+        self.tableWidget_7.setColumnCount(len(self.kiwoom.opt10059[0]))
+        for i in range(len(self.kiwoom.opt10059)) :
+            row = self.kiwoom.opt10059[i]
+            for j in range(len(row)) :
+                item = QTableWidgetItem(row[j])
+                item.setTextAlignment(Qt.AlignVCenter | Qt.AlignRight)
+                self.tableWidget_7.setItem(i, j, item)
+        self.tableWidget_7.resizeRowsToContents()
+        self.kiwoom.Clear_Opt10059()
 
 
 if __name__ == "__main__" :
