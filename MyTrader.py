@@ -236,8 +236,9 @@ class MyWindow(QMainWindow, form_class) :
             
             if len(row[0]) >= 6 :
                 row[0] = row[0][0:6]
-                if float(row[3]) >= 3.0 or float(row[3]) <= -2.0 :
-                    sendFlg = 1
+            
+            if float(row[3]) >= 3.0 or float(row[3]) <= -2.0 :
+                sendFlg = 1
             
             kakaoMsg = kakaoMsg + str(j+1) + "." + row[0] + '\n\t현재:' + row[1] + '\n\t등락:' + row[2] + '\n\t비율:' + row[3] + '\n'
             self.tableWidget_6.resizeRowsToContents()
