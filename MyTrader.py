@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5 import uic
 
-TIMER2_INTERVAL = 1000*120   # 잔고 및 보유종목현황 실시간 인터벌
+TIMER2_INTERVAL = 1000*300   # 잔고 및 보유종목현황 실시간 인터벌
 TIMER3_INTERVAL = 1000*120   # 보유종목 등락 실시간 인터벌
 TIMER4_INTERVAL = 1000*3600 # 보유종목 별 투자자현황 실시간 인터벌
 
@@ -377,32 +377,33 @@ class MyWindow(QMainWindow, form_class) :
 
     # 보유종목 별 투자자현황 실시간조회 이벤트 처리
     def Handle_Timeout4(self) :
-        kakaoMsgTitle = '#투자자현황(100일)#\n'
-        kakaoMsg = ''
-
         curTime = MyWindow.Get_CurTimeInt()
-        if self.checkBox_3.isChecked() and (curTime >= 90000 and curTime <= 100000) or (curTime >= 160000 and curTime <= 170000) :            
+        if self.checkBox_3.isChecked() and (curTime >= 90000 and curTime <= 100000) or (curTime >= 160000 and curTime <= 170000) :    
             for i in range(len(self.kiwoom.opw00018['multi'])) :
                 code = self.kiwoom.opw00018['multi'][i][0]
                 name = self.kiwoom.opw00018['multi'][i][1]
-                person = 0
-                foreigner = 0
-                gigwan = 0
+                buyer = []
+                buyerIdx = 0
+                kakaoMsg = ''
+                tmpPerson = 0
+                tmpForeigner = 0
+                tmpGigwan = 0
 
                 self.kiwoom.Get_Opt10059(code, self.kiwoom.MULTI_ONCE)
                 for j in range(len(self.kiwoom.opt10059)) :
-                    person += int(self.kiwoom.opt10059[j][3])
-                    foreigner += int(self.kiwoom.opt10059[j][4])
-                    gigwan += int(self.kiwoom.opt10059[j][5]) + int(self.kiwoom.opt10059[j][6])
+                    tmpPerson += int(self.kiwoom.opt10059[j][3])
+                    tmpForeigner += int(self.kiwoom.opt10059[j][4])
+                    tmpGigwan += int(self.kiwoom.opt10059[j][5]) + int(self.kiwoom.opt10059[j][6])
+                    
+                    if j == 4 or j == 9 or j == 29 or j == 59 or j == 99 :
+                        buyer.append([tmpPerson, tmpForeigner, tmpGigwan])
+                        kakaoMsg = kakaoMsg + str(j+1) + "일간\n" + "\t개인:" + str(buyer[buyerIdx][0]) + "\n\t외인:" + str(buyer[buyerIdx][1]) + "\n\t기관:" + str(buyer[buyerIdx][2]) + "\n"
+                        buyerIdx += 1
                 self.kiwoom.Clear_Opt10059()
 
                 if len(name) >= 6 :
                     name = name[0:6]
-                kakaoMsg = kakaoMsg + str(i+1) + "." + name + "\n\t개인:" + str(person) + "\n\t외인:" + str(foreigner) + "\n\t기관:" + str(gigwan) + "\n"
-
-            if (i + 1) % 5 == 0 :
-                Send_KakaoMessage(kakaoMsgTitle + kakaoMsg)
-                kakaoMsg = ''
+                Send_KakaoMessage("#" + name + "#\n" + kakaoMsg)
 
 
 if __name__ == "__main__" :
