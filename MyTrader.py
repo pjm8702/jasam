@@ -5,8 +5,8 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5 import uic
 
-TIMER2_INTERVAL = 1000*300   # 잔고 및 보유종목현황 실시간 인터벌
-TIMER3_INTERVAL = 1000*300   # 보유종목 등락 실시간 인터벌
+TIMER2_INTERVAL = 1000*120   # 잔고 및 보유종목현황 실시간 인터벌
+TIMER3_INTERVAL = 1000*120   # 보유종목 등락 실시간 인터벌
 TIMER4_INTERVAL = 1000*3600 # 보유종목 별 투자자현황 실시간 인터벌
 
 # Qt Designer UI 파일
@@ -221,6 +221,7 @@ class MyWindow(QMainWindow, form_class) :
         
         kakaoMsgTitle = '#종목정보#\n'
         kakaoMsg = ''
+        sendFlg = 0
 
         cntRow = len(self.kiwoom.opt10001)
         cntCol = len(self.kiwoom.opt10001[0])
@@ -235,13 +236,16 @@ class MyWindow(QMainWindow, form_class) :
             
             if len(row[0]) >= 6 :
                 row[0] = row[0][0:6]
+                if float(row[3]) >= 3.0 or float(row[3]) <= -2.0 :
+                    sendFlg = 1
             
             kakaoMsg = kakaoMsg + str(j+1) + "." + row[0] + '\n\t현재:' + row[1] + '\n\t등락:' + row[2] + '\n\t비율:' + row[3] + '\n'
             self.tableWidget_6.resizeRowsToContents()
             
-            if (j + 1) % 5 == 0 :
+            if (j + 1) % 5 == 0 and sendFlg == 1:
                 Send_KakaoMessage(kakaoMsgTitle + kakaoMsg)
                 kakaoMsg = ''
+                sendFlg = 0
 
         self.kiwoom.Clear_Opt10001()
 
