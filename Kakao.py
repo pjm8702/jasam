@@ -47,6 +47,25 @@ def Get_KakaoToken() :
         json.dump(tokens, fp)
     print(tokens)
 
+def Update_KakaoToken() :
+    with open(r"C:\Users\pjm87\Documents\Coding\jasam\elephant\kakao_code.json","r") as fp:
+        tokens = json.load(fp)
+    refreshToken = tokens['refresh_token']
+
+    url = "https://kauth.kakao.com/oauth/token"
+
+    data = {
+        "grant_type": "refresh_token",
+        "client_id": "7b38b6fab1cbdbfda1d02061d673ca60",
+        "refresh_token": refreshToken
+    }
+    response = requests.post(url, data=data)
+    tokens = response.json()
+
+    with open("kakao_code.json", "w") as fp:
+        json.dump(tokens, fp)
+    print(tokens)
+
 def Send_KakaoMessage(msg) :
     with open(r"C:\Users\pjm87\Documents\Coding\jasam\elephant\kakao_code.json","r") as fp:
         tokens = json.load(fp)
@@ -74,5 +93,7 @@ def Send_KakaoMessage(msg) :
 
 
 if __name__ == "__main__" :
-    Get_KakaoToken()
+    #Get_KakaoToken()
+    Send_KakaoMessage("Test Message to Me!!")
+    Update_KakaoToken()
     Send_KakaoMessage("Test Message to Me!!")

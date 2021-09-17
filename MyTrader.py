@@ -1,4 +1,5 @@
 import sys
+import os
 from Kakao import *
 from Kiwoom import *
 from PyQt5.QtWidgets import *
@@ -6,19 +7,22 @@ from PyQt5.QtCore import *
 from PyQt5 import uic
 
 TIMER2_INTERVAL = 1000*300   # 잔고 및 보유종목현황 실시간 인터벌
-TIMER3_INTERVAL = 1000*120   # 보유종목 등락 실시간 인터벌
+TIMER3_INTERVAL = 1000*300   # 보유종목 등락 실시간 인터벌
 TIMER4_INTERVAL = 1000*3600 # 보유종목 별 투자자현황 실시간 인터벌
+TIMER5_INTERVAL = 1000*3600*6   # 카카오톡 토큰 업데이트 인터벌
+
 
 # Qt Designer UI 파일
 form_class = uic.loadUiType("MyTrader.ui")[0]
 
 class MyWindow(QMainWindow, form_class) :
+    # Constructor
     def __init__(self) :
         super().__init__()
         self.setupUi(self)
 
-        self.lineEditStartDate = ''
-        self.lineEdit_2EndDate = ''
+        self.lineEditStartDate = '' # 실현손익 조회 시작날짜
+        self.lineEdit_2EndDate = '' # 실현손익 조회 종료날짜
 
         # 매일 오전 실행 시 카톡 메시지 전송을 위해 토큰 Get
         curTime = MyWindow.Get_CurTimeInt()
@@ -28,12 +32,11 @@ class MyWindow(QMainWindow, form_class) :
         self.kiwoom = Kiwoom()
         self.kiwoom.Comm_Connect()  # 키움 접속
         self.kiwoom.Get_LoginInfo() # 로그인 정보 Get
-        self.kiwoom.Make_StrDate()  # 오늘, 어제 날짜 처리
-        
-        # 접속정보 출력
-        self.Print_TextBrowser()
+        self.kiwoom.Make_StrDate()  # 오늘, 어제 날짜 문자열 처리
 
-        # Status Bar Timer Event 설정
+        self.Print_TextBrowser()    # 접속정보 출력
+
+        # Window 하단 Status Bar Timer Event 설정
         self.timer = QTimer(self)
         self.timer.start(1000)
         self.timer.timeout.connect(self.Handle_Timeout)
@@ -99,6 +102,15 @@ class MyWindow(QMainWindow, form_class) :
         self.timer4 = QTimer(self)
         self.timer4.start(TIMER4_INTERVAL)
         self.timer4.timeout.connect(self.Handle_Timeout4)
+
+        # 카카오톡 토큰 업데이트 이벤트 설정
+        self.timer5 = QTimer(self)
+        self.timer5.start(TIMER5_INTERVAL)
+        self.timer5.timeout.connect(self.Handle_Timeout5)
+
+        # 카카오톡 수동 토큰 얻기, 갱신 버튼 이벤트 설정
+        self.pushButton_9.clicked.connect(self.Handle_pushButton9)
+        self.pushButton_10.clicked.connect(self.Handle_pushButton10)
 
     @staticmethod
     def Get_CurTimeInt() :
@@ -208,7 +220,7 @@ class MyWindow(QMainWindow, form_class) :
         curTime = MyWindow.Get_CurTimeInt()
         if self.checkBox_2.isChecked() and curTime >= 90000 and curTime <= 153000 :
             self.Print_TableWidget_6()
-
+        
     # 보유종목 일일정보 실시간 조회 버튼 클릭 이벤트 처리
     def Handle_pushButton2(self) :
         self.Print_TableWidget_6()
@@ -405,6 +417,18 @@ class MyWindow(QMainWindow, form_class) :
                 if len(name) >= 6 :
                     name = name[0:6]
                 Send_KakaoMessage("#" + name + "#\n" + kakaoMsg)
+
+    # 카카오톡 토큰 만료 시 갱신 이벤트 핸들러
+    def Handle_Timeout5(self) :
+        Update_KakaoToken()
+
+    # 카카오톡 수동 토큰 얻기 버튼 클릭 이벤트 핸들러
+    def Handle_pushButton9(self) :
+        Get_KakaoToken()
+
+    # 카카오톡 수동 토큰 갱신 버튼 클릭 이벤트 핸들러
+    def Handle_pushButton10(self) :
+        Update_KakaoToken()
 
 
 if __name__ == "__main__" :

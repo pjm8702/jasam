@@ -525,14 +525,14 @@ if __name__ == "__main__" :
     app = QApplication(sys.argv)
     kiwoom = Kiwoom()
     
-    kiwoom.Make_StrDate()   # 오늘, 어제 날짜 처리
+    #kiwoom.Make_StrDate()   # 오늘, 어제 날짜 처리
 
     kiwoom.Comm_Connect()   # 키움 접속
     kiwoom.Get_LoginInfo()  # 로그인 정보
-    #kiwoom.Get_AllCodeName(kiwoom.MARKET_KOSPI) # 코스피 종목코드 및 종목명
-    #kiwoom.Get_AllCodeName(kiwoom.MARKET_KOSDAQ)    # 코스닥 종목코드 및 종목명
-    kiwoom.Get_Opw00001()   # 예수금상세현황요청
-    kiwoom.Get_Opw00018()   # 계좌평가잔고내역요청
+    kiwoom.Get_AllCodeName(kiwoom.MARKET_KOSPI) # 코스피 종목코드 및 종목명
+    kiwoom.Get_AllCodeName(kiwoom.MARKET_KOSDAQ)    # 코스닥 종목코드 및 종목명
+    #kiwoom.Get_Opw00001()   # 예수금상세현황요청
+    #kiwoom.Get_Opw00018()   # 계좌평가잔고내역요청
     
     # 보유주식 주식일봉차트조회요청
     #gap = 0
@@ -554,8 +554,9 @@ if __name__ == "__main__" :
     #Kakao.Send_KakaoMessage("Test Message!!!")
 
     # 종목별투자자기관별요청
-    for k in range(len(kiwoom.opw00018['multi'])) :
-        code = kiwoom.opw00018['multi'][k][0]
-        kiwoom.Get_Opt10059(code, kiwoom.MULTI_ONCE)
-    kiwoom.Print_Opt10059()
+    #for k in range(len(kiwoom.opw00018['multi'])) :
+    #    code = kiwoom.opw00018['multi'][k][0]
+    #    kiwoom.Get_Opt10059(code, kiwoom.MULTI_ONCE)
+    #kiwoom.Print_Opt10059()
     
+    # 전체 종목에서 조건에 맞는 종목 검색

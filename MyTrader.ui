@@ -510,7 +510,7 @@
     <property name="geometry">
      <rect>
       <x>992</x>
-      <y>10</y>
+      <y>420</y>
       <width>141</width>
       <height>41</height>
      </rect>
@@ -523,7 +523,7 @@
     <property name="geometry">
      <rect>
       <x>1141</x>
-      <y>20</y>
+      <y>430</y>
       <width>161</width>
       <height>23</height>
      </rect>
@@ -542,7 +542,7 @@
      </rect>
     </property>
     <property name="title">
-     <string>보유종목 별 투자자현황</string>
+     <string>보유종목 투자자현황</string>
     </property>
     <widget class="QComboBox" name="comboBox">
      <property name="geometry">
@@ -620,6 +620,58 @@
      </property>
      <property name="text">
       <string>실시간조회</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_7">
+    <property name="geometry">
+     <rect>
+      <x>990</x>
+      <y>80</y>
+      <width>301</width>
+      <height>251</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>실시간 조건 검색</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_8">
+    <property name="geometry">
+     <rect>
+      <x>990</x>
+      <y>10</y>
+      <width>301</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>카카오톡 메시지</string>
+    </property>
+    <widget class="QPushButton" name="pushButton_9">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>131</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>카톡 토큰 얻기</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_10">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>20</y>
+       <width>131</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>카톡 토큰 갱신</string>
      </property>
     </widget>
    </widget>
