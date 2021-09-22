@@ -112,12 +112,14 @@ class MyWindow(QMainWindow, form_class) :
         self.pushButton_9.clicked.connect(self.Handle_pushButton9)
         self.pushButton_10.clicked.connect(self.Handle_pushButton10)
 
+
     @staticmethod
     def Get_CurTimeInt() :
         curTime = QTime.currentTime()
         curTime = int(curTime.toString("hhmmss"))
         return curTime
-        
+
+
     # 계좌비밀번호 입력 다이얼로그 출력
     def Print_PasswdDialog(self) :
         if self.kiwoom.passwd == None :
@@ -126,6 +128,7 @@ class MyWindow(QMainWindow, form_class) :
                 self.kiwoom.passwd = passwd
             else :
                 self.kiwoom.passwd = None
+
 
     # 접속정보 출력
     def Print_TextBrowser(self) :
@@ -146,6 +149,7 @@ class MyWindow(QMainWindow, form_class) :
         else :
             self.textBrowser.append("방화벽설정 : 해지")
 
+
     # 창 하단 Status Bar 시간 출력 Timeout
     def Handle_Timeout(self) :
         curTime = QTime.currentTime()
@@ -160,16 +164,19 @@ class MyWindow(QMainWindow, form_class) :
 
         self.statusbar.showMessage(stateMsg + " | " + timeMsg)
 
+
     # 잔고 및 보유종목현황 실시간 조회 이벤트 Timeout
     def Handle_Timeout2(self) :
         if self.checkBox.isChecked() :
             self.Print_PasswdDialog()
             self.Print_TableWidget1n2()
 
+
     # 잔고 및 보유종목현황 실시간 조회 버튼 이벤트 처리
     def Handle_pushButton(self) :
         self.Print_PasswdDialog()
         self.Print_TableWidget1n2()
+
 
     # 잔고 및 보유종목현황 출력
     def Print_TableWidget1n2(self) :
@@ -177,6 +184,7 @@ class MyWindow(QMainWindow, form_class) :
         self.kiwoom.Get_Opw00018()
         self.Print_tableWidget()
         self.Print_tableWidget2()
+
 
     # 잔고 출력
     def Print_tableWidget(self) :
@@ -194,11 +202,13 @@ class MyWindow(QMainWindow, form_class) :
             item.setTextAlignment(Qt.AlignVCenter | Qt.AlignRight)
             self.tableWidget.setItem(0, i, item)
         self.tableWidget.resizeRowsToContents()
-    
+
+
     # 잔고 및 보유종목현황 csv 파일 저장 버튼 클릭 이벤트 처리
     def Handle_pushButton7(self):
         self.kiwoom.Make_MyAccountInfoCsvFile()
         passwd, ok = QInputDialog.getText(self, "잔고 및 보유종목현황", "완료")
+
 
     # 보유종목현황 출력
     def Print_tableWidget2(self) :
@@ -215,15 +225,18 @@ class MyWindow(QMainWindow, form_class) :
                 self.tableWidget_2.setItem(i, j, item)
         self.tableWidget_2.resizeRowsToContents()
 
+
     # 보유종목 일일정보 실시간 조회 이벤트 timeout
     def Handle_Timeout3(self) :
         curTime = MyWindow.Get_CurTimeInt()
         if self.checkBox_2.isChecked() and curTime >= 90000 and curTime <= 153000 :
             self.Print_TableWidget_6()
-        
+
+
     # 보유종목 일일정보 실시간 조회 버튼 클릭 이벤트 처리
     def Handle_pushButton2(self) :
         self.Print_TableWidget_6()
+
 
     # 보유종목 일일정보 출력 (종목명 | 현재가 | 대비 | 등락 | 거래량)
     def Print_TableWidget_6(self) :
@@ -262,10 +275,12 @@ class MyWindow(QMainWindow, form_class) :
 
         self.kiwoom.Clear_Opt10001()
 
+
     # 종목 조회 버튼 클릭 이벤트 처리
     def Handle_pushButton3(self) :
         self.kiwoom.Get_AllCodeName(self.market)
         self.Print_TableWideg3(self.market)
+
 
     # 종목 조회 라디오 버튼 클릭 이벤트 처리
     def Handle_radioButton1n2(self) :
@@ -273,6 +288,7 @@ class MyWindow(QMainWindow, form_class) :
             self.market = self.kiwoom.MARKET_KOSPI
         elif self.radioButton_2.isChecked() :
             self.market = self.kiwoom.MARKET_KOSDAQ
+
 
     # 코스피 or 코스닥 전체 종목정보 출력
     def Print_TableWideg3(self, market) :
@@ -298,12 +314,14 @@ class MyWindow(QMainWindow, form_class) :
             self.tableWidget_3.setItem(i, 1, item2)
         self.tableWidget_3.resizeRowsToContents()
 
+
     # 종목 조회 csv 파일 저장 버튼 클릭 이벤트 처리
     def Handle_pushButton6(self) :
         if len(self.kiwoom.codeList) == 0 :
             self.kiwoom.Get_AllCodeName(self.market)
         self.kiwoom.Make_CodeNameCsvFile(self.market)
         tmp, ok = QInputDialog.getText(self, "종목 조회 csv 파일 저장", "완료")
+
 
     # 실현손익 조회 버튼 클릭 이벤트 처리
     def Handle_pushButton4(self) :
@@ -333,10 +351,12 @@ class MyWindow(QMainWindow, form_class) :
         
         self.kiwoom.Clear_Opt10074()
 
+
     # 실현손익 조회를 위한 날짜 처리
     def Handle_lineEdit1n2(self) :
         self.lineEditStartDate = self.lineEdit.text()
         self.lineEdit_2EndDate = self.lineEdit_2.text()
+
 
     # 실현손익 csv 파일 저장 버튼 클릭 이벤트 처리
     def Handle_pushButton8(self) :
@@ -350,6 +370,7 @@ class MyWindow(QMainWindow, form_class) :
         self.kiwoom.Make_MyRealProfitCsvFile()
         tmp, ok = QInputDialog.getText(self, "실현손익 조회", "완료")
         self.kiwoom.Clear_Opt10074()
+
 
     # 보유주식 일봉차트 자료 조회 버튼 클릭 이벤트 처리
     def Handle_pushButton5(self) :
@@ -366,11 +387,13 @@ class MyWindow(QMainWindow, form_class) :
         
         tmp, ok = QInputDialog.getText(self, "보유주식 일봉차트 자료 조회", "완료...csv 파일을 확인하세요.")
 
+
     # 보유종목별 투자자현황 콤보박스 선택 이벤트 처리
     def Handle_comboBox(self) :
         idx = self.comboBox.currentIndex()
         if idx != 0 :
             self.Print_TableWidget7(idx)
+
 
     # 보유종목 별 투자자현황 출력
     def Print_TableWidget7(self, idx) :
@@ -387,6 +410,7 @@ class MyWindow(QMainWindow, form_class) :
                 self.tableWidget_7.setItem(i, j, item)
         self.tableWidget_7.resizeRowsToContents()
         self.kiwoom.Clear_Opt10059()
+
 
     # 보유종목 별 투자자현황 실시간조회 이벤트 처리
     def Handle_Timeout4(self) :
@@ -406,7 +430,7 @@ class MyWindow(QMainWindow, form_class) :
                 for j in range(len(self.kiwoom.opt10059)) :
                     tmpPerson += int(self.kiwoom.opt10059[j][3])
                     tmpForeigner += int(self.kiwoom.opt10059[j][4])
-                    tmpGigwan += int(self.kiwoom.opt10059[j][5]) + int(self.kiwoom.opt10059[j][6])
+                    tmpGigwan += int(self.kiwoom.opt10059[j][5]) + int(self.kiwoom.opt10059[j][6]) + int(self.kiwoom.opt10059[j][7]) + int(self.kiwoom.opt10059[j][8]) + int(self.kiwoom.opt10059[j][9])
                     
                     if j == 4 or j == 9 or j == 29 or j == 59 or j == 99 :
                         buyer.append([tmpPerson, tmpForeigner, tmpGigwan])
@@ -418,18 +442,21 @@ class MyWindow(QMainWindow, form_class) :
                     name = name[0:6]
                 Send_KakaoMessage("#" + name + "#\n" + kakaoMsg)
 
+
     # 카카오톡 토큰 만료 시 갱신 이벤트 핸들러
     def Handle_Timeout5(self) :
         Update_KakaoToken()
+
 
     # 카카오톡 수동 토큰 얻기 버튼 클릭 이벤트 핸들러
     def Handle_pushButton9(self) :
         Get_KakaoToken()
 
+
     # 카카오톡 수동 토큰 갱신 버튼 클릭 이벤트 핸들러
     def Handle_pushButton10(self) :
         Update_KakaoToken()
-
+        
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv)
