@@ -1,3 +1,4 @@
+from json.encoder import py_encode_basestring_ascii
 import sys
 import os
 from Kakao import *
@@ -10,6 +11,7 @@ TIMER2_INTERVAL = 1000*300   # 잔고 및 보유종목현황 실시간 인터벌
 TIMER3_INTERVAL = 1000*300   # 보유종목 등락 실시간 인터벌
 TIMER4_INTERVAL = 1000*3600 # 보유종목 별 투자자현황 실시간 인터벌
 TIMER5_INTERVAL = 1000*3600*6   # 카카오톡 토큰 업데이트 인터벌
+TIMER6_INTERVAL = 1000*3600 # 조건검색 실시간 인터벌
 
 
 # Qt Designer UI 파일
@@ -33,8 +35,8 @@ class MyWindow(QMainWindow, form_class) :
         self.kiwoom.Comm_Connect()  # 키움 접속
         self.kiwoom.Get_LoginInfo() # 로그인 정보 Get
         self.kiwoom.Make_StrDate()  # 오늘, 어제 날짜 문자열 처리
-
         self.Print_TextBrowser()    # 접속정보 출력
+        self.kiwoom.Get_ConditionLoad() # 조건검색 리스트 Get
 
         # Window 하단 Status Bar Timer Event 설정
         self.timer = QTimer(self)
@@ -111,6 +113,17 @@ class MyWindow(QMainWindow, form_class) :
         # 카카오톡 수동 토큰 얻기, 갱신 버튼 이벤트 설정
         self.pushButton_9.clicked.connect(self.Handle_pushButton9)
         self.pushButton_10.clicked.connect(self.Handle_pushButton10)
+
+        # 조건검색 콤보박스 설정
+        self.comboBox_2.addItem("선택하세요.")
+        for i in range(len(self.kiwoom.conditionList)) :
+            self.comboBox_2.addItem(self.kiwoom.conditionList[i])
+        self.comboBox_2.currentIndexChanged.connect(self.Handle_comboBox2)
+
+        # 조건검색 실시간 조회 이벤트 설정
+        self.timer6 = QTimer(self)
+        self.timer6.start(TIMER6_INTERVAL)
+        self.timer6.timeout.connect(self.Handle_Timeout6)
 
 
     @staticmethod
@@ -244,7 +257,7 @@ class MyWindow(QMainWindow, form_class) :
             code = self.kiwoom.opw00018['multi'][i][0]
             self.kiwoom.Get_Opt10001(code)
         
-        kakaoMsgTitle = '#종목정보#\n'
+        kakaoTitle = '#종목정보#\n'
         kakaoMsg = ''
         sendFlg = 0
 
@@ -260,7 +273,7 @@ class MyWindow(QMainWindow, form_class) :
                 self.tableWidget_6.setItem(j, k, item)
             
             if len(row[0]) >= 6 :
-                row[0] = row[0][0:6]
+                row[0] = row[0][0:5]
             
             if float(row[3]) >= 3.0 or float(row[3]) <= -2.0 :
                 sendFlg = 1
@@ -269,7 +282,7 @@ class MyWindow(QMainWindow, form_class) :
             self.tableWidget_6.resizeRowsToContents()
             
             if (j + 1) % 5 == 0 and sendFlg == 1:
-                Send_KakaoMessage(kakaoMsgTitle + kakaoMsg)
+                Send_KakaoMessage(kakaoTitle + kakaoMsg)
                 kakaoMsg = ''
                 sendFlg = 0
 
@@ -456,7 +469,52 @@ class MyWindow(QMainWindow, form_class) :
     # 카카오톡 수동 토큰 갱신 버튼 클릭 이벤트 핸들러
     def Handle_pushButton10(self) :
         Update_KakaoToken()
-        
+
+
+    # 조건검색 콤보박스 이벤트 처리
+    def Handle_comboBox2(self) :
+        idx = self.comboBox_2.currentIndex()
+        if idx != 0 :
+            self.Print_TableWidget8(idx)
+
+
+    # 조건검색 결과 출력
+    def Print_TableWidget8(self, idx) :
+        self.kiwoom.Send_Condition(self.kiwoom.SCREEN_NO, self.kiwoom.conditionList[idx - 1], idx - 1, 0)
+
+        self.tableWidget_8.setRowCount(len(self.kiwoom.conditionCodeList))
+        self.tableWidget_8.setColumnCount(2)
+        for i in range(len(self.kiwoom.conditionCodeList)) :
+            item = QTableWidgetItem(self.kiwoom.conditionCodeList[i])
+            item.setTextAlignment(Qt.AlignVCenter | Qt.AlignRight)
+            self.tableWidget_8.setItem(i, 0, item)
+
+            item = QTableWidgetItem(self.kiwoom.Get_CodeName(self.kiwoom.conditionCodeList[i]))
+            item.setTextAlignment(Qt.AlignVCenter | Qt.AlignRight)
+            self.tableWidget_8.setItem(i, 1, item)
+        self.tableWidget_8.resizeRowsToContents()
+        self.kiwoom.Clear_ConditionCodeList()
+    
+
+    # 조건검색 실시간 조회 이벤트 처리
+    def Handle_Timeout6(self) :
+        curTime = MyWindow.Get_CurTimeInt()
+        if self.checkBox_4.isChecked() and (curTime >= 90000 and curTime <= 100000) or (curTime >= 160000 and curTime <= 170000):
+            for i in range(len(self.kiwoom.conditionList)) :
+                self.kiwoom.Send_Condition(self.kiwoom.SCREEN_NO, self.kiwoom.conditionList[i], i, 0)
+                kakaoTitle = "#" + self.kiwoom.conditionList[i] +"#\n"
+                kakaoMsg = ''
+                for j in range(len(self.kiwoom.conditionCodeList)) :
+                    kakaoMsg = kakaoMsg + self.kiwoom.conditionCodeList[j] + " " + self.kiwoom.Get_CodeName(self.kiwoom.conditionCodeList[j])[0:5] + "\n"
+
+                    if (j + 1) % 15 == 0 :
+                        Send_KakaoMessage(kakaoTitle + kakaoMsg)
+                        kakaoMsg = ''
+                
+                if kakaoMsg != '' :
+                    Send_KakaoMessage(kakaoTitle + kakaoMsg)
+                self.kiwoom.Clear_ConditionCodeList()
+
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv)

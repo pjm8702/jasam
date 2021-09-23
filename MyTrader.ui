@@ -629,12 +629,55 @@
       <x>990</x>
       <y>140</y>
       <width>301</width>
-      <height>251</height>
+      <height>431</height>
      </rect>
     </property>
     <property name="title">
-     <string>실시간 조건 검색</string>
+     <string>조건 검색</string>
     </property>
+    <widget class="QComboBox" name="comboBox_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>181</width>
+       <height>22</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBox_4">
+     <property name="geometry">
+      <rect>
+       <x>205</x>
+       <y>22</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>실시간조회</string>
+     </property>
+    </widget>
+    <widget class="QTableWidget" name="tableWidget_8">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>281</width>
+       <height>371</height>
+      </rect>
+     </property>
+     <column>
+      <property name="text">
+       <string>종목번호</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>종목명</string>
+      </property>
+     </column>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_8">
     <property name="geometry">
@@ -674,6 +717,19 @@
       <string>카톡 토큰 갱신</string>
      </property>
     </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_9">
+    <property name="geometry">
+     <rect>
+      <x>990</x>
+      <y>580</y>
+      <width>301</width>
+      <height>221</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>매수/매도</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

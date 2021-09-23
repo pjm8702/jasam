@@ -45,6 +45,7 @@ class Kiwoom(QAxWidget) :
         self.opt10001 = []  # 종목명, 현재가, 전일대비, 등락율, 거래량, PER, EPS, ROE, PBR, 매출액, 영업이익, 당기순이익
         self.opt10059 = []  # 일자, 누적거래량, 누적거래대금, 개인투자자, 외국인투자자, 기관계, 연기금, 보험, 은행
         self.conditionList = [] # 조건식 리스트
+        self.conditionCodeList = [] # 조건식 종목 리스트
 
 
     @staticmethod   # 금액 정보 타입 처리
@@ -62,8 +63,8 @@ class Kiwoom(QAxWidget) :
             formatData = '-' + formatData
         
         return formatData
- 
-    
+
+
     @staticmethod   # 수익률 정보 타입 처리
     def change_format2(data) :
         stripData = data.lstrip('-0')
@@ -91,6 +92,8 @@ class Kiwoom(QAxWidget) :
         self.OnReceiveTrData.connect(self.Handle_Event_ReceiveTrData)
         self.OnReceiveMsg.connect(self.Handle_Event_ReceiveMsg)
         self.OnReceiveConditionVer.connect(self.Handle_Event_ReceiveConditionVer)
+        self.OnReceiveTrCondition.connect(self.Handle_Event_ReceiveTrCondition)
+        self.OnReceiveRealCondition.connect(self.Handle_Event_ReceiveRealCondition)
 
 
     # 키움 Rq 요청을 위한 입력값 설정
@@ -143,7 +146,18 @@ class Kiwoom(QAxWidget) :
         for i in range(len(tmpList)) :
             (no, condName) = tmpList[i].split('^')
             self.conditionList.append(condName)
-        print(self.conditionList)
+
+
+    # 조건검색 종목조회
+    def Send_Condition(self, scrNo, conditionName, idx, search) :
+        self.dynamicCall("SendCondition(QString, QString, int, int)", scrNo, conditionName, idx, search)
+        self.condition_loop = QEventLoop()
+        self.condition_loop.exec_()
+
+
+    # 조건검색 실시간 종목조회 중지
+    def Send_ConditionStop(self, scrNo, conditionName, idx) :
+        self. dynamicCall("SendConditionStop(QString, QString, int)", scrNo, conditionName, idx)
 
 
     # 키움 서버 접속 이벤트 처리
@@ -182,7 +196,7 @@ class Kiwoom(QAxWidget) :
 
     # 키움 서버 응답 메시지 이벤트 처리
     def Handle_Event_ReceiveMsg(self, screenNo, rqName, trCode, msg) :
-        print("# [Event ReceiveMsg] ScreenNo : " + screenNo + "TrCode : " + trCode + ", RqName : " + rqName + ", Msg : " + msg)
+        print("# [Event ReceiveMsg] ScreenNo : " + screenNo + ", TrCode : " + trCode + ", RqName : " + rqName + ", Msg : " + msg)
 
 
     # 조건식 목록조회 이벤트 처리
@@ -192,6 +206,19 @@ class Kiwoom(QAxWidget) :
 
         self.Get_ConditionNameList()
         self.condition_loop.exit()
+
+
+    # 조건식 종목조회 이벤트 처리
+    def Handle_Event_ReceiveTrCondition(self, scrNo, code, conditionName, idx, next) :
+        self.conditionCodeList = code.split(';')
+        del self.conditionCodeList[-1]
+        self.condition_loop.exit()
+        time.sleep(self.TQ_REQ_TIME_INTERVAL)
+
+
+    # 조건식 실시간 종목조회 이벤트 처리
+    def Handle_Event_ReceiveRealCondition(self, code, event, conditionName, idx) :
+        pass
 
 
     # 로그인 정보 처리(ACCOUNT_CNT : 전체 계좌 개수, ACCNO : 전체 계좌, USER_ID : 사용자 ID, USER_NAME : 사용자 이름, KEY_BSECGB : 키보드보안 해지 여부, FIREW_SECGB : 방화벽 설정 여부)
@@ -232,6 +259,11 @@ class Kiwoom(QAxWidget) :
         for code in self.codeList :
             name = self.dynamicCall("GetMasterCodeName(QString)", code)
             self.nameList.append(name)
+
+    
+    # 종목명 조회
+    def Get_CodeName(self, code) :
+        return self.dynamicCall("GetMasterCodeName(QString)", code)
 
 
     # 전체 종목 코드, 종목명 csv 파일 저장
@@ -577,6 +609,10 @@ class Kiwoom(QAxWidget) :
     def Clear_Opt10059(self) :
         self.opt10059.clear()
 
+    # 조건검색 종목 삭제
+    def Clear_ConditionCodeList(self) :
+        self.conditionCodeList.clear()
+
 
 # Main
 if __name__ == "__main__" :
@@ -618,3 +654,6 @@ if __name__ == "__main__" :
     #kiwoom.Print_Opt10059()
     
     kiwoom.Get_ConditionLoad()
+    for i in range(len(kiwoom.conditionList)) :
+        kiwoom.Send_Condition(kiwoom.SCREEN_NO, kiwoom.conditionList[i], i, 0)
+        time.sleep(kiwoom.TQ_REQ_TIME_INTERVAL)
