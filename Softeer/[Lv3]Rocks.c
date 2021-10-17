@@ -72,6 +72,7 @@ int main(void)
     printf("%d", max);
 
     free(height);
+    free(rocks);
 
   return 0;
 }
