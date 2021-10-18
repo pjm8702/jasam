@@ -29,71 +29,44 @@ Ai 작업장에서 Bi+1작업장으로 혹은 Bi 작업장에서 Ai+1작업장�
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct{
-    int work_time;
-    int move_time;
-} Factory;
+int get_min(int a, int b)
+{
+    if(a <= b)
+        return a;
+    else
+        return b;
+}
 
 int main(void)
 {
-    int N, i;
-    Factory *factory[2];
+    int N, A, B, AB, BA;
+    int i;
     int *time[2];
 
     scanf("%d", &N);
-    for(i = 0; i < 2; i++)
+    time[0] = (int*)calloc(N, sizeof(int));
+    time[1] = (int*)calloc(N, sizeof(int));
+
+    scanf("%d %d", &A, &B);
+    time[0][0] = A;
+    time[1][0] = B;
+
+    for(i = 1; i < N; i++)
     {
-        factory[i] = (Factory*)calloc(N, sizeof(Factory));
-        time[i] = (int*)calloc(N, sizeof(int));
+        scanf("%d %d", &AB, &BA);
+        scanf("%d %d", &A, &B);
+
+        time[0][i] = get_min(time[0][i-1], time[1][i-1] + BA) + A;
+        time[1][i] = get_min(time[1][i-1], time[0][i-1] + AB) + B;
     }
 
-    for(i = 0; i < N; i++)
-    {
-        if(i == N-1)
-        {
-            scanf("%d %d", &(factory[0][i].work_time), &(factory[1][i].work_time));
-        }
-        else
-        {
-            scanf("%d %d %d %d", &(factory[0][i].work_time), &(factory[1][i].work_time), &(factory[0][i].move_time), &(factory[1][i].move_time));
-        }
-    }
-
-    time[0][0] = factory[0][0].work_time;
-    time[1][0] = factory[1][0].work_time;    
-    for(i = 1 ; i < N; i++)
-    {
-        if(time[0][i-1] < time[1][i-1] + factory[1][i-1].move_time)
-        {
-            time[0][i] = time[0][i-1] + factory[0][i].work_time;
-        }
-        else
-        {
-            time[0][i] = time[1][i-1] + factory[1][i-1].move_time + factory[0][i].work_time;
-        }
-
-        if(time[1][i-1] < time[0][i-1] + factory[0][i-1].move_time)
-        {
-            time[1][i] = time[1][i-1] + factory[1][i].work_time;
-        }
-        else
-        {
-            time[1][i] = time[0][i-1] + factory[0][i-1].move_time + factory[1][i].work_time;
-        }
-    }
-
-    if(time[0][N - 1] > time[1][N - 1])
-    {
-        printf("%d\n", time[1][N-1]);
-    }
-    else
-    {
+    if(time[0][N-1] <= time[1][N-1])
         printf("%d\n", time[0][N-1]);
-    }
+    else
+        printf("%d\n", time[1][N-1]);
 
-    free(factory[0]);
-    free(factory[1]);
     free(time[0]);
     free(time[1]);
   return 0;
+}
 }
