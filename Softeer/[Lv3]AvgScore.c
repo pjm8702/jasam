@@ -30,41 +30,31 @@ i번째 줄에 i번째 구간의 성적평균(소수셋째자리에서 반올림
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct
-{
-    int start;
-    int end;
-} Period;
-
 int main(void)
 {
-    int N, K, i, j;
-    double avg = 0;
-    double sum = 0, cnt = 0;
-    int *point;
-    Period* period;
-
+    int N, K, S, A, B;
+    int i;
+    double *sum;
+    double avg;
+    
     scanf("%d %d", &N, &K);
-    point = (int*)calloc(N, sizeof(int));
-    for(i = 0; i < N; i++)
-        scanf("%d", &point[i]);
-    period = (Period*)calloc(K, sizeof(Period));
-    for(i = 0; i < K; i++)
-        scanf("%d %d", &(period[i].start), &(period[i].end));
+    sum = (double*)calloc(N+1, sizeof(double));
+    scanf("%d", &S);
+    sum[1] = S;
+    for(i = 2; i <= N; i++)
+    {
+        scanf("%d", &S);
+        sum[i] = sum[i-1] + S;
+    }
 
     for(i = 0; i < K; i++)
     {
-        for(j = period[i].start - 1; j < period[i].end; j++)
-        {
-            sum += point[j];
-            cnt++;
-        }
-        avg = sum / cnt;
+        scanf("%d %d\n", &A, &B);
+        avg = (sum[B] - sum[A-1]) / (B - A + 1);
         printf("%.2lf\n", avg);
-        avg = sum = cnt = 0;
     }
-
-    free(point);
-    free(period);
+    
+    free(sum);
+    
   return 0;
 }
