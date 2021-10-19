@@ -29,40 +29,32 @@
 
 int main(void)
 {
-    int N;
-    int *height, *rocks;
-    int i, j, max = 1;
+    int N, i, j, max;
+    int bridge[3000] = {0,};
+    int rocks[3000] = {1,};
 
     scanf("%d", &N);
-    height = (int*)calloc(N, sizeof(int));
-    rocks = (int*)calloc(N, sizeof(int));
-  
     for(i = 0; i < N; i++)
     {
-        scanf("%d", &height[i]);
-        rocks[i] = 1;
+        scanf("%d", &bridge[i]);
     }
 
-    for(i = 0; i < N; i++)
+    for(i = 1; i < N; i++)
     {
+        max = 1;
         for(j = i - 1; j >= 0; j--)
         {
-            if(height[i] > height[j])
+            if(bridge[i] > bridge[j] && max < rocks[j] + 1)
             {
-                if(max < rocks[j] + 1)
-                {
-                    max = rocks[j] + 1;
-                }
+                max = rocks[j] + 1;
             }
         }
         rocks[i] = max;
-        max = 1;
     }
 
-    max = 1;
-    for(i = 0; i < N; i++)
+    max = rocks[0];
+    for(i = 1; i < N; i++)
     {
-        //printf("%d ", rocks[i]);
         if(max < rocks[i])
         {
             max = rocks[i];
@@ -70,9 +62,6 @@ int main(void)
     }
 
     printf("%d", max);
-
-    free(height);
-    free(rocks);
 
   return 0;
 }
