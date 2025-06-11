@@ -2,6 +2,7 @@
 ### 설치파일
 * 키움 Open API+
 * 키움 번개3
+* 키움 KOA Studio
 
 ### 코드 설명
 1. Kiwoom.py
