@@ -1,6 +1,9 @@
-# jasam
-# For Elephant Project.
+# MyTrader
+### 설치파일
+* 키움 Open API+
+* 키움 번개3
 
+### 코드 설명
 1. Kiwoom.py
     Kiwoom 서버 접속, 데이터 요청 및 이벤트 처리
 
