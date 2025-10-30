@@ -1,0 +1,320 @@
+1. 종목별 현재가
+<삼성전자> 현재가: 104,100
+<SK하이닉스> 현재가: 568,000
+<NAVER> 현재가: 255,500
+<카카오> 현재가: 63,500
+<씨어스테크놀로지> 현재가: 82,800
+<한국전력> 현재가: 42,950
+<LG전자> 현재가: 87,600
+<현대차> 현재가: 265,000
+
+2. 종목별 매매동향 분석
+<삼성전자> 매매동향
+1일간 외국인 / 기관 순매매량 : 5159179.0 / 59109.0
+3일간 외국인 / 기관 순매매량 : 539562.0 / 943.0
+5일간 외국인 / 기관 순매매량 : 13566803.0 / 5181992.0
+10일간 외국인 / 기관 순매매량 : 15618248.0 / 5891600.0
+30일간 외국인 / 기관 순매매량 : 108459372.0 / 19812464.0
+60일간 외국인 / 기관 순매매량 : 99956329.0 / 21861419.0
+120일간 외국인 / 기관 순매매량 : 140767281.0 / 21630608.0
+
+<SK하이닉스> 매매동향
+1일간 외국인 / 기관 순매매량 : -457849.0 / -86681.0
+3일간 외국인 / 기관 순매매량 : -3336600.0 / 475769.0
+5일간 외국인 / 기관 순매매량 : -3719971.0 / 1032135.0
+10일간 외국인 / 기관 순매매량 : -7118182.0 / 1916792.0
+30일간 외국인 / 기관 순매매량 : -9300019.0 / 3584502.0
+60일간 외국인 / 기관 순매매량 : -2301808.0 / 4018468.0
+120일간 외국인 / 기관 순매매량 : 10201253.0 / -444715.0
+
+<NAVER> 매매동향
+1일간 외국인 / 기관 순매매량 : -199691.0 / -253166.0
+3일간 외국인 / 기관 순매매량 : -56346.0 / 259028.0
+5일간 외국인 / 기관 순매매량 : 69119.0 / 144027.0
+10일간 외국인 / 기관 순매매량 : -648574.0 / -478886.0
+30일간 외국인 / 기관 순매매량 : -2588116.0 / 2521633.0
+60일간 외국인 / 기관 순매매량 : -6314371.0 / 2421998.0
+120일간 외국인 / 기관 순매매량 : -12937302.0 / 1638722.0
+
+<카카오> 매매동향
+1일간 외국인 / 기관 순매매량 : -1217161.0 / -778781.0
+3일간 외국인 / 기관 순매매량 : 2944331.0 / 559209.0
+5일간 외국인 / 기관 순매매량 : 3129455.0 / 637324.0
+10일간 외국인 / 기관 순매매량 : 2554237.0 / -416899.0
+30일간 외국인 / 기관 순매매량 : 1207526.0 / -5179719.0
+60일간 외국인 / 기관 순매매량 : 9266427.0 / -1283431.0
+120일간 외국인 / 기관 순매매량 : 6274773.0 / 3648943.0
+
+<씨어스테크놀로지> 매매동향
+1일간 외국인 / 기관 순매매량 : 20171.0 / 13214.0
+3일간 외국인 / 기관 순매매량 : -11235.0 / 44508.0
+5일간 외국인 / 기관 순매매량 : 837.0 / 63408.0
+10일간 외국인 / 기관 순매매량 : -128487.0 / 108473.0
+30일간 외국인 / 기관 순매매량 : -226679.0 / 186794.0
+60일간 외국인 / 기관 순매매량 : 167105.0 / 110028.0
+120일간 외국인 / 기관 순매매량 : 680434.0 / 93707.0
+
+<한국전력> 매매동향
+1일간 외국인 / 기관 순매매량 : -9496.0 / -364080.0
+3일간 외국인 / 기관 순매매량 : 260144.0 / 138142.0
+5일간 외국인 / 기관 순매매량 : 127391.0 / 392881.0
+10일간 외국인 / 기관 순매매량 : 2304438.0 / 1169082.0
+30일간 외국인 / 기관 순매매량 : 8469496.0 / -1426886.0
+60일간 외국인 / 기관 순매매량 : 16487119.0 / -4346524.0
+120일간 외국인 / 기관 순매매량 : 29777769.0 / 5482658.0
+
+<LG전자> 매매동향
+1일간 외국인 / 기관 순매매량 : -43261.0 / -47456.0
+3일간 외국인 / 기관 순매매량 : 55175.0 / -108570.0
+5일간 외국인 / 기관 순매매량 : -224974.0 / -236343.0
+10일간 외국인 / 기관 순매매량 : 569399.0 / 72461.0
+30일간 외국인 / 기관 순매매량 : 3354931.0 / -227616.0
+60일간 외국인 / 기관 순매매량 : 3421281.0 / -680838.0
+120일간 외국인 / 기관 순매매량 : 3055472.0 / -2608622.0
+
+<현대차> 매매동향
+1일간 외국인 / 기관 순매매량 : -912186.0 / -302551.0
+3일간 외국인 / 기관 순매매량 : -1103097.0 / -301996.0
+5일간 외국인 / 기관 순매매량 : -1198731.0 / -395762.0
+10일간 외국인 / 기관 순매매량 : -1926803.0 / -144564.0
+30일간 외국인 / 기관 순매매량 : -1667487.0 / -1020384.0
+60일간 외국인 / 기관 순매매량 : -815864.0 / -1266006.0
+120일간 외국인 / 기관 순매매량 : -1198221.0 / -1184317.0
+
+<삼성전자> 종목분석 리포트
+25.10.15 / 한화투자증권 / https://finance.naver.com/research/company_read.naver?nid=86810&page=1&searchType=itemCode&itemCode=005930)
+25.10.15 / 미래에셋증권 / https://finance.naver.com/research/company_read.naver?nid=86805&page=1&searchType=itemCode&itemCode=005930)
+25.10.15 / iM증권 / https://finance.naver.com/research/company_read.naver?nid=86801&page=1&searchType=itemCode&itemCode=005930)
+25.10.15 / IBK투자증권 / https://finance.naver.com/research/company_read.naver?nid=86797&page=1&searchType=itemCode&itemCode=005930)
+25.10.15 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=86790&page=1&searchType=itemCode&itemCode=005930)
+25.10.15 / 키움증권 / https://finance.naver.com/research/company_read.naver?nid=86777&page=1&searchType=itemCode&itemCode=005930)
+25.10.14 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=86762&page=1&searchType=itemCode&itemCode=005930)
+25.09.30 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=86562&page=1&searchType=itemCode&itemCode=005930)
+25.09.23 / 키움증권 / https://finance.naver.com/research/company_read.naver?nid=86445&page=1&searchType=itemCode&itemCode=005930)
+25.09.22 / 미래에셋증권 / https://finance.naver.com/research/company_read.naver?nid=86433&page=1&searchType=itemCode&itemCode=005930)
+25.09.19 / 한화투자증권 / https://finance.naver.com/research/company_read.naver?nid=86423&page=1&searchType=itemCode&itemCode=005930)
+25.09.17 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=86378&page=1&searchType=itemCode&itemCode=005930)
+25.09.17 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=86375&page=1&searchType=itemCode&itemCode=005930)
+25.09.15 / 미래에셋증권 / https://finance.naver.com/research/company_read.naver?nid=86347&page=1&searchType=itemCode&itemCode=005930)
+25.08.22 / 키움증권 / https://finance.naver.com/research/company_read.naver?nid=86040&page=1&searchType=itemCode&itemCode=005930)
+25.08.01 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=85224&page=1&searchType=itemCode&itemCode=005930)
+25.08.01 / DS투자증권 / https://finance.naver.com/research/company_read.naver?nid=85223&page=1&searchType=itemCode&itemCode=005930)
+25.08.01 / 한화투자증권 / https://finance.naver.com/research/company_read.naver?nid=85200&page=1&searchType=itemCode&itemCode=005930)
+25.08.01 / 유안타증권 / https://finance.naver.com/research/company_read.naver?nid=85197&page=1&searchType=itemCode&itemCode=005930)
+25.08.01 / 미래에셋증권 / https://finance.naver.com/research/company_read.naver?nid=85186&page=1&searchType=itemCode&itemCode=005930)
+25.08.01 / 유진투자증권 / https://finance.naver.com/research/company_read.naver?nid=85180&page=1&searchType=itemCode&itemCode=005930)
+25.08.01 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=85146&page=1&searchType=itemCode&itemCode=005930)
+25.08.01 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=85131&page=1&searchType=itemCode&itemCode=005930)
+25.08.01 / 키움증권 / https://finance.naver.com/research/company_read.naver?nid=85121&page=1&searchType=itemCode&itemCode=005930)
+25.08.01 / IBK투자증권 / https://finance.naver.com/research/company_read.naver?nid=85115&page=1&searchType=itemCode&itemCode=005930)
+25.07.31 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=85063&page=1&searchType=itemCode&itemCode=005930)
+25.07.29 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=84928&page=1&searchType=itemCode&itemCode=005930)
+25.07.29 / 유진투자증권 / https://finance.naver.com/research/company_read.naver?nid=84927&page=1&searchType=itemCode&itemCode=005930)
+25.07.29 / IBK투자증권 / https://finance.naver.com/research/company_read.naver?nid=84921&page=1&searchType=itemCode&itemCode=005930)
+25.07.29 / 미래에셋증권 / https://finance.naver.com/research/company_read.naver?nid=84911&page=1&searchType=itemCode&itemCode=005930)
+
+<SK하이닉스> 종목분석 리포트
+25.10.30 / DS투자증권 / https://finance.naver.com/research/company_read.naver?nid=87259&page=1&searchType=itemCode&itemCode=000660)
+25.10.30 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=87250&page=1&searchType=itemCode&itemCode=000660)
+25.10.30 / 유안타증권 / https://finance.naver.com/research/company_read.naver?nid=87245&page=1&searchType=itemCode&itemCode=000660)
+25.10.30 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=87235&page=1&searchType=itemCode&itemCode=000660)
+25.10.30 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=87227&page=1&searchType=itemCode&itemCode=000660)
+25.10.30 / iM증권 / https://finance.naver.com/research/company_read.naver?nid=87223&page=1&searchType=itemCode&itemCode=000660)
+25.10.30 / 키움증권 / https://finance.naver.com/research/company_read.naver?nid=87221&page=1&searchType=itemCode&itemCode=000660)
+25.10.30 / IBK투자증권 / https://finance.naver.com/research/company_read.naver?nid=87220&page=1&searchType=itemCode&itemCode=000660)
+25.10.30 / 유진투자증권 / https://finance.naver.com/research/company_read.naver?nid=87213&page=1&searchType=itemCode&itemCode=000660)
+25.10.30 / 미래에셋증권 / https://finance.naver.com/research/company_read.naver?nid=87201&page=1&searchType=itemCode&itemCode=000660)
+25.10.21 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=86951&page=1&searchType=itemCode&itemCode=000660)
+25.10.17 / iM증권 / https://finance.naver.com/research/company_read.naver?nid=86878&page=1&searchType=itemCode&itemCode=000660)
+25.10.14 / 미래에셋증권 / https://finance.naver.com/research/company_read.naver?nid=86735&page=1&searchType=itemCode&itemCode=000660)
+25.09.30 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=86561&page=1&searchType=itemCode&itemCode=000660)
+25.09.30 / 현대차증권 / https://finance.naver.com/research/company_read.naver?nid=86555&page=1&searchType=itemCode&itemCode=000660)
+25.09.25 / 한화투자증권 / https://finance.naver.com/research/company_read.naver?nid=86515&page=1&searchType=itemCode&itemCode=000660)
+25.09.23 / IBK투자증권 / https://finance.naver.com/research/company_read.naver?nid=86450&page=1&searchType=itemCode&itemCode=000660)
+25.09.17 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=86376&page=1&searchType=itemCode&itemCode=000660)
+25.09.15 / iM증권 / https://finance.naver.com/research/company_read.naver?nid=86341&page=1&searchType=itemCode&itemCode=000660)
+25.09.15 / 키움증권 / https://finance.naver.com/research/company_read.naver?nid=86340&page=1&searchType=itemCode&itemCode=000660)
+25.09.09 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=86273&page=1&searchType=itemCode&itemCode=000660)
+25.07.31 / 현대차증권 / https://finance.naver.com/research/company_read.naver?nid=85098&page=1&searchType=itemCode&itemCode=000660)
+25.07.28 / DS투자증권 / https://finance.naver.com/research/company_read.naver?nid=84907&page=1&searchType=itemCode&itemCode=000660)
+25.07.25 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=84759&page=1&searchType=itemCode&itemCode=000660)
+25.07.25 / 한화투자증권 / https://finance.naver.com/research/company_read.naver?nid=84745&page=1&searchType=itemCode&itemCode=000660)
+25.07.25 / 유안타증권 / https://finance.naver.com/research/company_read.naver?nid=84742&page=1&searchType=itemCode&itemCode=000660)
+25.07.25 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=84730&page=1&searchType=itemCode&itemCode=000660)
+25.07.25 / 유진투자증권 / https://finance.naver.com/research/company_read.naver?nid=84702&page=1&searchType=itemCode&itemCode=000660)
+25.07.25 / IBK투자증권 / https://finance.naver.com/research/company_read.naver?nid=84698&page=1&searchType=itemCode&itemCode=000660)
+25.07.25 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=84686&page=1&searchType=itemCode&itemCode=000660)
+
+<NAVER> 종목분석 리포트
+25.10.20 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=86905&page=1&searchType=itemCode&itemCode=035420)
+25.10.14 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=86750&page=1&searchType=itemCode&itemCode=035420)
+25.10.10 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=86684&page=1&searchType=itemCode&itemCode=035420)
+25.09.30 / DS투자증권 / https://finance.naver.com/research/company_read.naver?nid=86573&page=1&searchType=itemCode&itemCode=035420)
+25.09.29 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=86551&page=1&searchType=itemCode&itemCode=035420)
+25.09.18 / 미래에셋증권 / https://finance.naver.com/research/company_read.naver?nid=86393&page=1&searchType=itemCode&itemCode=035420)
+25.08.14 / 미래에셋증권 / https://finance.naver.com/research/company_read.naver?nid=85814&page=1&searchType=itemCode&itemCode=035420)
+25.08.11 / 한화투자증권 / https://finance.naver.com/research/company_read.naver?nid=85665&page=1&searchType=itemCode&itemCode=035420)
+25.08.11 / DS투자증권 / https://finance.naver.com/research/company_read.naver?nid=85663&page=1&searchType=itemCode&itemCode=035420)
+25.08.11 / 교보증권 / https://finance.naver.com/research/company_read.naver?nid=85661&page=1&searchType=itemCode&itemCode=035420)
+25.08.11 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=85653&page=1&searchType=itemCode&itemCode=035420)
+25.08.11 / 유안타증권 / https://finance.naver.com/research/company_read.naver?nid=85645&page=1&searchType=itemCode&itemCode=035420)
+25.08.11 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=85633&page=1&searchType=itemCode&itemCode=035420)
+25.08.11 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=85596&page=1&searchType=itemCode&itemCode=035420)
+25.08.11 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=85594&page=1&searchType=itemCode&itemCode=035420)
+25.08.11 / 유진투자증권 / https://finance.naver.com/research/company_read.naver?nid=85587&page=1&searchType=itemCode&itemCode=035420)
+25.08.08 / 미래에셋증권 / https://finance.naver.com/research/company_read.naver?nid=85570&page=1&searchType=itemCode&itemCode=035420)
+25.07.09 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=84227&page=1&searchType=itemCode&itemCode=035420)
+25.07.08 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=84145&page=1&searchType=itemCode&itemCode=035420)
+25.07.07 / 교보증권 / https://finance.naver.com/research/company_read.naver?nid=84124&page=1&searchType=itemCode&itemCode=035420)
+25.07.02 / 한화투자증권 / https://finance.naver.com/research/company_read.naver?nid=84011&page=1&searchType=itemCode&itemCode=035420)
+25.06.23 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=83834&page=1&searchType=itemCode&itemCode=035420)
+25.06.10 / 미래에셋증권 / https://finance.naver.com/research/company_read.naver?nid=83646&page=1&searchType=itemCode&itemCode=035420)
+25.05.30 / 유안타증권 / https://finance.naver.com/research/company_read.naver?nid=83573&page=1&searchType=itemCode&itemCode=035420)
+25.05.21 / 한화투자증권 / https://finance.naver.com/research/company_read.naver?nid=83403&page=1&searchType=itemCode&itemCode=035420)
+25.05.12 / DS투자증권 / https://finance.naver.com/research/company_read.naver?nid=83042&page=1&searchType=itemCode&itemCode=035420)
+25.05.12 / 교보증권 / https://finance.naver.com/research/company_read.naver?nid=83034&page=1&searchType=itemCode&itemCode=035420)
+25.05.12 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=83028&page=1&searchType=itemCode&itemCode=035420)
+25.05.12 / 한화투자증권 / https://finance.naver.com/research/company_read.naver?nid=83013&page=1&searchType=itemCode&itemCode=035420)
+25.05.12 / 유안타증권 / https://finance.naver.com/research/company_read.naver?nid=83012&page=1&searchType=itemCode&itemCode=035420)
+
+<카카오> 종목분석 리포트
+25.10.20 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=86903&page=1&searchType=itemCode&itemCode=035720)
+25.10.14 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=86751&page=1&searchType=itemCode&itemCode=035720)
+25.10.10 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=86685&page=1&searchType=itemCode&itemCode=035720)
+25.10.01 / 삼성증권 / https://finance.naver.com/research/company_read.naver?nid=86583&page=1&searchType=itemCode&itemCode=035720)
+25.09.25 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=86508&page=1&searchType=itemCode&itemCode=035720)
+25.09.24 / 교보증권 / https://finance.naver.com/research/company_read.naver?nid=86498&page=1&searchType=itemCode&itemCode=035720)
+25.09.24 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=86493&page=1&searchType=itemCode&itemCode=035720)
+25.09.24 / 유안타증권 / https://finance.naver.com/research/company_read.naver?nid=86487&page=1&searchType=itemCode&itemCode=035720)
+25.09.24 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=86477&page=1&searchType=itemCode&itemCode=035720)
+25.09.24 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=86471&page=1&searchType=itemCode&itemCode=035720)
+25.09.24 / 유진투자증권 / https://finance.naver.com/research/company_read.naver?nid=86470&page=1&searchType=itemCode&itemCode=035720)
+25.09.24 / 키움증권 / https://finance.naver.com/research/company_read.naver?nid=86469&page=1&searchType=itemCode&itemCode=035720)
+25.09.18 / 미래에셋증권 / https://finance.naver.com/research/company_read.naver?nid=86394&page=1&searchType=itemCode&itemCode=035720)
+25.09.10 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=86283&page=1&searchType=itemCode&itemCode=035720)
+25.09.01 / 키움증권 / https://finance.naver.com/research/company_read.naver?nid=86167&page=1&searchType=itemCode&itemCode=035720)
+25.08.27 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=86107&page=1&searchType=itemCode&itemCode=035720)
+25.08.11 / 키움증권 / https://finance.naver.com/research/company_read.naver?nid=85614&page=1&searchType=itemCode&itemCode=035720)
+25.08.08 / DS투자증권 / https://finance.naver.com/research/company_read.naver?nid=85561&page=1&searchType=itemCode&itemCode=035720)
+25.08.08 / 교보증권 / https://finance.naver.com/research/company_read.naver?nid=85558&page=1&searchType=itemCode&itemCode=035720)
+25.08.08 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=85550&page=1&searchType=itemCode&itemCode=035720)
+25.08.08 / 유안타증권 / https://finance.naver.com/research/company_read.naver?nid=85537&page=1&searchType=itemCode&itemCode=035720)
+25.08.08 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=85528&page=1&searchType=itemCode&itemCode=035720)
+25.08.08 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=85502&page=1&searchType=itemCode&itemCode=035720)
+25.08.08 / 유진투자증권 / https://finance.naver.com/research/company_read.naver?nid=85488&page=1&searchType=itemCode&itemCode=035720)
+25.08.08 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=85483&page=1&searchType=itemCode&itemCode=035720)
+25.08.08 / 미래에셋증권 / https://finance.naver.com/research/company_read.naver?nid=85457&page=1&searchType=itemCode&itemCode=035720)
+25.08.07 / 한화투자증권 / https://finance.naver.com/research/company_read.naver?nid=85453&page=1&searchType=itemCode&itemCode=035720)
+25.08.01 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=85099&page=1&searchType=itemCode&itemCode=035720)
+25.07.14 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=84368&page=1&searchType=itemCode&itemCode=035720)
+25.07.09 / 교보증권 / https://finance.naver.com/research/company_read.naver?nid=84230&page=1&searchType=itemCode&itemCode=035720)
+
+<씨어스테크놀로지> 종목분석 리포트
+25.10.29 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=87141&page=1&searchType=itemCode&itemCode=458870)
+25.10.16 / 미래에셋증권 / https://finance.naver.com/research/company_read.naver?nid=86822&page=1&searchType=itemCode&itemCode=458870)
+25.09.08 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=86258&page=1&searchType=itemCode&itemCode=458870)
+25.09.08 / iM증권 / https://finance.naver.com/research/company_read.naver?nid=86255&page=1&searchType=itemCode&itemCode=458870)
+25.08.28 / 미래에셋증권 / https://finance.naver.com/research/company_read.naver?nid=86108&page=1&searchType=itemCode&itemCode=458870)
+25.08.27 / 한국IR협의회 / https://finance.naver.com/research/company_read.naver?nid=86095&page=1&searchType=itemCode&itemCode=458870)
+25.08.13 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=85744&page=1&searchType=itemCode&itemCode=458870)
+25.05.13 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=83053&page=1&searchType=itemCode&itemCode=458870)
+25.03.14 / 유안타증권 / https://finance.naver.com/research/company_read.naver?nid=81454&page=1&searchType=itemCode&itemCode=458870)
+25.02.26 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=81251&page=1&searchType=itemCode&itemCode=458870)
+24.10.02 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=77270&page=1&searchType=itemCode&itemCode=458870)
+
+<한국전력> 종목분석 리포트
+25.10.22 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=86991&page=1&searchType=itemCode&itemCode=015760)
+25.10.01 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=86589&page=1&searchType=itemCode&itemCode=015760)
+25.08.13 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=85767&page=1&searchType=itemCode&itemCode=015760)
+25.08.13 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=85759&page=1&searchType=itemCode&itemCode=015760)
+25.08.13 / 미래에셋증권 / https://finance.naver.com/research/company_read.naver?nid=85749&page=1&searchType=itemCode&itemCode=015760)
+25.08.13 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=85748&page=1&searchType=itemCode&itemCode=015760)
+25.08.13 / 유진투자증권 / https://finance.naver.com/research/company_read.naver?nid=85739&page=1&searchType=itemCode&itemCode=015760)
+25.08.13 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=85735&page=1&searchType=itemCode&itemCode=015760)
+25.08.01 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=85128&page=1&searchType=itemCode&itemCode=015760)
+25.07.22 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=84570&page=1&searchType=itemCode&itemCode=015760)
+25.07.07 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=84109&page=1&searchType=itemCode&itemCode=015760)
+25.07.03 / 미래에셋증권 / https://finance.naver.com/research/company_read.naver?nid=84017&page=1&searchType=itemCode&itemCode=015760)
+25.06.11 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=83675&page=1&searchType=itemCode&itemCode=015760)
+25.06.11 / 한화투자증권 / https://finance.naver.com/research/company_read.naver?nid=83673&page=1&searchType=itemCode&itemCode=015760)
+25.05.14 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=83152&page=1&searchType=itemCode&itemCode=015760)
+25.05.14 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=83131&page=1&searchType=itemCode&itemCode=015760)
+25.05.14 / 미래에셋증권 / https://finance.naver.com/research/company_read.naver?nid=83122&page=1&searchType=itemCode&itemCode=015760)
+25.05.14 / 유진투자증권 / https://finance.naver.com/research/company_read.naver?nid=83116&page=1&searchType=itemCode&itemCode=015760)
+25.05.14 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=83114&page=1&searchType=itemCode&itemCode=015760)
+25.05.14 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=83112&page=1&searchType=itemCode&itemCode=015760)
+25.05.14 / IBK투자증권 / https://finance.naver.com/research/company_read.naver?nid=83092&page=1&searchType=itemCode&itemCode=015760)
+25.04.21 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=82094&page=1&searchType=itemCode&itemCode=015760)
+25.04.16 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=82036&page=1&searchType=itemCode&itemCode=015760)
+25.04.15 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=82019&page=1&searchType=itemCode&itemCode=015760)
+25.04.01 / 메리츠증권 / https://finance.naver.com/research/company_read.naver?nid=81691&page=1&searchType=itemCode&itemCode=015760)
+25.03.04 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=81330&page=1&searchType=itemCode&itemCode=015760)
+25.03.04 / 한화투자증권 / https://finance.naver.com/research/company_read.naver?nid=81328&page=1&searchType=itemCode&itemCode=015760)
+25.03.04 / 미래에셋증권 / https://finance.naver.com/research/company_read.naver?nid=81322&page=1&searchType=itemCode&itemCode=015760)
+25.03.04 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=81318&page=1&searchType=itemCode&itemCode=015760)
+25.03.04 / 유진투자증권 / https://finance.naver.com/research/company_read.naver?nid=81311&page=1&searchType=itemCode&itemCode=015760)
+
+<LG전자> 종목분석 리포트
+25.10.21 / 유안타증권 / https://finance.naver.com/research/company_read.naver?nid=86958&page=1&searchType=itemCode&itemCode=066570)
+25.10.21 / 유진투자증권 / https://finance.naver.com/research/company_read.naver?nid=86948&page=1&searchType=itemCode&itemCode=066570)
+25.10.20 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=86927&page=1&searchType=itemCode&itemCode=066570)
+25.10.20 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=86917&page=1&searchType=itemCode&itemCode=066570)
+25.10.20 / 키움증권 / https://finance.naver.com/research/company_read.naver?nid=86908&page=1&searchType=itemCode&itemCode=066570)
+25.10.14 / 교보증권 / https://finance.naver.com/research/company_read.naver?nid=86769&page=1&searchType=itemCode&itemCode=066570)
+25.10.14 / iM증권 / https://finance.naver.com/research/company_read.naver?nid=86746&page=1&searchType=itemCode&itemCode=066570)
+25.10.02 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=86628&page=1&searchType=itemCode&itemCode=066570)
+25.10.02 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=86620&page=1&searchType=itemCode&itemCode=066570)
+25.08.26 / 유안타증권 / https://finance.naver.com/research/company_read.naver?nid=86084&page=1&searchType=itemCode&itemCode=066570)
+25.08.06 / iM증권 / https://finance.naver.com/research/company_read.naver?nid=85327&page=1&searchType=itemCode&itemCode=066570)
+25.07.28 / DS투자증권 / https://finance.naver.com/research/company_read.naver?nid=84908&page=1&searchType=itemCode&itemCode=066570)
+25.07.28 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=84894&page=1&searchType=itemCode&itemCode=066570)
+25.07.28 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=84847&page=1&searchType=itemCode&itemCode=066570)
+25.07.28 / 유진투자증권 / https://finance.naver.com/research/company_read.naver?nid=84844&page=1&searchType=itemCode&itemCode=066570)
+25.07.28 / iM증권 / https://finance.naver.com/research/company_read.naver?nid=84825&page=1&searchType=itemCode&itemCode=066570)
+25.07.28 / IBK투자증권 / https://finance.naver.com/research/company_read.naver?nid=84816&page=1&searchType=itemCode&itemCode=066570)
+25.07.28 / 키움증권 / https://finance.naver.com/research/company_read.naver?nid=84809&page=1&searchType=itemCode&itemCode=066570)
+25.07.28 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=84806&page=1&searchType=itemCode&itemCode=066570)
+25.07.08 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=84183&page=1&searchType=itemCode&itemCode=066570)
+25.07.08 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=84167&page=1&searchType=itemCode&itemCode=066570)
+25.07.08 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=84158&page=1&searchType=itemCode&itemCode=066570)
+25.07.08 / iM증권 / https://finance.naver.com/research/company_read.naver?nid=84156&page=1&searchType=itemCode&itemCode=066570)
+25.07.08 / 키움증권 / https://finance.naver.com/research/company_read.naver?nid=84133&page=1&searchType=itemCode&itemCode=066570)
+25.07.04 / 유진투자증권 / https://finance.naver.com/research/company_read.naver?nid=84054&page=1&searchType=itemCode&itemCode=066570)
+25.07.01 / iM증권 / https://finance.naver.com/research/company_read.naver?nid=83989&page=1&searchType=itemCode&itemCode=066570)
+25.07.01 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=83984&page=1&searchType=itemCode&itemCode=066570)
+25.06.27 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=83939&page=1&searchType=itemCode&itemCode=066570)
+25.06.23 / 미래에셋증권 / https://finance.naver.com/research/company_read.naver?nid=83841&page=1&searchType=itemCode&itemCode=066570)
+25.06.19 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=83783&page=1&searchType=itemCode&itemCode=066570)
+
+<현대차> 종목분석 리포트
+25.10.20 / 키움증권 / https://finance.naver.com/research/company_read.naver?nid=86895&page=1&searchType=itemCode&itemCode=005380)
+25.10.16 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=86825&page=1&searchType=itemCode&itemCode=005380)
+25.10.13 / 교보증권 / https://finance.naver.com/research/company_read.naver?nid=86725&page=1&searchType=itemCode&itemCode=005380)
+25.10.13 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=86704&page=1&searchType=itemCode&itemCode=005380)
+25.10.02 / 한화투자증권 / https://finance.naver.com/research/company_read.naver?nid=86645&page=1&searchType=itemCode&itemCode=005380)
+25.10.01 / 삼성증권 / https://finance.naver.com/research/company_read.naver?nid=86585&page=1&searchType=itemCode&itemCode=005380)
+25.09.23 / 교보증권 / https://finance.naver.com/research/company_read.naver?nid=86456&page=1&searchType=itemCode&itemCode=005380)
+25.09.23 / 유안타증권 / https://finance.naver.com/research/company_read.naver?nid=86454&page=1&searchType=itemCode&itemCode=005380)
+25.09.23 / 키움증권 / https://finance.naver.com/research/company_read.naver?nid=86446&page=1&searchType=itemCode&itemCode=005380)
+25.09.22 / 한화투자증권 / https://finance.naver.com/research/company_read.naver?nid=86438&page=1&searchType=itemCode&itemCode=005380)
+25.09.22 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=86435&page=1&searchType=itemCode&itemCode=005380)
+25.09.19 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=86420&page=1&searchType=itemCode&itemCode=005380)
+25.09.19 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=86412&page=1&searchType=itemCode&itemCode=005380)
+25.09.02 / 유안타증권 / https://finance.naver.com/research/company_read.naver?nid=86194&page=1&searchType=itemCode&itemCode=005380)
+25.07.28 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=84850&page=1&searchType=itemCode&itemCode=005380)
+25.07.25 / 교보증권 / https://finance.naver.com/research/company_read.naver?nid=84772&page=1&searchType=itemCode&itemCode=005380)
+25.07.25 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=84764&page=1&searchType=itemCode&itemCode=005380)
+25.07.25 / 한화투자증권 / https://finance.naver.com/research/company_read.naver?nid=84751&page=1&searchType=itemCode&itemCode=005380)
+25.07.25 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=84723&page=1&searchType=itemCode&itemCode=005380)
+25.07.25 / IBK투자증권 / https://finance.naver.com/research/company_read.naver?nid=84705&page=1&searchType=itemCode&itemCode=005380)
+25.07.25 / 미래에셋증권 / https://finance.naver.com/research/company_read.naver?nid=84703&page=1&searchType=itemCode&itemCode=005380)
+25.07.25 / 유진투자증권 / https://finance.naver.com/research/company_read.naver?nid=84690&page=1&searchType=itemCode&itemCode=005380)
+25.07.25 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=84689&page=1&searchType=itemCode&itemCode=005380)
+25.07.25 / 키움증권 / https://finance.naver.com/research/company_read.naver?nid=84676&page=1&searchType=itemCode&itemCode=005380)
+25.07.16 / 교보증권 / https://finance.naver.com/research/company_read.naver?nid=84469&page=1&searchType=itemCode&itemCode=005380)
+25.07.14 / 키움증권 / https://finance.naver.com/research/company_read.naver?nid=84342&page=1&searchType=itemCode&itemCode=005380)
+25.07.10 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=84250&page=1&searchType=itemCode&itemCode=005380)
+25.07.10 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=84245&page=1&searchType=itemCode&itemCode=005380)
+25.07.07 / 유진투자증권 / https://finance.naver.com/research/company_read.naver?nid=84098&page=1&searchType=itemCode&itemCode=005380)
+25.07.01 / 한화투자증권 / https://finance.naver.com/research/company_read.naver?nid=84000&page=1&searchType=itemCode&itemCode=005380)
+
