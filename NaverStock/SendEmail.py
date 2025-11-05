@@ -84,9 +84,9 @@ def send_gmail_with_txt(to_email, subject, body, file_path):
         if 'server' in locals():
             server.quit() # 서버 연결 종료
 
-# --- 실행 예시 ---
+
 if __name__ == "__main__":
-    # 1. (가정) 분석 결과를 TXT 파일로 저장
+    # 1. 분석 결과를 TXT 파일로 저장
     try:
         with open("NaverStock.txt", "w", encoding="utf-8") as f:
             f.write("네이버 증권 매매동향 분석 결과입니다.\n")
@@ -95,7 +95,7 @@ if __name__ == "__main__":
         print(f"파일 저장 오류: {e}")
 
     # 2. 메일 전송
-    MY_RECEIVER_EMAIL = "pjm8702@gmail.com" # 📥 메일을 받을 주소 (본인 주소)
+    MY_RECEIVER_EMAIL = "pjm8702@gmail.com" # 📥 메일을 받을 주소
     
     subject = "[자동 보고서] 네이버 증권 매매동향"
     body = "오늘의 매매동향 분석 결과를 TXT 파일로 첨부합니다."
