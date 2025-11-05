@@ -18,9 +18,12 @@ STOCK = {
     }
 
 RESULT_FILE = "NaverStock.txt"
+
 PDF_SAVE_DIR = "reports"
 
-MY_RECEIVER_EMAIL = "xxx@gmail.com"
+RECEIVER_EMAIL = "xxx@gmail.com"
+SENDER_EMAIL = "xxx@gmail.com"
+SENDER_PASSWORD = "xxx"     # 🔑 발급받은 16자리 앱 비밀번호
 
 
 # PDF 저장 폴더 초기화
@@ -116,5 +119,5 @@ if __name__ == "__main__" :
     # 4. 메일 전송
     subject = "[자동 보고서] 네이버 증권 데이터 크롤링"
     file_to_send = RESULT_FILE
-    se.send_gmail_with_txt(MY_RECEIVER_EMAIL, subject, body, file_to_send)
+    se.send_gmail_with_txt(RECEIVER_EMAIL, SENDER_EMAIL, SENDER_PASSWORD, subject, body, file_to_send)
         

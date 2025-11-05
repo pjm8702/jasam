@@ -267,11 +267,6 @@ def download_pdf_report(name, source, pdf_url, save_directory):
 
     except Exception:
         file_name = f"{name}_{source}_default_report.pdf"
-
-    # 3. 저장 경로 생성
-    if not os.path.exists(save_directory):
-        os.makedirs(save_directory)
-        print(f"📁 디렉토리 생성: {save_directory}")
         
     save_path = os.path.join(save_directory, file_name)
         

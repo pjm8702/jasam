@@ -4,32 +4,18 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 
-def send_gmail_with_txt(to_email, subject, body, file_path):
-    """
-    Gmail을 사용하여 TXT 파일을 첨부한 이메일을 전송합니다.
-
-    Args:
-        to_email (str): 수신자 이메일 주소
-        subject (str): 이메일 제목
-        body (str): 이메일 본문
-        file_path (str): 첨부할 TXT 파일의 경로
-    """
-    
-    # --- 1. 본인의 Gmail 계정 및 앱 비밀번호 설정 ---
-    SENDER_EMAIL = "xxx@gmail.com"     # 📧 본인의 Gmail 주소
-    SENDER_PASSWORD = "xxx"     # 🔑 발급받은 16자리 앱 비밀번호
-    # -----------------------------------------------
-    
-    # 2. 이메일 메시지 객체 생성 (MIMEMultipart)
+def send_gmail_with_txt(to_email, sender_email, sender_password, subject, body, file_path):
+        
+    # 1. 이메일 메시지 객체 생성 (MIMEMultipart)
     msg = MIMEMultipart()
-    msg['From'] = SENDER_EMAIL
+    msg['From'] = sender_email
     msg['To'] = to_email
     msg['Subject'] = subject
     
-    # 3. 본문 추가 (MIMEText)
+    # 2. 본문 추가 (MIMEText)
     msg.attach(MIMEText(body, 'plain', 'utf-8'))
     
-    # 4. 파일 첨부 (MIMEBase)
+    # 3. 파일 첨부 (MIMEBase)
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
             # 텍스트 파일의 내용을 읽습니다.
@@ -58,7 +44,7 @@ def send_gmail_with_txt(to_email, subject, body, file_path):
         print(f"❌ 파일 처리 중 오류: {e}")
         return
 
-    # 5. Gmail SMTP 서버에 연결 및 전송
+    # 4. Gmail SMTP 서버에 연결 및 전송
     try:
         # Gmail SMTP 서버 주소 및 포트
         smtp_server = "smtp.gmail.com"
@@ -69,10 +55,10 @@ def send_gmail_with_txt(to_email, subject, body, file_path):
         server.starttls()  # TLS 암호화 시작
         
         # 앱 비밀번호로 로그인
-        server.login(SENDER_EMAIL, SENDER_PASSWORD)
+        server.login(sender_email, sender_password)
         
         # 메일 전송
-        server.sendmail(SENDER_EMAIL, to_email, msg.as_string())
+        server.sendmail(sender_email, to_email, msg.as_string())
         
         print(f"✅ 이메일 전송 성공: '{subject}' 제목의 메일을 {to_email} (으)로 보냈습니다.")
         
