@@ -1,140 +1,109 @@
-1. 종목별 종가(2025-11-05)
-<삼성전자> 현재가: 100,600 하락4,300(-4.10%)
-<SK하이닉스> 현재가: 579,000 하락7,000(-1.19%)
-<NAVER> 현재가: 278,500 상승11,500(+4.31%)
-<LG전자> 현재가: 87,100 하락1,400(-1.58%)
-<현대차> 현재가: 268,500 하락7,500(-2.72%)
-<카카오> 현재가: 62,700 하락1,500(-2.34%)
-<씨어스테크놀로지> 현재가: 83,800 상승1,700(+2.07%)
-<한국전력> 현재가: 43,500 하락1,550(-3.44%)
+1. 종목별 종가(2025-11-12)
+<삼성전자> 현재가: 103,100 하락400(-0.39%)
+<SK하이닉스> 현재가: 617,000 하락2,000(-0.32%)
+<NAVER> 현재가: 263,500 상승500(+0.19%)
+<LG전자> 현재가: 92,900 상승2,300(+2.54%)
+<현대차> 현재가: 275,500 상승6,500(+2.42%)
+<카카오> 현재가: 63,800 하락300(-0.47%)
+<씨어스테크놀로지> 현재가: 98,100 상승6,200(+6.75%)
+<한국전력> 현재가: 47,650 하락1,900(-3.83%)
 
 2. 종목별 매매동향 분석
 <삼성전자> 매매동향
-1일간 외국인 / 기관 순매매량 : -1622112.0 / -1069851.0
-3일간 외국인 / 기관 순매매량 : -9711396.0 / 482373.0
-5일간 외국인 / 기관 순매매량 : 12860376.0 / -14910576.0
-10일간 외국인 / 기관 순매매량 : 20087023.0 / -11348672.0
-30일간 외국인 / 기관 순매매량 : 86967026.0 / -2921907.0
-60일간 외국인 / 기관 순매매량 : 112256198.0 / 12300131.0
-120일간 외국인 / 기관 순매매량 : 162790612.0 / 8018061.0
-
+1일간 외국인 / 기관 순매매량 : -4337394.0 / 1925957.0
+3일간 외국인 / 기관 순매매량 : -1431442.0 / 4456379.0
+5일간 외국인 / 기관 순매매량 : -6074316.0 / 4367357.0
+10일간 외국인 / 기관 순매매량 : 6786060.0 / -10543219.0
+30일간 외국인 / 기관 순매매량 : 65585536.0 / -3155648.0
+60일간 외국인 / 기관 순매매량 : 110018995.0 / 14768754.0
 <SK하이닉스> 매매동향
-1일간 외국인 / 기관 순매매량 : -2188885.0 / 651613.0
-3일간 외국인 / 기관 순매매량 : -5010299.0 / 1256384.0
-5일간 외국인 / 기관 순매매량 : -6559886.0 / 1508478.0
-10일간 외국인 / 기관 순매매량 : -10385923.0 / 2780374.0
-30일간 외국인 / 기관 순매매량 : -16865434.0 / 4952342.0
-60일간 외국인 / 기관 순매매량 : -8467232.0 / 5931333.0
-120일간 외국인 / 기관 순매매량 : 985640.0 / 430858.0
-
+1일간 외국인 / 기관 순매매량 : -745723.0 / 328522.0
+3일간 외국인 / 기관 순매매량 : -1747314.0 / 1215081.0
+5일간 외국인 / 기관 순매매량 : -3081134.0 / 1833634.0
+10일간 외국인 / 기관 순매매량 : -9641020.0 / 3342112.0
+30일간 외국인 / 기관 순매매량 : -17786529.0 / 5809431.0
+60일간 외국인 / 기관 순매매량 : -17517673.0 / 6790143.0
 <NAVER> 매매동향
-1일간 외국인 / 기관 순매매량 : -271545.0 / -124550.0
-3일간 외국인 / 기관 순매매량 : -818807.0 / -299538.0
-5일간 외국인 / 기관 순매매량 : -976520.0 / -268090.0
-10일간 외국인 / 기관 순매매량 : -1186807.0 / -291858.0
-30일간 외국인 / 기관 순매매량 : -3362255.0 / 2460168.0
-60일간 외국인 / 기관 순매매량 : -6730026.0 / 2645188.0
-120일간 외국인 / 기관 순매매량 : -13632575.0 / 1975764.0
-
+1일간 외국인 / 기관 순매매량 : -36261.0 / -14305.0
+3일간 외국인 / 기관 순매매량 : 15906.0 / 69345.0
+5일간 외국인 / 기관 순매매량 : -254724.0 / -145875.0
+10일간 외국인 / 기관 순매매량 : -1231244.0 / -413965.0
+30일간 외국인 / 기관 순매매량 : -3024893.0 / 2196113.0
+60일간 외국인 / 기관 순매매량 : -3600878.0 / 2399815.0
 <LG전자> 매매동향
-1일간 외국인 / 기관 순매매량 : 73059.0 / -2827.0
-3일간 외국인 / 기관 순매매량 : -15090.0 / 23204.0
-5일간 외국인 / 기관 순매매량 : -216972.0 / 31698.0
-10일간 외국인 / 기관 순매매량 : -236256.0 / -190090.0
-30일간 외국인 / 기관 순매매량 : 2669422.0 / -85924.0
-60일간 외국인 / 기관 순매매량 : 3825787.0 / -475734.0
-120일간 외국인 / 기관 순매매량 : 2787741.0 / -2378874.0
-
+1일간 외국인 / 기관 순매매량 : -150043.0 / 59934.0
+3일간 외국인 / 기관 순매매량 : 6307.0 / 77279.0
+5일간 외국인 / 기관 순매매량 : 170773.0 / 328873.0
+10일간 외국인 / 기관 순매매량 : -46199.0 / 360571.0
+30일간 외국인 / 기관 순매매량 : 2557747.0 / 110749.0
+60일간 외국인 / 기관 순매매량 : 3511220.0 / 56121.0
 <현대차> 매매동향
-1일간 외국인 / 기관 순매매량 : 151168.0 / -42001.0
-3일간 외국인 / 기관 순매매량 : -172613.0 / -68091.0
-5일간 외국인 / 기관 순매매량 : -904597.0 / -16291.0
-10일간 외국인 / 기관 순매매량 : -1264883.0 / -155985.0
-30일간 외국인 / 기관 순매매량 : -1070871.0 / -188226.0
-60일간 외국인 / 기관 순매매량 : -554844.0 / -238360.0
-120일간 외국인 / 기관 순매매량 : -1185211.0 / -751205.0
-
+1일간 외국인 / 기관 순매매량 : 154055.0 / 80997.0
+3일간 외국인 / 기관 순매매량 : 262888.0 / 92573.0
+5일간 외국인 / 기관 순매매량 : 240484.0 / 139583.0
+10일간 외국인 / 기관 순매매량 : -664113.0 / 123292.0
+30일간 외국인 / 기관 순매매량 : -822221.0 / 135812.0
+60일간 외국인 / 기관 순매매량 : -1422154.0 / -528962.0
 <카카오> 매매동향
-1일간 외국인 / 기관 순매매량 : -424823.0 / -87674.0
-3일간 외국인 / 기관 순매매량 : -853522.0 / 2879.0
-5일간 외국인 / 기관 순매매량 : -1722081.0 / -617988.0
-10일간 외국인 / 기관 순매매량 : 2064016.0 / 570348.0
-30일간 외국인 / 기관 순매매량 : -1134462.0 / -5268417.0
-60일간 외국인 / 기관 순매매량 : 8948830.0 / -1674671.0
-120일간 외국인 / 기관 순매매량 : 8262798.0 / 4697047.0
-
+1일간 외국인 / 기관 순매매량 : -545375.0 / -98767.0
+3일간 외국인 / 기관 순매매량 : 1048588.0 / -40055.0
+5일간 외국인 / 기관 순매매량 : 942715.0 / 999929.0
+10일간 외국인 / 기관 순매매량 : -779366.0 / 381941.0
+30일간 외국인 / 기관 순매매량 : -122904.0 / -3520084.0
+60일간 외국인 / 기관 순매매량 : 1887131.0 / -4146468.0
 <씨어스테크놀로지> 매매동향
-1일간 외국인 / 기관 순매매량 : 4779.0 / 1196.0
-3일간 외국인 / 기관 순매매량 : -33437.0 / 21579.0
-5일간 외국인 / 기관 순매매량 : -79921.0 / 57981.0
-10일간 외국인 / 기관 순매매량 : -176105.0 / 135088.0
-30일간 외국인 / 기관 순매매량 : -295923.0 / 270578.0
-60일간 외국인 / 기관 순매매량 : 18216.0 / 150458.0
-120일간 외국인 / 기관 순매매량 : 553997.0 / 134281.0
-
+1일간 외국인 / 기관 순매매량 : 6215.0 / 20055.0
+3일간 외국인 / 기관 순매매량 : -28448.0 / 21873.0
+5일간 외국인 / 기관 순매매량 : -65550.0 / 53106.0
+10일간 외국인 / 기관 순매매량 : -145471.0 / 111087.0
+30일간 외국인 / 기관 순매매량 : -299502.0 / 300950.0
+60일간 외국인 / 기관 순매매량 : -349342.0 / 269356.0
 <한국전력> 매매동향
-1일간 외국인 / 기관 순매매량 : -421298.0 / -94959.0
-3일간 외국인 / 기관 순매매량 : 307946.0 / -140165.0
-5일간 외국인 / 기관 순매매량 : 364438.0 / -673968.0
-10일간 외국인 / 기관 순매매량 : 560342.0 / -102428.0
-30일간 외국인 / 기관 순매매량 : 8541949.0 / -481015.0
-60일간 외국인 / 기관 순매매량 : 14364328.0 / -2848803.0
-120일간 외국인 / 기관 순매매량 : 27896175.0 / 3931545.0
+1일간 외국인 / 기관 순매매량 : -1304845.0 / -675766.0
+3일간 외국인 / 기관 순매매량 : -317300.0 / 252687.0
+5일간 외국인 / 기관 순매매량 : -852276.0 / 482669.0
+10일간 외국인 / 기관 순매매량 : -487838.0 / -191299.0
+30일간 외국인 / 기관 순매매량 : 6986702.0 / 248195.0
+60일간 외국인 / 기관 순매매량 : 8103364.0 / -1522675.0
 
-3. 종목별 리포트(2025-11-05)
+3. 종목별 리포트(2025-11-12)
 <삼성전자> 종목분석 리포트
 25.11.03 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=87440&page=1&searchType=itemCode&itemCode=005930
 25.11.03 / 현대차증권 / https://finance.naver.com/research/company_read.naver?nid=87438&page=1&searchType=itemCode&itemCode=005930
 25.10.31 / DS투자증권 / https://finance.naver.com/research/company_read.naver?nid=87427&page=1&searchType=itemCode&itemCode=005930
-25.10.31 / 교보증권 / https://finance.naver.com/research/company_read.naver?nid=87413&page=1&searchType=itemCode&itemCode=005930
-25.10.31 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=87406&page=1&searchType=itemCode&itemCode=005930
 
 <SK하이닉스> 종목분석 리포트
 25.11.04 / 교보증권 / https://finance.naver.com/research/company_read.naver?nid=87608&page=1&searchType=itemCode&itemCode=000660
 25.10.31 / 메리츠증권 / https://finance.naver.com/research/company_read.naver?nid=87283&page=1&searchType=itemCode&itemCode=000660
 25.10.30 / DS투자증권 / https://finance.naver.com/research/company_read.naver?nid=87259&page=1&searchType=itemCode&itemCode=000660
-25.10.30 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=87250&page=1&searchType=itemCode&itemCode=000660
-25.10.30 / 유안타증권 / https://finance.naver.com/research/company_read.naver?nid=87245&page=1&searchType=itemCode&itemCode=000660
 
 <NAVER> 종목분석 리포트
-25.11.05 / 미래에셋증권 / https://finance.naver.com/research/company_read.naver?nid=87683&page=1&searchType=itemCode&itemCode=035420
-25.11.03 / DS투자증권 / https://finance.naver.com/research/company_read.naver?nid=87550&page=1&searchType=itemCode&itemCode=035420
-25.10.20 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=86905&page=1&searchType=itemCode&itemCode=035420
-25.10.14 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=86750&page=1&searchType=itemCode&itemCode=035420
-25.10.10 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=86684&page=1&searchType=itemCode&itemCode=035420
+25.11.06 / 교보증권 / https://finance.naver.com/research/company_read.naver?nid=87766&page=1&searchType=itemCode&itemCode=035420
+25.11.06 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=87755&page=1&searchType=itemCode&itemCode=035420
+25.11.06 / 유안타증권 / https://finance.naver.com/research/company_read.naver?nid=87744&page=1&searchType=itemCode&itemCode=035420
 
 <LG전자> 종목분석 리포트
+25.11.10 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=87927&page=1&searchType=itemCode&itemCode=066570
 25.11.03 / DS투자증권 / https://finance.naver.com/research/company_read.naver?nid=87552&page=1&searchType=itemCode&itemCode=066570
 25.11.03 / 교보증권 / https://finance.naver.com/research/company_read.naver?nid=87542&page=1&searchType=itemCode&itemCode=066570
-25.11.03 / 유안타증권 / https://finance.naver.com/research/company_read.naver?nid=87519&page=1&searchType=itemCode&itemCode=066570
-25.11.03 / IBK투자증권 / https://finance.naver.com/research/company_read.naver?nid=87492&page=1&searchType=itemCode&itemCode=066570
-25.11.03 / 유진투자증권 / https://finance.naver.com/research/company_read.naver?nid=87487&page=1&searchType=itemCode&itemCode=066570
 
 <현대차> 종목분석 리포트
 25.10.31 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=87435&page=1&searchType=itemCode&itemCode=005380
 25.10.31 / DS투자증권 / https://finance.naver.com/research/company_read.naver?nid=87430&page=1&searchType=itemCode&itemCode=005380
 25.10.31 / 교보증권 / https://finance.naver.com/research/company_read.naver?nid=87422&page=1&searchType=itemCode&itemCode=005380
-25.10.31 / 한화투자증권 / https://finance.naver.com/research/company_read.naver?nid=87399&page=1&searchType=itemCode&itemCode=005380
-25.10.31 / 유안타증권 / https://finance.naver.com/research/company_read.naver?nid=87385&page=1&searchType=itemCode&itemCode=005380
 
 <카카오> 종목분석 리포트
-25.10.20 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=86903&page=1&searchType=itemCode&itemCode=035720
-25.10.14 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=86751&page=1&searchType=itemCode&itemCode=035720
-25.10.10 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=86685&page=1&searchType=itemCode&itemCode=035720
-25.10.01 / 삼성증권 / https://finance.naver.com/research/company_read.naver?nid=86583&page=1&searchType=itemCode&itemCode=035720
-25.09.25 / SK증권 / https://finance.naver.com/research/company_read.naver?nid=86508&page=1&searchType=itemCode&itemCode=035720
+25.11.10 / 교보증권 / https://finance.naver.com/research/company_read.naver?nid=87970&page=1&searchType=itemCode&itemCode=035720
+25.11.10 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=87966&page=1&searchType=itemCode&itemCode=035720
+25.11.10 / 유안타증권 / https://finance.naver.com/research/company_read.naver?nid=87955&page=1&searchType=itemCode&itemCode=035720
 
 <씨어스테크놀로지> 종목분석 리포트
 25.11.05 / 키움증권 / https://finance.naver.com/research/company_read.naver?nid=87624&page=1&searchType=itemCode&itemCode=458870
 25.10.29 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=87141&page=1&searchType=itemCode&itemCode=458870
 25.10.16 / 미래에셋증권 / https://finance.naver.com/research/company_read.naver?nid=86822&page=1&searchType=itemCode&itemCode=458870
-25.09.08 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=86258&page=1&searchType=itemCode&itemCode=458870
-25.09.08 / iM증권 / https://finance.naver.com/research/company_read.naver?nid=86255&page=1&searchType=itemCode&itemCode=458870
 
 <한국전력> 종목분석 리포트
 25.10.22 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=86991&page=1&searchType=itemCode&itemCode=015760
 25.10.01 / 신한투자증권 / https://finance.naver.com/research/company_read.naver?nid=86589&page=1&searchType=itemCode&itemCode=015760
 25.08.13 / 대신증권 / https://finance.naver.com/research/company_read.naver?nid=85767&page=1&searchType=itemCode&itemCode=015760
-25.08.13 / 하나증권 / https://finance.naver.com/research/company_read.naver?nid=85759&page=1&searchType=itemCode&itemCode=015760
-25.08.13 / 미래에셋증권 / https://finance.naver.com/research/company_read.naver?nid=85749&page=1&searchType=itemCode&itemCode=015760
 

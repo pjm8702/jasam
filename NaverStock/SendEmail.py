@@ -1,8 +1,19 @@
 import smtplib
+import os
+import mimetypes
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
+
+
+def get_mime_type(file_path) :
+    mime_type, encoding = mimetypes.guess_type(file_path)
+    
+    if mime_type:
+        return mime_type.split('/')
+    else:
+        return ['application', 'octet-stream']
 
 def send_gmail(sender_email, receiver_email, password, subject, body, file_path = "empty"):
     
@@ -18,10 +29,12 @@ def send_gmail(sender_email, receiver_email, password, subject, body, file_path 
     # E-Mail Attachment(MIMEBase)
     if file_path != "empty" :
         try:
-            with open(file_path, 'r', encoding='utf-8') as f:
+            with open(file_path, 'rb') as f:
                 attachment_data = f.read()
-            part = MIMEBase('application', 'octet-stream')
-            part.set_payload(attachment_data.encode('utf-8'))
+            
+            main_type, sub_type = get_mime_type(file_path)
+            part = MIMEBase(main_type, sub_type)
+            part.set_payload(attachment_data)
             
             # encode Base64(E-Mail Standard)
             encoders.encode_base64(part)
@@ -63,18 +76,14 @@ def send_gmail(sender_email, receiver_email, password, subject, body, file_path 
 
 
 if __name__ == "__main__":
-    try:
-        with open("NaverStock.txt", "w", encoding="utf-8") as f:
-            f.write("네이버 증권 매매동향 분석 결과입니다.\n")
-        print("NaverStock.txt 파일 저장 완료.")
-    except Exception as e:
-        print(f"파일 저장 오류: {e}")
-
     sender_email = "xxx@gmail.com"
     receiver_email = "xxx@gmail.com"
     password = "xxx"     # 🔑 Google App Password
     subject = "테스트 이메일"
     body = "이메일 전송 테스트"
-    file_path = "NaverStock.txt"
+    
+    current_path = os.path.dirname(os.path.abspath(__file__))
+    #file_path = current_path + "\\NaverStock.txt"
+    file_path = current_path + "\\reports.zip"
     
     send_gmail(sender_email, receiver_email, password, subject, body, file_path)

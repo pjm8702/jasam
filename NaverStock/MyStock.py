@@ -4,8 +4,10 @@ import os
 import shutil
 import NaverStock as ns
 import SendEmail as se
+import MyZip as mz
+import TradeGraph as tg
 
-# 분석하고 싶은 종목
+# MY STOCK
 STOCK = {
     "삼성전자" : "005930", 
     "SK하이닉스" : "000660", 
@@ -17,16 +19,17 @@ STOCK = {
     "한국전력" : "015760"
     }
 
-RESULT_FILE = "NaverStock.txt"
 
-PDF_SAVE_DIR = "reports"
+CURRENT_PATH = os.path.dirname(os.path.abspath(__file__))
+RESULT_FILE = CURRENT_PATH + "\\NaverStock.txt"
+REPORT_DIR = CURRENT_PATH + '\\reports'
+ZIP_FILE = CURRENT_PATH + '\\reports.zip'
 
-RECEIVER_EMAIL = "xxx@gmail.com"
-SENDER_EMAIL = "xxx@gmail.com"
-SENDER_PASSWORD = "xxx"     # 🔑 발급받은 16자리 앱 비밀번호
+INVERSER_TRADING_MAX_PAGE = 3
+PDF_MAX_NUM = 3
 
 
-# PDF 저장 폴더 초기화
+# delete and make reports folder to save Stock PDF
 def clear_directory(save_directory):
     print(f"--- {save_directory} 폴더 삭제 ---")
 
@@ -35,7 +38,6 @@ def clear_directory(save_directory):
         return
 
     try:
-        # shutil.rmtree()를 사용하여 폴더와 모든 내용물을 삭제
         shutil.rmtree(save_directory)
         print(f"🎉 성공: '{save_directory}' 폴더와 내용물 전체가 삭제되었습니다.")
 
@@ -51,11 +53,14 @@ def clear_directory(save_directory):
 
 
 if __name__ == "__main__" :
-    
-    clear_directory(PDF_SAVE_DIR)
 
-    with open(RESULT_FILE, 'w', encoding="UTF-8") as f :
-        # 1. 종목별 현재가(종가) 확인
+    clear_directory(REPORT_DIR)
+
+    foreign_data_list = []
+    institution_data_list = []
+
+    with open(RESULT_FILE, 'w', encoding="utf-8") as f :
+        # Get current price of STOCK
         print_str = f"1. 종목별 종가({datetime.date.today()})\n"
         f.write(print_str)
         body = print_str
@@ -65,7 +70,7 @@ if __name__ == "__main__" :
             body += current_price_text + '\n'
         print(f"--- 현재가 크롤링 세션 종료 ---\n")
 
-        # 2. 외국인/기관 순매매량을 기간별로 총합하여 추세 확인
+        # Get Foreign/Institution's amount of buy
         print_str = f"\n2. 종목별 매매동향 분석\n"
         f.write(print_str)
         body += print_str
@@ -73,28 +78,25 @@ if __name__ == "__main__" :
             final_data = pd.DataFrame()
             f.write(f"<{key}> 매매동향\n")
             body += f"<{key}> 매매동향\n"
-            for i in range(1, 7) :
+            for i in range(1, INVERSER_TRADING_MAX_PAGE) :
                 data = ns.get_investor_trading_volume(key, value, i)
                 final_data = pd.concat([final_data, data], ignore_index=True)
+
+            days = [1, 3, 5, 10, 30, 60]
+            for d in days :
+                end_idx = d - 1
+                foreign_sum = final_data.loc[0:end_idx, '외국인_순매매량'].sum()
+                foreign_data_list.append(foreign_sum)
+                institution_sum = final_data.loc[0:end_idx, '기관_순매매량'].sum()
+                institution_data_list.append(institution_sum)
             
-            f.write(f"1일간 외국인 / 기관 순매매량 : {final_data.loc[0, '외국인_순매매량']} / {final_data.loc[0, '기관_순매매량']}\n")
-            body += f"1일간 외국인 / 기관 순매매량 : {final_data.loc[0, '외국인_순매매량']} / {final_data.loc[0, '기관_순매매량']}\n"
-            f.write(f"3일간 외국인 / 기관 순매매량 : {final_data.loc[0:2, '외국인_순매매량'].sum()} / {final_data.loc[0:2, '기관_순매매량'].sum()}\n")
-            body += f"3일간 외국인 / 기관 순매매량 : {final_data.loc[0:2, '외국인_순매매량'].sum()} / {final_data.loc[0:2, '기관_순매매량'].sum()}\n"
-            f.write(f"5일간 외국인 / 기관 순매매량 : {final_data.loc[0:4, '외국인_순매매량'].sum()} / {final_data.loc[0:4, '기관_순매매량'].sum()}\n")
-            body += f"5일간 외국인 / 기관 순매매량 : {final_data.loc[0:4, '외국인_순매매량'].sum()} / {final_data.loc[0:4, '기관_순매매량'].sum()}\n"
-            f.write(f"10일간 외국인 / 기관 순매매량 : {final_data.loc[0:9, '외국인_순매매량'].sum()} / {final_data.loc[0:9, '기관_순매매량'].sum()}\n")
-            body += f"10일간 외국인 / 기관 순매매량 : {final_data.loc[0:9, '외국인_순매매량'].sum()} / {final_data.loc[0:9, '기관_순매매량'].sum()}\n"
-            f.write(f"30일간 외국인 / 기관 순매매량 : {final_data.loc[0:29, '외국인_순매매량'].sum()} / {final_data.loc[0:29, '기관_순매매량'].sum()}\n")
-            body += f"30일간 외국인 / 기관 순매매량 : {final_data.loc[0:29, '외국인_순매매량'].sum()} / {final_data.loc[0:29, '기관_순매매량'].sum()}\n"
-            f.write(f"60일간 외국인 / 기관 순매매량 : {final_data.loc[0:59, '외국인_순매매량'].sum()} / {final_data.loc[0:59, '기관_순매매량'].sum()}\n")
-            body += f"60일간 외국인 / 기관 순매매량 : {final_data.loc[0:59, '외국인_순매매량'].sum()} / {final_data.loc[0:59, '기관_순매매량'].sum()}\n"
-            f.write(f"120일간 외국인 / 기관 순매매량 : {final_data.loc[0:119, '외국인_순매매량'].sum()} / {final_data.loc[0:119, '기관_순매매량'].sum()}\n\n")
-            body += f"120일간 외국인 / 기관 순매매량 : {final_data.loc[0:119, '외국인_순매매량'].sum()} / {final_data.loc[0:119, '기관_순매매량'].sum()}\n\n"
-        
+                f.write(f"{d}일간 외국인 / 기관 순매매량 : {foreign_sum} / {institution_sum}\n")
+                body += f"{d}일간 외국인 / 기관 순매매량 : {foreign_sum} / {institution_sum}\n"
+        f.write('\n')
+        body += '\n'
         print(f"--- 매매동향 크롤링 세션 종료 ---\n")
 
-        # 3. 관심 종목 리포트 링크 및 리포트 다운로드
+        # Download STOCK's Report
         print_str = f"3. 종목별 리포트({datetime.date.today()})\n"
         f.write(print_str)
         body += print_str
@@ -103,21 +105,27 @@ if __name__ == "__main__" :
             print_str = f"<{name}> 종목분석 리포트\n"
             f.write(print_str)
             body += print_str
-            for i in range(0, 5) :
+            for i in range(0, PDF_MAX_NUM) :
                 f.write(f"{reports_list[i]['date']} / {reports_list[i]['source']} / {reports_list[i]['link']}\n")
                 body += f"{reports_list[i]['date']} / {reports_list[i]['source']} / {reports_list[i]['link']}\n"
             f.write('\n')
             body += '\n'
 
-            for i in range(0, 5) :
+            for i in range(0, PDF_MAX_NUM) :
                 pdf_link = ns.extract_pdf_download_url(reports_list[i]['link'])
                 if pdf_link == None :
                     continue
-                ns.download_pdf_report(name, reports_list[i]['source'], pdf_link, PDF_SAVE_DIR)
+                ns.download_pdf_report(i, name, reports_list[i]['source'], pdf_link, REPORT_DIR)
             print(f"--- {name} 종목 리포트 다운로드 완료 ---\n")
+        
+    # reports to zip
+    mz.folder_to_zip(REPORT_DIR, ZIP_FILE)
 
-    # 4. 메일 전송
-    subject = "[자동 보고서] 네이버 증권 데이터 크롤링"
-    file_to_send = RESULT_FILE
-    se.send_gmail_with_txt(RECEIVER_EMAIL, SENDER_EMAIL, SENDER_PASSWORD, subject, body, file_to_send)
+    # Send E-Mail
+    sender_email = "pjm8702@gmail.com"
+    receiver_email = "pjm8702@gmail.com"
+    password = "wlntofwdzhbtwldr"     # 🔑 Google App Password
+    subject = f"[보고서] 네이버 증권 데이터({datetime.date.today()})"
+    file_path = ZIP_FILE
+    se.send_gmail(sender_email, receiver_email, password, subject, body, file_path)
         
